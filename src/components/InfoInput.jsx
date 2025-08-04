@@ -12,7 +12,7 @@ const infoSections = [
   "Skills & Interests",
 ];
 
-export default function InfoInput() {
+export default function InfoInput({ setUserData }) {
   const [infoSelection, setInfoSelection] = useState("Personal");
 
   function infoSelectionComp() {
@@ -34,6 +34,7 @@ export default function InfoInput() {
         {infoSections.map((section) => {
           return (
             <InfoSectionSelector
+              key={section}
               value={section}
               onClick={() => setInfoSelection(section)}
             />

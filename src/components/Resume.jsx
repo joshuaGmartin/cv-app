@@ -1,7 +1,7 @@
-export default function Resume() {
+export default function Resume({ userData }) {
   return (
     <div className="Resume">
-      Resume div
+      {JSON.stringify(userData)}
       <div className="wrapper">
         <button onClick={clickAlert}>Print</button>
       </div>

@@ -1,7 +1,13 @@
 export default function PersonalInfoInput() {
   return (
     <div className="PersonalInfoInput">
-      this is from PersonalInfoInput component
+      <input type="text" placeholder="Fullname" />
     </div>
   );
 }
+
+// name
+// email
+// phone
+// location
+// github link
