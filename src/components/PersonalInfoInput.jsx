@@ -5,9 +5,3 @@ export default function PersonalInfoInput() {
     </div>
   );
 }
-
-// name
-// email
-// phone
-// location
-// github link

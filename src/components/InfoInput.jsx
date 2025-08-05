@@ -15,16 +15,16 @@ const infoSections = [
 export default function InfoInput({ setUserData }) {
   const [infoSelection, setInfoSelection] = useState("Personal");
 
-  function infoSelectionComp() {
+  function infoSelectionComponent() {
     switch (infoSelection) {
       case "Education":
-        return <EducationInfoInput />;
+        return <EducationInfoInput setUserData={setUserData} />;
       case "Relevant Work Experience":
-        return <WorkExpInfoInput />;
+        return <WorkExpInfoInput setUserData={setUserData} />;
       case "Skills & Interests":
-        return <SkillsAndIntInfoInput />;
+        return <SkillsAndIntInfoInput setUserData={setUserData} />;
       default:
-        return <PersonalInfoInput />;
+        return <PersonalInfoInput setUserData={setUserData} />;
     }
   }
 
@@ -42,7 +42,7 @@ export default function InfoInput({ setUserData }) {
         })}
       </div>
 
-      {infoSelectionComp()}
+      {infoSelectionComponent()}
     </div>
   );
 }

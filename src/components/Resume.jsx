@@ -1,15 +1,17 @@
+import ResumePortionPersonal from "./ResumePortionPersonal";
+import ResumePortionEducation from "./ResumePortionEducation";
+
 export default function Resume({ userData }) {
   return (
     <div className="Resume">
-      {JSON.stringify(userData)}
-      <div className="wrapper">
-        <button onClick={clickAlert}>Print</button>
-      </div>
+      <ResumePortionPersonal userData={userData} />
+      <hr />
+      <ResumePortionEducation userData={userData} />
     </div>
   );
 }
 
-function clickAlert() {
+function printResume() {
   const resumeElm = document.querySelector(".Resume");
   window.print();
 

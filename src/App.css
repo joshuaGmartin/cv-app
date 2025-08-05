@@ -17,7 +17,7 @@
   /* text-align: center; */
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
   gap: var(--spacing);
 }
 
@@ -52,7 +52,14 @@
 
 .Resume {
   background-color: white;
-  padding: var(--padding);
+  padding: calc(2 * var(--padding));
+}
+
+.Resume .education-top-line,
+.Resume .education-second-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
 /* ======================================================= */
