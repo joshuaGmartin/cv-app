@@ -5,6 +5,7 @@ export default function ResumePortionPersonal({ userData }) {
       {userData.personal.email} | {userData.personal.phone} |{" "}
       {userData.personal.location} |{" "}
       <a href={userData.personal.gitHub}>GitHub</a>
+      <hr />
     </div>
   );
 }

@@ -1,12 +1,14 @@
 import ResumePortionPersonal from "./ResumePortionPersonal";
 import ResumePortionEducation from "./ResumePortionEducation";
+import ResumePortionWorkExp from "./ResumePortionWorkExp";
+import { use } from "react";
 
 export default function Resume({ userData }) {
   return (
     <div className="Resume">
       <ResumePortionPersonal userData={userData} />
-      <hr />
       <ResumePortionEducation userData={userData} />
+      <ResumePortionWorkExp userData={userData} />
     </div>
   );
 }

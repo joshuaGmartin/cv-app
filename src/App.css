@@ -62,6 +62,13 @@
   align-items: end;
 }
 
+.Resume .workExp-top-line,
+.Resume .workExp-job-title-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
 /* ======================================================= */
 /* from template */
 /* ======================================================= */

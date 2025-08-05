@@ -99,10 +99,11 @@ let userData = {
           duties: [
             "Created and managed a working process for filing bond claims for all U.S. states for non-payment of equipment",
             "Leveraged my programming skills to automate my daily tasks (Excel).",
-            "Promoted due to my attention to detail, initiative, and teachability.",
           ],
           stack: [],
-          keyResults: [],
+          keyResults: [
+            "Promoted due to my attention to detail, initiative, and teachability.",
+          ],
         },
         {
           position: "Lien Specialist",
@@ -133,8 +134,9 @@ let userData = {
             "Worked closely with engineering to test/troubleshoot new Linux-based remote software.",
           ],
           stack: [],
-          keyResults:
+          keyResults: [
             "Remote data analysis allowed for field-based/travel cost savings for all geoscientists.",
+          ],
         },
       ],
     },
