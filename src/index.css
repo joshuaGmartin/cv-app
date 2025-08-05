@@ -28,6 +28,15 @@
   }
 }
 
+#page-title {
+  margin: 0 2rem -1rem;
+  font-size: 3rem;
+  color: yellowgreen;
+  span {
+    color: white;
+  }
+}
+
 /* ======================================================= */
 /* from template */
 /* ======================================================= */

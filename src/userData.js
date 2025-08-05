@@ -4,7 +4,8 @@ let userData = {
     email: "joshua.g.martin.email@gmail.com",
     phone: "(936) 697-3800",
     location: "Waupaca, WI, USA",
-    gitHub: "https://github.com/joshuaGmartin",
+    portfolioName: "GitHub",
+    portfolioLink: "https://github.com/joshuaGmartin",
   },
   education: [
     {

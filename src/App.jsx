@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <InfoInput setUserData={setUserData}></InfoInput>
+      <InfoInput userData={userData} setUserData={setUserData}></InfoInput>
       <Resume userData={userData}></Resume>
     </>
   );

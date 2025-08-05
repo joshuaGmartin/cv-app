@@ -1,7 +1,6 @@
 import ResumePortionPersonal from "./ResumePortionPersonal";
 import ResumePortionEducation from "./ResumePortionEducation";
 import ResumePortionWorkExp from "./ResumePortionWorkExp";
-import { use } from "react";
 
 export default function Resume({ userData }) {
   return (
