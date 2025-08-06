@@ -1,15 +1,49 @@
-export default function InfoInput_Education({ userData, setUserData }) {
+export default function InfoInput_Education({
+  userData,
+  setUserData,
+  resetData,
+}) {
   return (
     <div className="InfoInput_Education">
       {userData.education.map((thisEd) => {
         return (
-          <div key={thisEd.school + thisEd.gradYear}>
-            <div className="education-section">
-              {getEducationInputs(thisEd, userData, setUserData)}
-            </div>
+          <div key={thisEd.id} className="education-section">
+            {getEducationInputs(thisEd, userData, setUserData)}
+            <button
+              className="delete-education-button"
+              onClick={() =>
+                setUserData({
+                  ...userData,
+                  education: userData.education.filter((mapEd) => {
+                    if (mapEd.id !== thisEd.id) return mapEd;
+                  }),
+                })
+              }
+            >
+              xxxxxxxxxxxxx
+            </button>
           </div>
         );
       })}
+
+      {/* add education button */}
+      <button
+        className="add-education-button"
+        onClick={() =>
+          setUserData({
+            ...userData,
+            education: [
+              ...userData.education,
+              {
+                ...resetData.education[0],
+                id: crypto.randomUUID(),
+              },
+            ],
+          })
+        }
+      >
+        ++++++++++++
+      </button>
     </div>
   );
 }
@@ -121,6 +155,8 @@ function getEducationInputs(thisEd, userData, setUserData) {
               )
             : null}
         </div>
+
+        <div className="awards-input"></div>
       </div>
     </>
   );
@@ -235,7 +271,7 @@ function getRadioInputs(args) {
   if (key === "minor") otherKey = "specialization";
 
   return (
-    <label for={inputName}>
+    <label htmlFor={inputName}>
       {key}:{" "}
       <input
         type={type}

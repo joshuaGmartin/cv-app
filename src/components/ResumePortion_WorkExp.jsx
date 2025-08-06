@@ -7,13 +7,7 @@ export default function ResumePortion_WorkExp({ userData }) {
 
       {userData.workExperience.map((thisWork, index) => {
         return (
-          <div
-            key={
-              thisWork.employer +
-              thisWork.totalTimeStart +
-              thisWork.totalTimeEnd
-            }
-          >
+          <div key={thisWork.id}>
             {index !== 0 ? <br /> : null}
             <div className="workExp-top-line">
               <h3>{thisWork.employer}</h3>
@@ -24,16 +18,7 @@ export default function ResumePortion_WorkExp({ userData }) {
 
             {thisWork.jobsInfo.map((thisJob, index) => {
               return (
-                <div
-                  key={
-                    thisWork.employer +
-                    thisWork.totalTimeStart +
-                    thisWork.totalTimeEnd +
-                    thisJob.position +
-                    thisJob.timeStart +
-                    thisJob.timeStop
-                  }
-                >
+                <div key={thisJob.id}>
                   {index !== 0 ? <br /> : null}
                   <div className="workExp-job-title-line">
                     <i>

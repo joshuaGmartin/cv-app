@@ -7,10 +7,7 @@ export default function ResumePortion_Education({ userData }) {
 
       {userData.education.map((thisEd, index) => {
         return (
-          <div
-            className="education-section"
-            key={thisEd.school + thisEd.gradYear}
-          >
+          <div className="education-section" key={thisEd.id}>
             {index !== 0 ? <br /> : null}
             <div className="education-top-line">
               <h3>{thisEd.school}</h3>

@@ -2,14 +2,18 @@ import { useState } from "react";
 import "./App.css";
 import InfoInput from "./components/InfoInput.jsx";
 import Resume from "./components/Resume.jsx";
-import userDataImport from "./userData.js"; // edit to joshInfo and resetInfo
+import { joshData, resetData } from "./userData.js";
 
 function App() {
-  const [userData, setUserData] = useState(userDataImport);
+  const [userData, setUserData] = useState(joshData);
 
   return (
     <>
-      <InfoInput userData={userData} setUserData={setUserData}></InfoInput>
+      <InfoInput
+        userData={userData}
+        setUserData={setUserData}
+        resetData={resetData}
+      ></InfoInput>
       <Resume userData={userData}></Resume>
     </>
   );

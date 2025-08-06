@@ -1,4 +1,4 @@
-let userData = {
+export const joshData = {
   personal: {
     fullname: "Joshua Martin",
     email: "joshua.g.martin.email@gmail.com",
@@ -9,6 +9,7 @@ let userData = {
   },
   education: [
     {
+      id: crypto.randomUUID(),
       school: "Western Governors University",
       gradYear: "2025",
       currentStudent: true,
@@ -34,6 +35,7 @@ let userData = {
       ],
     },
     {
+      id: crypto.randomUUID(),
       school: "Sam Houston State University",
       gradYear: "2013",
       currentStudent: false,
@@ -61,11 +63,13 @@ let userData = {
   ],
   workExperience: [
     {
+      id: crypto.randomUUID(),
       employer: "Freelance Web Development",
       totalTimeStart: "2024",
       totalTimeEnd: "Present",
       jobsInfo: [
         {
+          id: crypto.randomUUID(),
           position: "Developer",
           timeStart: "2024",
           timeEnd: "Present",
@@ -88,11 +92,13 @@ let userData = {
       ],
     },
     {
+      id: crypto.randomUUID(),
       employer: "EquipmentShare",
       totalTimeStart: "2023",
       totalTimeEnd: "2025",
       jobsInfo: [
         {
+          id: crypto.randomUUID(),
           position: "Bonds Manager",
           timeStart: "Feb 2024",
           timeEnd: "Jan 2025",
@@ -107,6 +113,7 @@ let userData = {
           ],
         },
         {
+          id: crypto.randomUUID(),
           position: "Lien Specialist",
           timeStart: "Nov 2023",
           timeEnd: "Feb 2024",
@@ -120,11 +127,13 @@ let userData = {
       ],
     },
     {
+      id: crypto.randomUUID(),
       employer: "Baker Hughes",
       totalTimeStart: "2013",
       totalTimeEnd: "2016",
       jobsInfo: [
         {
+          id: crypto.randomUUID(),
           position: "Microseismic Geophysicist",
           timeStart: "",
           timeEnd: "",
@@ -192,4 +201,56 @@ let userData = {
   },
 };
 
-export default userData;
+export const resetData = {
+  personal: {
+    fullname: "",
+    email: "",
+    phone: "",
+    location: "",
+    portfolioName: "",
+    portfolioLink: "",
+  },
+  education: [
+    {
+      id: crypto.randomUUID(),
+      school: "",
+      gradYear: "",
+      currentStudent: false,
+      location: "",
+      degree: "",
+      major: "",
+      minor: "",
+      specialization: null,
+      gpa: false,
+      gpaScale: false,
+      awards: [],
+      coursework: [],
+    },
+  ],
+  workExperience: [
+    {
+      id: crypto.randomUUID(),
+      employer: "",
+      totalTimeStart: "",
+      totalTimeEnd: "",
+      jobsInfo: [
+        {
+          id: crypto.randomUUID(),
+          position: "",
+          timeStart: "",
+          timeEnd: "",
+          location: "",
+          duties: [],
+          stack: [],
+          keyResults: [],
+        },
+      ],
+    },
+  ],
+  skillsAndInt: {
+    hardSkillsTech: [],
+    hardSkillsOther: [],
+    softSkills: [],
+    interests: [],
+  },
+};
