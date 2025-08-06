@@ -50,6 +50,11 @@
   }
 }
 
+.InfoInput .education-section {
+  padding: var(--padding);
+  outline: white solid 1px;
+}
+
 .Resume {
   background-color: white;
   padding: calc(2 * var(--padding));

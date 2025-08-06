@@ -34,7 +34,8 @@ export default function InfoInput({ userData, setUserData }) {
         );
       default:
         return (
-          <PersonalInfoInput userData={userData} setUserData={setUserData} />
+          // <PersonalInfoInput userData={userData} setUserData={setUserData} />
+          <EducationInfoInput userData={userData} setUserData={setUserData} />
         );
     }
   }

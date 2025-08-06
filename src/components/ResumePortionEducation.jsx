@@ -16,17 +16,19 @@ export default function ResumePortionEducation({ userData }) {
               <h3>{thisEd.school}</h3>
               <b>
                 Graduation {thisEd.gradYear}
-                {thisEd.currentStudent ? "(expected)" : null}
+                {thisEd.currentStudent ? " (expected)" : null}
               </b>
             </div>
 
             <div className="education-second-line">
               <i>
-                {thisEd.degree}, {thisEd.major} (
-                {thisEd.minor !== ""
+                {thisEd.degree}, {thisEd.major}
+                {getMinorOrSpecLine(thisEd)}
+                {/* (
+                {thisEd.minor !== null
                   ? thisEd.minor + " minor"
                   : thisEd.specialization + " specialization"}
-                )
+                ) */}
               </i>
               <i>{thisEd.location}</i>
             </div>
@@ -36,6 +38,23 @@ export default function ResumePortionEducation({ userData }) {
       })}
     </div>
   );
+}
+
+function getMinorOrSpecLine(thisEd) {
+  if (thisEd.minor === "" || thisEd.specialization === "") {
+    return null;
+  } else {
+    return (
+      <>
+        {" "}
+        (
+        {thisEd.minor !== null
+          ? thisEd.minor + " minor"
+          : thisEd.specialization + " specialization"}
+        )
+      </>
+    );
+  }
 }
 
 function EducationListSection({ thisEd }) {

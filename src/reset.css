@@ -38,7 +38,7 @@ textarea,
 select {
   font: inherit;
   /* exclude radio buttons */
-  &:not([type="radio"]) {
+  &:not([type="radio"]):not([type="checkbox"]) {
     appearance: none;
   }
 }

@@ -11,11 +11,11 @@ let userData = {
     {
       school: "Western Governors University",
       gradYear: "2025",
-      currentStudent: false,
+      currentStudent: true,
       location: "",
       degree: "Master of Science",
       major: "Computer Science",
-      minor: "",
+      minor: null,
       specialization: "Computing Systems",
       gpa: null,
       gpaScale: null,
