@@ -1,8 +1,6 @@
-import userData from "../userData";
-
-export default function PersonalInfoInput({ userData, setUserData }) {
+export default function InfoInput_Personal({ userData, setUserData }) {
   return (
-    <div className="PersonalInfoInput">
+    <div className="InfoInput_Personal">
       {Object.keys(userData.personal).map((key) => {
         return (
           <div key={key}>

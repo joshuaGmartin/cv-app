@@ -1,6 +1,6 @@
-export default function ResumePortionEducation({ userData }) {
+export default function ResumePortion_Education({ userData }) {
   return (
-    <div className="ResumePortionEducation">
+    <div className="ResumePortion_Education">
       <br />
       <h2>EDUCATION</h2>
       <hr />
@@ -27,7 +27,7 @@ export default function ResumePortionEducation({ userData }) {
               </i>
               <i>{thisEd.location}</i>
             </div>
-            <EducationListSection thisEd={thisEd} />
+            {educationListSection(thisEd)}
           </div>
         );
       })}
@@ -52,7 +52,7 @@ function getMinorOrSpecLine(thisEd) {
   }
 }
 
-function EducationListSection({ thisEd }) {
+function educationListSection(thisEd) {
   let edList = null;
   let edGPA = null;
   let edAwards = null;

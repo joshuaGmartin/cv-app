@@ -1,13 +1,19 @@
-export default function ResumePortionWorkExp({ userData }) {
+export default function ResumePortion_WorkExp({ userData }) {
   return (
-    <div className="ResumePortionWorkExp">
+    <div className="ResumePortion_WorkExp">
       <br />
       <h2>RELEVANT WORK EXPERIENCE</h2>
       <hr />
 
       {userData.workExperience.map((thisWork, index) => {
         return (
-          <>
+          <div
+            key={
+              thisWork.employer +
+              thisWork.totalTimeStart +
+              thisWork.totalTimeEnd
+            }
+          >
             {index !== 0 ? <br /> : null}
             <div className="workExp-top-line">
               <h3>{thisWork.employer}</h3>
@@ -18,7 +24,16 @@ export default function ResumePortionWorkExp({ userData }) {
 
             {thisWork.jobsInfo.map((thisJob, index) => {
               return (
-                <>
+                <div
+                  key={
+                    thisWork.employer +
+                    thisWork.totalTimeStart +
+                    thisWork.totalTimeEnd +
+                    thisJob.position +
+                    thisJob.timeStart +
+                    thisJob.timeStop
+                  }
+                >
                   {index !== 0 ? <br /> : null}
                   <div className="workExp-job-title-line">
                     <i>
@@ -36,19 +51,19 @@ export default function ResumePortionWorkExp({ userData }) {
                   <ul>
                     {thisJob.duties.length > 0
                       ? thisJob.duties.map((duty) => {
-                          return <li>{duty}</li>;
+                          return <li key={duty}>{duty}</li>;
                         })
                       : null}
                     {thisJob.stack.length > 0 ? (
                       <li>
                         <b>Stack: </b>
-                        {SemiColonList(thisJob.stack)}
+                        {semiColonList(thisJob.stack)}
                       </li>
                     ) : null}
                     {thisJob.keyResults.length > 0
                       ? thisJob.keyResults.map((keyResult) => {
                           return (
-                            <li>
+                            <li key={keyResult}>
                               <b>Key Results: </b>
                               {keyResult}
                             </li>
@@ -56,17 +71,17 @@ export default function ResumePortionWorkExp({ userData }) {
                         })
                       : null}
                   </ul>
-                </>
+                </div>
               );
             })}
-          </>
+          </div>
         );
       })}
     </div>
   );
 }
 
-function SemiColonList(list) {
+function semiColonList(list) {
   let formattedList = "";
 
   list.forEach((item, index) => {

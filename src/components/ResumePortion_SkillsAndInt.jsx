@@ -1,6 +1,6 @@
-export default function ResumePortionSkillsAndInt({ userData }) {
+export default function ResumePortion_SkillsAndInt({ userData }) {
   return (
-    <div className="ResumePortionSkillsAndInt">
+    <div className="ResumePortion_SkillsAndInt">
       <br />
       <h2>SKILLS & INTERESTS</h2>
       <hr />
@@ -8,14 +8,12 @@ export default function ResumePortionSkillsAndInt({ userData }) {
         {Object.keys(userData.skillsAndInt).map((thisSkillorInt) => {
           if (userData.skillsAndInt[thisSkillorInt].length > 0) {
             return (
-              <>
-                <li>
-                  {getListTitle(thisSkillorInt)}
-                  {SemiColonList(userData.skillsAndInt[thisSkillorInt])}
-                </li>
-              </>
+              <li key={thisSkillorInt}>
+                {getListTitle(thisSkillorInt)}
+                {semiColonList(userData.skillsAndInt[thisSkillorInt])}
+              </li>
             );
-          }
+          } else return null;
         })}
       </ul>
     </div>
@@ -35,7 +33,7 @@ function getListTitle(thisSkillorInt) {
   }
 }
 
-function SemiColonList(list) {
+function semiColonList(list) {
   let formattedList = "";
 
   list.forEach((item, index) => {

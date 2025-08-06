@@ -1,9 +1,8 @@
 import { useState } from "react";
-import InfoSectionSelector from "./InfoSectionSelector";
-import PersonalInfoInput from "./PersonalInfoInput";
-import EducationInfoInput from "./EducationInfoInput";
-import WorkExpInfoInput from "./WorkExpInfoInput";
-import SkillsAndIntInfoInput from "./SkillsAndIntInfoInput";
+import InfoInput_Personal from "./InfoInput_Personal";
+import InfoInput_Education from "./InfoInput_Education";
+import InfoInput_WorkExp from "./InfoInput_WorkExp";
+import InfoInput_SkillsAndInt from "./InfoInput_SkillsAndInt";
 
 const infoSections = [
   "Personal",
@@ -19,23 +18,23 @@ export default function InfoInput({ userData, setUserData }) {
     switch (infoSelection) {
       case "Education":
         return (
-          <EducationInfoInput userData={userData} setUserData={setUserData} />
+          <InfoInput_Education userData={userData} setUserData={setUserData} />
         );
       case "Relevant Work Experience":
         return (
-          <WorkExpInfoInput userData={userData} setUserData={setUserData} />
+          <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
         );
       case "Skills & Interests":
         return (
-          <SkillsAndIntInfoInput
+          <InfoInput_SkillsAndInt
             userData={userData}
             setUserData={setUserData}
           />
         );
       default:
         return (
-          // <PersonalInfoInput userData={userData} setUserData={setUserData} />
-          <EducationInfoInput userData={userData} setUserData={setUserData} />
+          // <InfoInput_Personal userData={userData} setUserData={setUserData} />
+          <InfoInput_Education userData={userData} setUserData={setUserData} />
         );
     }
   }
@@ -55,6 +54,14 @@ export default function InfoInput({ userData, setUserData }) {
       </div>
 
       {infoSelectionComponent()}
+    </div>
+  );
+}
+
+function InfoSectionSelector({ value, onClick }) {
+  return (
+    <div className="InfoSectionSelector" onClick={onClick}>
+      {value}
     </div>
   );
 }

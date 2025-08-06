@@ -1,15 +1,13 @@
-console.clear();
-
-export default function EducationInfoInput({ userData, setUserData }) {
+export default function InfoInput_Education({ userData, setUserData }) {
   return (
-    <div className="EducationInfoInput">
+    <div className="InfoInput_Education">
       {userData.education.map((thisEd) => {
         return (
-          <>
+          <div key={thisEd.school + thisEd.gradYear}>
             <div className="education-section">
               {getEducationInputs(thisEd, userData, setUserData)}
             </div>
-          </>
+          </div>
         );
       })}
     </div>
@@ -21,7 +19,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
     <>
       <div className="education-top-lines-inputs">
         {/* thisEd, key, userData, setUserData, name, type */}
-        {GetInput(
+        {getInput(
           thisEd,
           "school",
           userData,
@@ -30,7 +28,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
           "text"
         )}
         <div className="grad-year-line">
-          {GetInput(
+          {getInput(
             thisEd,
             "gradYear",
             userData,
@@ -38,7 +36,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
             thisEd.school + thisEd.gradYear + "gradYear-input",
             "text"
           )}
-          {GetInput(
+          {getInput(
             thisEd,
             "currentStudent",
             userData,
@@ -47,7 +45,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
             "checkbox"
           )}
         </div>
-        {GetInput(
+        {getInput(
           thisEd,
           "location",
           userData,
@@ -55,7 +53,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
           thisEd.school + thisEd.gradYear + "location-input",
           "text"
         )}
-        {GetInput(
+        {getInput(
           thisEd,
           "degree",
           userData,
@@ -64,7 +62,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
           "text"
         )}
         <div className="minOrSpec-line">
-          {GetInput(
+          {getInput(
             thisEd,
             "minorOrSpec",
             userData,
@@ -72,7 +70,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
             thisEd.school + thisEd.gradYear + "minorOrSpec-input",
             "text"
           )}
-          {GetInput(
+          {getInput(
             thisEd,
             "minor",
             userData,
@@ -80,7 +78,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
             thisEd.school + thisEd.gradYear + "minor-input",
             "radio"
           )}{" "}
-          {GetInput(
+          {getInput(
             thisEd,
             "specialization",
             userData,
@@ -94,7 +92,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
       <div className="education-list-inputs">
         {/* thisEd, key, userData, setUserData, name, type */}
         <div className="gpa-inputs">
-          {GetInput(
+          {getInput(
             thisEd,
             "gpa",
             userData,
@@ -103,7 +101,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
             "checkbox"
           )}
           {thisEd.gpa || thisEd.gpa === ""
-            ? GetInput(
+            ? getInput(
                 thisEd,
                 "gpa",
                 userData,
@@ -113,7 +111,7 @@ function getEducationInputs(thisEd, userData, setUserData) {
               )
             : null}
           {thisEd.gpa || thisEd.gpa === ""
-            ? GetInput(
+            ? getInput(
                 thisEd,
                 "gpaScale",
                 userData,
@@ -128,18 +126,18 @@ function getEducationInputs(thisEd, userData, setUserData) {
   );
 }
 
-function GetInput(...args) {
+function getInput(...args) {
   switch (args[5]) {
     case "text":
-      return GetTextInput(args);
+      return getTextInput(args);
     case "checkbox":
-      return GetCheckBoxInput(args);
+      return getCheckBoxInput(args);
     case "radio":
-      return GetRadioInputs(args);
+      return getRadioInputs(args);
   }
 }
 
-function GetTextInput(args) {
+function getTextInput(args) {
   let [thisEd, key, userData, setUserData, inputName, type] = args;
   let value = thisEd[key];
 
@@ -189,7 +187,7 @@ function GetTextInput(args) {
   );
 }
 
-function GetCheckBoxInput(args) {
+function getCheckBoxInput(args) {
   let [thisEd, key, userData, setUserData, inputName, type] = args;
   let checked = thisEd[key];
 
@@ -204,60 +202,6 @@ function GetCheckBoxInput(args) {
       break;
   }
 
-  // if (key === "currentStudent") {
-  //   return (
-  //     <label htmlFor={inputName}>
-  //       {label}?:{" "}
-  //       <input
-  //         id={inputName}
-  //         name={inputName}
-  //         type={type}
-  //         checked={checked} // thisEd[key] || thisEd.gpa === "" ???
-  //         onChange={() =>
-  //           setUserData({
-  //             ...userData,
-  //             education: userData.education.map((mapEd) => {
-  //               if (mapEd === thisEd) {
-  //                 return {
-  //                   ...mapEd,
-  //                   [key]: !thisEd[key],
-  //                 };
-  //               } else return { ...mapEd };
-  //             }),
-  //           })
-  //         }
-  //       />
-  //     </label>
-  //   );
-  // }
-
-  // // can condense to one return? check edit gpa first
-  // if (key === "gpa") {
-  //   return (
-  //     <div>
-  //       <span>{label}?: </span>
-  //       <input
-  //         name={inputName}
-  //         type={type}
-  //         checked={checked}
-  //         onChange={() =>
-  //           setUserData({
-  //             ...userData,
-  //             education: userData.education.map((mapEd) => {
-  //               if (mapEd === thisEd) {
-  //                 return {
-  //                   ...mapEd,
-  //                   [key]: !thisEd[key],
-  //                   gpaScale: !thisEd.gpaScale, // make ternany?
-  //                 };
-  //               } else return { ...mapEd };
-  //             }),
-  //           })
-  //         }
-  //       />
-  //     </div>
-  //   );
-  // }
   return (
     <label htmlFor={inputName}>
       {label}?:{" "}
@@ -285,18 +229,17 @@ function GetCheckBoxInput(args) {
   );
 }
 
-function GetRadioInputs(args) {
+function getRadioInputs(args) {
   let [thisEd, key, userData, setUserData, inputName, type] = args;
   let otherKey = "minor";
   if (key === "minor") otherKey = "specialization";
 
-  // console.log([thisEd, key, userData, setUserData, inputName, type]);
-
   return (
-    <>
+    <label for={inputName}>
       {key}:{" "}
       <input
         type={type}
+        id={inputName}
         name={inputName}
         value={key}
         checked={thisEd[key] !== null}
@@ -315,6 +258,6 @@ function GetRadioInputs(args) {
           })
         }
       />
-    </>
+    </label>
   );
 }

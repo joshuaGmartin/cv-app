@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import InfoInput from "./components/InfoInput.jsx";
 import Resume from "./components/Resume.jsx";
-import userDataImport from "./userData.js";
+import userDataImport from "./userData.js"; // edit to joshInfo and resetInfo
 
 function App() {
   const [userData, setUserData] = useState(userDataImport);
