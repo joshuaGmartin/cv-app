@@ -24,11 +24,6 @@ export default function ResumePortionEducation({ userData }) {
               <i>
                 {thisEd.degree}, {thisEd.major}
                 {getMinorOrSpecLine(thisEd)}
-                {/* (
-                {thisEd.minor !== null
-                  ? thisEd.minor + " minor"
-                  : thisEd.specialization + " specialization"}
-                ) */}
               </i>
               <i>{thisEd.location}</i>
             </div>
@@ -65,7 +60,7 @@ function EducationListSection({ thisEd }) {
   let edGPAplusAwards = null;
 
   if (thisEd.gpa || thisEd.awards.length > 0 || thisEd.coursework.length > 0) {
-    if (thisEd.gpa) {
+    if (thisEd.gpa || thisEd.gpa === "") {
       edGPA = (
         <b>
           GPA: {thisEd.gpa}/{thisEd.gpaScale}

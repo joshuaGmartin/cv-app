@@ -17,8 +17,8 @@ let userData = {
       major: "Computer Science",
       minor: null,
       specialization: "Computing Systems",
-      gpa: null,
-      gpaScale: null,
+      gpa: false,
+      gpaScale: false,
       awards: [],
       coursework: [
         "Emerging Computing Systems",
