@@ -1,12 +1,22 @@
-export function getTextInput(thisEd, key, userData, setUserData, inputName) {
-  // let [thisEd, key, userData, setUserData, inputName, type] = args;
-  let value = thisEd[key];
+// =========================================================================
+// unnested updaters
+// =========================================================================
+
+export function getTextInput(
+  thisListItem,
+  key,
+  userData,
+  setUserData,
+  inputName,
+  dataType
+) {
+  let value = thisListItem[key];
 
   // handle special
   if (key === "minorOrSpec") {
     key = "minor";
-    if (thisEd.minor === null) key = "specialization";
-    value = thisEd[key];
+    if (thisListItem.minor === null) key = "specialization";
+    value = thisListItem[key];
   }
   if (key === "gpa" || key === "gpaScale") {
     if (value === true) value = "";
@@ -21,6 +31,12 @@ export function getTextInput(thisEd, key, userData, setUserData, inputName) {
     case "gpaScale":
       placeholder = "gpa scale";
       break;
+    case "totalTimeStart":
+      placeholder = "when started?";
+      break;
+    case "totalTimeEnd":
+      placeholder = "when ended?";
+      break;
   }
 
   return (
@@ -33,13 +49,13 @@ export function getTextInput(thisEd, key, userData, setUserData, inputName) {
         onChange={(e) =>
           setUserData({
             ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd.id === thisEd.id) {
+            [dataType]: userData[dataType].map((thisMap) => {
+              if (thisMap.id === thisListItem.id) {
                 return {
-                  ...mapEd,
+                  ...thisMap,
                   [key]: e.target.value,
                 };
-              } else return { ...mapEd };
+              } else return { ...thisMap };
             }),
           })
         }
@@ -48,9 +64,8 @@ export function getTextInput(thisEd, key, userData, setUserData, inputName) {
   );
 }
 
-//bug: dont think index will work once add delete/add awards. will need ids in database lists? - works
 export function getListItemInput(
-  thisEd,
+  thisListItem,
   userData,
   setUserData,
   inputName,
@@ -82,7 +97,7 @@ export function getListItemInput(
         setUserData({
           ...userData,
           education: userData.education.map((mapEd) => {
-            if (mapEd.id === thisEd.id) {
+            if (mapEd.id === thisListItem.id) {
               return {
                 ...mapEd,
                 [key]: mapEd[key].map((maplistItem, mapIndex) => {
@@ -99,13 +114,13 @@ export function getListItemInput(
 }
 
 export function getCheckBoxInput(
-  thisEd,
+  thisListItem,
   key,
   userData,
   setUserData,
   inputName
 ) {
-  let checked = thisEd[key];
+  let checked = thisListItem[key];
 
   let label = key;
   switch (key) {
@@ -114,7 +129,7 @@ export function getCheckBoxInput(
       break;
     case "gpa":
       label = "include GPA";
-      if (thisEd.gpa === "") checked = true; // empty string is false in boolean
+      if (thisListItem.gpa === "") checked = true; // empty string is false in boolean
       break;
   }
 
@@ -125,16 +140,19 @@ export function getCheckBoxInput(
         id={inputName}
         name={inputName}
         type="checkbox"
-        checked={checked} // thisEd[key] || thisEd.gpa === "" ???
+        checked={checked} // thisListItem[key] || thisListItem.gpa === "" ???
         onChange={() =>
           setUserData({
             ...userData,
             education: userData.education.map((mapEd) => {
-              if (mapEd === thisEd) {
+              if (mapEd === thisListItem) {
                 return {
                   ...mapEd,
-                  [key]: !thisEd[key],
-                  gpaScale: key === "gpa" ? !thisEd.gpaScale : thisEd.gpaScale, // could make condition to save GPA in dataBase
+                  [key]: !thisListItem[key],
+                  gpaScale:
+                    key === "gpa"
+                      ? !thisListItem.gpaScale
+                      : thisListItem.gpaScale, // could make condition to save GPA in dataBase
                 };
               } else return { ...mapEd };
             }),
@@ -145,7 +163,13 @@ export function getCheckBoxInput(
   );
 }
 
-export function getRadioInput(thisEd, key, userData, setUserData, inputName) {
+export function getRadioInput(
+  thisListItem,
+  key,
+  userData,
+  setUserData,
+  inputName
+) {
   let otherKey = "minor";
   if (key === "minor") otherKey = "specialization";
 
@@ -157,15 +181,15 @@ export function getRadioInput(thisEd, key, userData, setUserData, inputName) {
         id={inputName}
         name={inputName}
         value={key}
-        checked={thisEd[key] !== null}
+        checked={thisListItem[key] !== null}
         onChange={() =>
           setUserData({
             ...userData,
             education: userData.education.map((mapEd) => {
-              if (mapEd === thisEd) {
+              if (mapEd === thisListItem) {
                 return {
                   ...mapEd,
-                  [key]: thisEd[otherKey],
+                  [key]: thisListItem[otherKey],
                   [otherKey]: null,
                 };
               } else return { ...mapEd };
@@ -174,5 +198,142 @@ export function getRadioInput(thisEd, key, userData, setUserData, inputName) {
         }
       />
     </label>
+  );
+}
+
+export function getAddSectionButton(
+  userData,
+  setUserData,
+  resetData,
+  sectionType
+) {
+  return (
+    <button
+      className={`add-${sectionType}-button`}
+      onClick={() =>
+        setUserData({
+          ...userData,
+          [sectionType]: [
+            ...userData[sectionType],
+            {
+              ...resetData[sectionType][0],
+              id: crypto.randomUUID(),
+            },
+          ],
+        })
+      }
+    >
+      ++++++++++++
+    </button>
+  );
+}
+
+// =========================================================================
+// nested updaters
+// =========================================================================
+
+export function getTextInput_nested1(
+  userData,
+  setUserData,
+  thisSection_top,
+  thisSection_top_key,
+  thisSection_nested,
+  thisSection_nested_key,
+  keyToChange,
+  inputName
+) {
+  let value = thisSection_nested[keyToChange];
+
+  // set and format placeholders
+  let placeholder = keyToChange;
+  switch (keyToChange) {
+    //test
+    case "timeStart":
+      placeholder = "when start position?";
+      break;
+    case "timeEnd":
+      placeholder = "when end position?";
+      break;
+  }
+
+  return (
+    <div>
+      <input
+        name={inputName}
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) =>
+          setUserData({
+            ...userData,
+            [thisSection_top_key]: userData[thisSection_top_key].map(
+              (topSectionMap) => {
+                if (topSectionMap.id === thisSection_top.id) {
+                  return {
+                    ...topSectionMap,
+                    [thisSection_nested_key]: topSectionMap[
+                      thisSection_nested_key
+                    ].map((nestedSectionMap) => {
+                      if (nestedSectionMap.id === thisSection_nested.id) {
+                        return {
+                          ...nestedSectionMap,
+                          [keyToChange]: e.target.value,
+                        };
+                      } else return nestedSectionMap;
+                    }),
+                  };
+                } else return topSectionMap;
+              }
+            ),
+          })
+        }
+      />
+    </div>
+  );
+}
+
+export function getAddSectionButton_nested1(
+  userData,
+  setUserData,
+  thisSection_top,
+  thisSection_top_key,
+  thisSection_nested_key,
+  resetData
+) {
+  return (
+    <button
+      className={`add-${thisSection_nested_key}-button`} //need formatting
+      onClick={() =>
+        setUserData({
+          ...userData,
+          [thisSection_top_key]: userData[thisSection_top_key].map(
+            (topSectionMap) => {
+              if (topSectionMap.id === thisSection_top.id) {
+                return {
+                  ...topSectionMap,
+                  [thisSection_nested_key]: [
+                    ...topSectionMap[thisSection_nested_key],
+                    resetData[thisSection_top_key][0][
+                      thisSection_nested_key
+                    ][0],
+                  ],
+                };
+              }
+              return topSectionMap;
+            }
+          ),
+
+          // [
+          //   ...userData[thisSection_top_key],
+          //   {
+          //     ...resetData[thisSection_top_key][0],
+          //     id: crypto.randomUUID(),
+          //   },
+          // ],
+        })
+      }
+    >
+      ++++++++++++
+    </button>
   );
 }

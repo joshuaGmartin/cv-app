@@ -30,7 +30,7 @@ export default function ResumePortion_WorkExp({ userData }) {
                         </>
                       ) : null}
                     </i>
-                    {index === 0 ? <i>{thisJob.location}</i> : null}
+                    <i>{thisJob.location}</i>
                   </div>
 
                   <ul>

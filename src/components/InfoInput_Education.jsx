@@ -37,23 +37,12 @@ export default function InfoInput_Education({
       })}
 
       {/* add education button */}
-      <button
-        className="add-education-button"
-        onClick={() =>
-          setUserData({
-            ...userData,
-            education: [
-              ...userData.education,
-              {
-                ...resetData.education[0],
-                id: crypto.randomUUID(),
-              },
-            ],
-          })
-        }
-      >
-        ++++++++++++
-      </button>
+      {componentBuilder.getAddSectionButton(
+        userData,
+        setUserData,
+        resetData,
+        "education"
+      )}
     </div>
   );
 }
@@ -66,7 +55,7 @@ function getEducationInputs(
 ) {
   return (
     <div className="education-inputs">
-      {getEducationInputs_topLine(thisEd, userData, setUserData)}
+      {getEducationInputs_topLines(thisEd, userData, setUserData)}
       {getEducationInputs_listInputs(
         thisEd,
         userData,
@@ -77,7 +66,7 @@ function getEducationInputs(
   );
 }
 
-function getEducationInputs_topLine(thisEd, userData, setUserData) {
+function getEducationInputs_topLines(thisEd, userData, setUserData) {
   return (
     <div className="education-top-lines-inputs">
       {componentBuilder.getTextInput(
@@ -85,7 +74,7 @@ function getEducationInputs_topLine(thisEd, userData, setUserData) {
         "school",
         userData,
         setUserData,
-        thisEd.school + thisEd.gradYear + "school-input"
+        thisEd.id + "-school-input"
       )}
 
       <div className="grad-year-line">
@@ -94,14 +83,14 @@ function getEducationInputs_topLine(thisEd, userData, setUserData) {
           "gradYear",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "gradYear-input"
+          thisEd.id + "-gradYear-input"
         )}
         {componentBuilder.getCheckBoxInput(
           thisEd,
           "currentStudent",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "currentStudent-input"
+          thisEd.id + "-currentStudent-input"
         )}
       </div>
 
@@ -110,14 +99,14 @@ function getEducationInputs_topLine(thisEd, userData, setUserData) {
         "location",
         userData,
         setUserData,
-        thisEd.school + thisEd.gradYear + "location-input"
+        thisEd.id + "-location-input"
       )}
       {componentBuilder.getTextInput(
         thisEd,
         "degree",
         userData,
         setUserData,
-        thisEd.school + thisEd.gradYear + "degree-input"
+        thisEd.id + "-degree-input"
       )}
 
       <div className="minOrSpec-line">
@@ -126,21 +115,21 @@ function getEducationInputs_topLine(thisEd, userData, setUserData) {
           "minorOrSpec",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "minorOrSpec-input"
+          thisEd.id + "-minorOrSpec-input"
         )}
         {componentBuilder.getRadioInput(
           thisEd,
           "minor",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "minor-input"
+          thisEd.id + "-minor-input"
         )}{" "}
         {componentBuilder.getRadioInput(
           thisEd,
           "specialization",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "specialization-input"
+          thisEd.id + "-specialization-input"
         )}
       </div>
     </div>
@@ -182,7 +171,7 @@ function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
         "gpa",
         userData,
         setUserData,
-        thisEd.school + thisEd.gradYear + "includeGPA-input"
+        thisEd.id + "-includeGPA-input"
       )}
       {thisEd.gpa || thisEd.gpa === ""
         ? componentBuilder.getTextInput(
@@ -190,7 +179,7 @@ function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
             "gpa",
             userData,
             setUserData,
-            thisEd.school + thisEd.gradYear + "gpa-input"
+            thisEd.id + "-gpa-input"
           )
         : null}
       {thisEd.gpa || thisEd.gpa === ""
@@ -199,7 +188,7 @@ function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
             "gpaScale",
             userData,
             setUserData,
-            thisEd.school + thisEd.gradYear + "gpaScale-input"
+            thisEd.id + "-gpaScale-input"
           )
         : null}
     </div>

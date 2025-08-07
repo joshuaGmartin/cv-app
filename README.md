@@ -14,6 +14,7 @@ todo:
 -need add focus handler in App root
 -move focuser to util.js?
 -inline the input list for space saving
+-enable scrolling on resume
 
 
 on:

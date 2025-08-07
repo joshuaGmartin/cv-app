@@ -26,7 +26,11 @@ export default function InfoInput({ userData, setUserData, resetData }) {
         );
       case "Relevant Work Experience":
         return (
-          <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
+          <InfoInput_WorkExp
+            userData={userData}
+            setUserData={setUserData}
+            resetData={resetData}
+          />
         );
       case "Skills & Interests":
         return (
@@ -37,12 +41,29 @@ export default function InfoInput({ userData, setUserData, resetData }) {
         );
       default:
         return (
-          // <InfoInput_Personal userData={userData} setUserData={setUserData} />
-          <InfoInput_Education
+          // <InfoInput_Personal
+          //   userData={userData}
+          //   setUserData={setUserData}
+          //   resetData={resetData}
+          // />
+
+          // <InfoInput_Education
+          //   userData={userData}
+          //   setUserData={setUserData}
+          //   resetData={resetData}
+          // />
+
+          <InfoInput_WorkExp
             userData={userData}
             setUserData={setUserData}
             resetData={resetData}
           />
+
+          // <InfoInput_SkillsAndInt
+          //   userData={userData}
+          //   setUserData={setUserData}
+          //   resetData={resetData}
+          // />
         );
     }
   }

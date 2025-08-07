@@ -50,7 +50,9 @@
   }
 }
 
-.InfoInput .education-section {
+.InfoInput .education-section,
+.InfoInput .work-exp-section,
+.InfoInput .work-exp-section .work-exp-job-section {
   padding: var(--padding);
   outline: white solid 1px;
 }
@@ -58,6 +60,12 @@
 .Resume {
   background-color: white;
   padding: calc(2 * var(--padding));
+
+  max-height: calc(100vh - 6rem);
+  overflow-y: scroll;
+
+  /* position: fixed; */
+  /* margin-left: 50rem; */
 }
 
 .Resume .education-top-line,
