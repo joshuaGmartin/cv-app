@@ -67,14 +67,21 @@ function educationListSection(thisEd) {
     }
 
     if (thisEd.awards.length > 0) {
-      edAwards = "";
+      let awardsString = "";
 
       thisEd.awards.forEach((award, index) => {
-        edAwards += award;
+        awardsString += award;
         if (index !== thisEd.awards.length - 1) {
-          edAwards += "; ";
+          awardsString += "; ";
         }
       });
+
+      edAwards = (
+        <>
+          {!thisEd.gpa ? <b>Awards: </b> : null}
+          {awardsString}
+        </>
+      );
     }
 
     if (thisEd.coursework.length > 0) {

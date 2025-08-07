@@ -1,22 +1,41 @@
+import * as componentBuilder from "../modules/componentBuilder.jsx";
+import { useEffect, useState } from "react";
+
 export default function InfoInput_Education({
   userData,
   setUserData,
   resetData,
 }) {
+  const [focusElementInfo, setFocusElementInfo] = useState({
+    focusElmId: null,
+    focusElmType: null,
+  });
+
+  useEffect(() => {
+    if (!focusElementInfo.focusElmId || !focusElementInfo.focusElmType) return;
+
+    handleFocusChange(focusElementInfo);
+  }, [focusElementInfo]);
+
   return (
     <div className="InfoInput_Education">
       {userData.education.map((thisEd) => {
         return (
-          <div key={thisEd.id} className="education-section">
-            {getEducationInputs(thisEd, userData, setUserData)}
+          <div key={thisEd.id} className="education-section" id={thisEd.id}>
+            {getEducationInputs(
+              thisEd,
+              userData,
+              setUserData,
+              setFocusElementInfo
+            )}
             <button
               className="delete-education-button"
               onClick={() =>
                 setUserData({
                   ...userData,
-                  education: userData.education.filter((mapEd) => {
-                    if (mapEd.id !== thisEd.id) return mapEd;
-                  }),
+                  education: userData.education.filter(
+                    (filterEd) => filterEd.id !== thisEd.id
+                  ),
                 })
               }
             >
@@ -48,252 +67,278 @@ export default function InfoInput_Education({
   );
 }
 
-function getEducationInputs(thisEd, userData, setUserData) {
+function getEducationInputs(
+  thisEd,
+  userData,
+  setUserData,
+  setFocusElementInfo
+) {
   return (
-    <>
-      <div className="education-top-lines-inputs">
-        {/* thisEd, key, userData, setUserData, name, type */}
-        {getInput(
+    <div className="education-inputs">
+      {getEducationInputs_topLine(thisEd, userData, setUserData)}
+      {getEducationInputs_listInputs(
+        thisEd,
+        userData,
+        setUserData,
+        setFocusElementInfo
+      )}
+    </div>
+  );
+}
+
+function getEducationInputs_topLine(thisEd, userData, setUserData) {
+  return (
+    <div className="education-top-lines-inputs">
+      {componentBuilder.getTextInput(
+        thisEd,
+        "school",
+        userData,
+        setUserData,
+        thisEd.school + thisEd.gradYear + "school-input"
+      )}
+
+      <div className="grad-year-line">
+        {componentBuilder.getTextInput(
           thisEd,
-          "school",
+          "gradYear",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "school-input",
-          "text"
+          thisEd.school + thisEd.gradYear + "gradYear-input"
         )}
-        <div className="grad-year-line">
-          {getInput(
-            thisEd,
-            "gradYear",
-            userData,
-            setUserData,
-            thisEd.school + thisEd.gradYear + "gradYear-input",
-            "text"
-          )}
-          {getInput(
-            thisEd,
-            "currentStudent",
-            userData,
-            setUserData,
-            thisEd.school + thisEd.gradYear + "currentStudent-input",
-            "checkbox"
-          )}
-        </div>
-        {getInput(
+        {componentBuilder.getCheckBoxInput(
           thisEd,
-          "location",
+          "currentStudent",
           userData,
           setUserData,
-          thisEd.school + thisEd.gradYear + "location-input",
-          "text"
+          thisEd.school + thisEd.gradYear + "currentStudent-input"
         )}
-        {getInput(
-          thisEd,
-          "degree",
-          userData,
-          setUserData,
-          thisEd.school + thisEd.gradYear + "degree-input",
-          "text"
-        )}
-        <div className="minOrSpec-line">
-          {getInput(
-            thisEd,
-            "minorOrSpec",
-            userData,
-            setUserData,
-            thisEd.school + thisEd.gradYear + "minorOrSpec-input",
-            "text"
-          )}
-          {getInput(
-            thisEd,
-            "minor",
-            userData,
-            setUserData,
-            thisEd.school + thisEd.gradYear + "minor-input",
-            "radio"
-          )}{" "}
-          {getInput(
-            thisEd,
-            "specialization",
-            userData,
-            setUserData,
-            thisEd.school + thisEd.gradYear + "specialization-input",
-            "radio"
-          )}
-        </div>
       </div>
 
-      <div className="education-list-inputs">
-        {/* thisEd, key, userData, setUserData, name, type */}
-        <div className="gpa-inputs">
-          {getInput(
+      {componentBuilder.getTextInput(
+        thisEd,
+        "location",
+        userData,
+        setUserData,
+        thisEd.school + thisEd.gradYear + "location-input"
+      )}
+      {componentBuilder.getTextInput(
+        thisEd,
+        "degree",
+        userData,
+        setUserData,
+        thisEd.school + thisEd.gradYear + "degree-input"
+      )}
+
+      <div className="minOrSpec-line">
+        {componentBuilder.getTextInput(
+          thisEd,
+          "minorOrSpec",
+          userData,
+          setUserData,
+          thisEd.school + thisEd.gradYear + "minorOrSpec-input"
+        )}
+        {componentBuilder.getRadioInput(
+          thisEd,
+          "minor",
+          userData,
+          setUserData,
+          thisEd.school + thisEd.gradYear + "minor-input"
+        )}{" "}
+        {componentBuilder.getRadioInput(
+          thisEd,
+          "specialization",
+          userData,
+          setUserData,
+          thisEd.school + thisEd.gradYear + "specialization-input"
+        )}
+      </div>
+    </div>
+  );
+}
+
+function getEducationInputs_listInputs(
+  thisEd,
+  userData,
+  setUserData,
+  setFocusElementInfo
+) {
+  return (
+    <div className="education-list-inputs">
+      {getEducationInputs_gpaInputs(thisEd, userData, setUserData)}
+      {getEducationInputs_listItemInput(
+        thisEd,
+        userData,
+        setUserData,
+        "award",
+        setFocusElementInfo
+      )}
+      {getEducationInputs_listItemInput(
+        thisEd,
+        userData,
+        setUserData,
+        "course",
+        setFocusElementInfo
+      )}
+    </div>
+  );
+}
+
+function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
+  return (
+    <div className="gpa-inputs">
+      {componentBuilder.getCheckBoxInput(
+        thisEd,
+        "gpa",
+        userData,
+        setUserData,
+        thisEd.school + thisEd.gradYear + "includeGPA-input"
+      )}
+      {thisEd.gpa || thisEd.gpa === ""
+        ? componentBuilder.getTextInput(
             thisEd,
             "gpa",
             userData,
             setUserData,
-            thisEd.school + thisEd.gradYear + "includeGPA-input",
-            "checkbox"
-          )}
-          {thisEd.gpa || thisEd.gpa === ""
-            ? getInput(
-                thisEd,
-                "gpa",
-                userData,
-                setUserData,
-                thisEd.school + thisEd.gradYear + "gpa-input",
-                "text"
-              )
-            : null}
-          {thisEd.gpa || thisEd.gpa === ""
-            ? getInput(
-                thisEd,
-                "gpaScale",
-                userData,
-                setUserData,
-                thisEd.school + thisEd.gradYear + "gpaScale-input",
-                "text"
-              )
-            : null}
-        </div>
+            thisEd.school + thisEd.gradYear + "gpa-input"
+          )
+        : null}
+      {thisEd.gpa || thisEd.gpa === ""
+        ? componentBuilder.getTextInput(
+            thisEd,
+            "gpaScale",
+            userData,
+            setUserData,
+            thisEd.school + thisEd.gradYear + "gpaScale-input"
+          )
+        : null}
+    </div>
+  );
+}
 
-        <div className="awards-input"></div>
+function getEducationInputs_listItemInput(
+  thisEd,
+  userData,
+  setUserData,
+  listItemtype,
+  setFocusElementInfo
+) {
+  let key;
+
+  switch (listItemtype) {
+    case "award":
+      key = "awards";
+      break;
+    case "course":
+      key = "coursework";
+      break;
+  }
+
+  return (
+    <>
+      <div className={`${key}-input`}>
+        {key}:
+        {thisEd[key].map((listItem, index) => {
+          return (
+            <div key={index}>
+              {componentBuilder.getListItemInput(
+                thisEd,
+                userData,
+                setUserData,
+                thisEd.school + thisEd.gradYear + listItemtype + "input",
+                listItem,
+                index,
+                listItemtype
+              )}
+
+              {/* delete listItem button */}
+              <button
+                className={`delete-${listItemtype}-button`}
+                onClick={() =>
+                  setUserData({
+                    ...userData,
+                    education: userData.education.map((mapEd) => {
+                      if (mapEd.id === thisEd.id) {
+                        return {
+                          ...mapEd,
+                          [key]: mapEd[key].filter(
+                            (listItem, filterIndex) => index !== filterIndex
+                          ),
+                        };
+                      } else return mapEd;
+                    }),
+                  })
+                }
+              >
+                -X-
+              </button>
+            </div>
+          );
+        })}
+        {/* add item button */}
+        <button
+          className={`add-${listItemtype}-button`}
+          onClick={() =>
+            handleAddListItemButtonClick(
+              thisEd,
+              userData,
+              setUserData,
+              setFocusElementInfo,
+              listItemtype,
+              key
+            )
+          }
+        >
+          add {listItemtype}
+        </button>
       </div>
     </>
   );
 }
 
-function getInput(...args) {
-  switch (args[5]) {
-    case "text":
-      return getTextInput(args);
-    case "checkbox":
-      return getCheckBoxInput(args);
-    case "radio":
-      return getRadioInputs(args);
-  }
+// need add focus handler in App root?
+function handleAddListItemButtonClick(
+  thisEd,
+  userData,
+  setUserData,
+  setFocusElementInfo,
+  listItemtype,
+  key
+) {
+  setFocusElementInfo({
+    focusElmId: thisEd.id,
+    focusElmType: listItemtype,
+  });
+
+  setUserData({
+    ...userData,
+    education: userData.education.map((mapEd) => {
+      if (mapEd.id === thisEd.id) {
+        return {
+          ...mapEd,
+          [key]: [...mapEd[key], ""],
+        };
+      } else return mapEd;
+    }),
+  });
+
+  return;
 }
 
-function getTextInput(args) {
-  let [thisEd, key, userData, setUserData, inputName, type] = args;
-  let value = thisEd[key];
+function handleFocusChange(focusElementInfo) {
+  const parentFocusElm = document.getElementById(focusElementInfo.focusElmId);
+  let inputCollectionElm;
 
-  // handle special
-  if (key === "minorOrSpec") {
-    key = "minor";
-    if (thisEd.minor === null) key = "specialization";
-    value = thisEd[key];
+  if (focusElementInfo.focusElmType === "award") {
+    inputCollectionElm = parentFocusElm.querySelector(".awards-input");
   }
-  if (key === "gpa" || key === "gpaScale") {
-    if (value === true) value = "";
+  if (focusElementInfo.focusElmType === "course") {
+    inputCollectionElm = parentFocusElm.querySelector(".coursework-input");
   }
 
-  // set and format placeholders
-  let placeholder = key;
-  switch (key) {
-    case "gradYear":
-      placeholder = "graduation year";
-      break;
-    case "gpaScale":
-      placeholder = "gpa scale";
-      break;
-  }
+  inputCollectionElm
+    .querySelector("div:last-of-type")
+    .querySelector("input")
+    .focus();
 
-  return (
-    <div>
-      <input
-        name={inputName}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) =>
-          setUserData({
-            ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd === thisEd) {
-                return {
-                  ...mapEd,
-                  [key]: e.target.value,
-                };
-              } else return { ...mapEd };
-            }),
-          })
-        }
-      />
-    </div>
-  );
-}
-
-function getCheckBoxInput(args) {
-  let [thisEd, key, userData, setUserData, inputName, type] = args;
-  let checked = thisEd[key];
-
-  let label = key;
-  switch (key) {
-    case "currentStudent":
-      label = "current student";
-      break;
-    case "gpa":
-      label = "include GPA";
-      if (thisEd.gpa === "") checked = true; // empty string is false in boolean
-      break;
-  }
-
-  return (
-    <label htmlFor={inputName}>
-      {label}?:{" "}
-      <input
-        id={inputName}
-        name={inputName}
-        type={type}
-        checked={checked} // thisEd[key] || thisEd.gpa === "" ???
-        onChange={() =>
-          setUserData({
-            ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd === thisEd) {
-                return {
-                  ...mapEd,
-                  [key]: !thisEd[key],
-                  gpaScale: key === "gpa" ? !thisEd.gpaScale : thisEd.gpaScale, // could make condition to save GPA in dataBase
-                };
-              } else return { ...mapEd };
-            }),
-          })
-        }
-      />
-    </label>
-  );
-}
-
-function getRadioInputs(args) {
-  let [thisEd, key, userData, setUserData, inputName, type] = args;
-  let otherKey = "minor";
-  if (key === "minor") otherKey = "specialization";
-
-  return (
-    <label htmlFor={inputName}>
-      {key}:{" "}
-      <input
-        type={type}
-        id={inputName}
-        name={inputName}
-        value={key}
-        checked={thisEd[key] !== null}
-        onChange={() =>
-          setUserData({
-            ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd === thisEd) {
-                return {
-                  ...mapEd,
-                  [key]: thisEd[otherKey],
-                  [otherKey]: null,
-                };
-              } else return { ...mapEd };
-            }),
-          })
-        }
-      />
-    </label>
-  );
+  return;
 }
