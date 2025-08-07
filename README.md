@@ -13,6 +13,7 @@ todo:
 -fix name parameters in ed input
 -need add focus handler in App root
 -move focuser to util.js?
+-inline the input list for space saving
 
 
 on:

@@ -1,21 +1,12 @@
 import * as componentBuilder from "../modules/componentBuilder.jsx";
-import { useEffect, useState } from "react";
+import { FocusHandler } from "../modules/Helper.jsx";
 
 export default function InfoInput_Education({
   userData,
   setUserData,
   resetData,
 }) {
-  const [focusElementInfo, setFocusElementInfo] = useState({
-    focusElmId: null,
-    focusElmType: null,
-  });
-
-  useEffect(() => {
-    if (!focusElementInfo.focusElmId || !focusElementInfo.focusElmType) return;
-
-    handleFocusChange(focusElementInfo);
-  }, [focusElementInfo]);
+  const setFocusElementInfo = FocusHandler();
 
   return (
     <div className="InfoInput_Education">
@@ -320,25 +311,6 @@ function handleAddListItemButtonClick(
       } else return mapEd;
     }),
   });
-
-  return;
-}
-
-function handleFocusChange(focusElementInfo) {
-  const parentFocusElm = document.getElementById(focusElementInfo.focusElmId);
-  let inputCollectionElm;
-
-  if (focusElementInfo.focusElmType === "award") {
-    inputCollectionElm = parentFocusElm.querySelector(".awards-input");
-  }
-  if (focusElementInfo.focusElmType === "course") {
-    inputCollectionElm = parentFocusElm.querySelector(".coursework-input");
-  }
-
-  inputCollectionElm
-    .querySelector("div:last-of-type")
-    .querySelector("input")
-    .focus();
 
   return;
 }
