@@ -322,14 +322,6 @@ export function getAddSectionButton_nested1(
               return topSectionMap;
             }
           ),
-
-          // [
-          //   ...userData[thisSection_top_key],
-          //   {
-          //     ...resetData[thisSection_top_key][0],
-          //     id: crypto.randomUUID(),
-          //   },
-          // ],
         })
       }
     >

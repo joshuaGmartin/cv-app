@@ -47,7 +47,8 @@ function getWorkExpInputs(
         thisWork,
         userData,
         setUserData,
-        resetData
+        resetData,
+        setFocusElementInfo
       )}{" "}
     </div>
   );
@@ -91,7 +92,8 @@ function getWorkExpInputs_jobSection(
   thisWork,
   userData,
   setUserData,
-  resetData
+  resetData,
+  setFocusElementInfo
 ) {
   return (
     <>
@@ -134,12 +136,6 @@ function getWorkExpInputs_jobSection(
               </>
             ) : null}
 
-            {/* {getWorkExpInputs_listInputs(
-              thisWork,
-              userData,
-              setUserData,
-              setFocusElementInfo
-              )} */}
             {componentBuilder.getTextInput_nested1(
               userData,
               setUserData,
@@ -149,6 +145,13 @@ function getWorkExpInputs_jobSection(
               "jobsInfo",
               "location",
               thisWork.id + "-location-input"
+            )}
+            {getWorkExpInputs_listInputs(
+              thisWork,
+              thisJob,
+              userData,
+              setUserData,
+              setFocusElementInfo
             )}
           </div>
         );
@@ -167,9 +170,29 @@ function getWorkExpInputs_jobSection(
 
 function getWorkExpInputs_listInputs(
   thisWork,
+  thisJob,
   userData,
   setUserData,
   setFocusElementInfo
 ) {
-  return;
+  return (
+    <div className="work-exp-list-inputs">
+      <div className="work-exp-duties">
+        duties:
+        {thisJob.duties.map((thisDuty, index) => {
+          return (
+            <div className="job-duty" key={index}>
+              <textarea
+                className="job-duty-description-input"
+                placeholder="job duty description"
+                value={thisDuty}
+                onChange={() => console.log()}
+                // onChange={() => {}}
+              ></textarea>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }

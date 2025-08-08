@@ -18,7 +18,5 @@ todo:
 
 
 on:
--add delete/add education
--ed list input
--add/del award (check if need ids in database)
+-add/del award (check if need ids in database) - maybe
  -->
