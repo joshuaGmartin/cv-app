@@ -1,68 +1,251 @@
-// =========================================================================
-// unnested updaters
-// =========================================================================
+import { changeData } from "./dataHandler.js";
 
-export function getTextInput(
-  thisListItem,
-  key,
-  userData,
-  setUserData,
-  inputName,
-  dataType
-) {
-  let value = thisListItem[key];
+export function GetDataInput({
+  e = null,
+  userData = null,
+  setUserData = null,
+  level_0_key = null,
+  level_1_key = null,
+  level_1_id = null,
+  level_2_key = null,
+  level_2_id = null,
+  listIndexToChange = null,
+}) {
+  const args = {
+    e,
+    userData,
+    setUserData,
+    level_0_key,
+    level_1_id,
+    level_1_key,
+    level_2_id,
+    level_2_key,
+    listIndexToChange,
+  };
 
-  // handle special
-  if (key === "minorOrSpec") {
-    key = "minor";
-    if (thisListItem.minor === null) key = "specialization";
-    value = thisListItem[key];
+  switch (args.level_0_key) {
+    case "personal":
+      return getPersonalInput(args);
+    case "education":
+      return getEducationInput(args);
+    case "workExperience":
+      return getWorkExperienceInput(args);
+    case "skillsAndInt":
+      return getSkillsAndIntInput(args);
+    default:
+      console.error(
+        args.level_0_key + " does not exist in data base as top level key"
+      );
+      return;
   }
-  if (key === "gpa" || key === "gpaScale") {
-    if (value === true) value = "";
+}
+
+function getPersonalInput(args) {
+  return get_level_0_textInput(args);
+}
+
+function getEducationInput(args) {
+  const thisEd = args.userData.education.find(
+    (thisEdMap) => thisEdMap.id === args.level_1_id
+  );
+
+  // qualifiers
+  const checkboxKeys = ["currentStudent", "includeGPA"];
+  const radioKeys = ["minor", "specialization"];
+
+  // handle checkbox inputs
+  if (checkboxKeys.includes(args.level_1_key)) {
+    return get_level_1_checkboxInput(args, thisEd);
   }
 
-  // set and format placeholders
-  let placeholder = key;
-  switch (key) {
-    case "gradYear":
-      placeholder = "graduation year";
-      break;
-    case "gpaScale":
-      placeholder = "gpa scale";
-      break;
-    case "totalTimeStart":
-      placeholder = "when started?";
-      break;
-    case "totalTimeEnd":
-      placeholder = "when ended?";
-      break;
+  // handle radio inputs
+  if (radioKeys.includes(args.level_1_key)) {
+    return get_level_1_radioInput(args, thisEd);
   }
 
+  //need list text also (nested)
+  // handle
+  else return get_level_1_textInput(args, thisEd);
+}
+
+// =======================================================================================
+// helper functions
+// =======================================================================================
+
+//temp fix
+export function getTextInput(args) {
+  return; // NOT THIS ONE
+}
+
+// ====================== level 0 ======================
+function get_level_0_textInput(args) {
   return (
     <div>
       <input
-        name={inputName}
         type="text"
-        placeholder={placeholder}
-        value={value}
+        placeholder={args.level_1_key}
+        value={args.userData[args.level_0_key][args.level_1_key]}
         onChange={(e) =>
-          setUserData({
-            ...userData,
-            [dataType]: userData[dataType].map((thisMap) => {
-              if (thisMap.id === thisListItem.id) {
-                return {
-                  ...thisMap,
-                  [key]: e.target.value,
-                };
-              } else return { ...thisMap };
-            }),
+          changeData({
+            ...args,
+            e: e,
           })
         }
       />
     </div>
   );
 }
+
+// ====================== level 1 ======================
+
+function get_level_1_textInput(args, this_level_1) {
+  let inputValue;
+  let placeholder;
+  let temp_level_1_key;
+
+  // handle special
+  switch (args.level_0_key) {
+    case "education":
+      switch (args.level_1_key) {
+        case "minorOrSpec":
+          temp_level_1_key = "minor"; // auto assign key to minor and then check for specialization
+          if (!this_level_1.minor) {
+            temp_level_1_key = "specialization";
+          }
+          inputValue = this_level_1[temp_level_1_key];
+          break;
+
+        case "gpa":
+        case "gpaScale":
+          if (inputValue === true) inputValue = "";
+          break;
+        default:
+          inputValue = this_level_1[args.level_1_key];
+      }
+      break;
+
+    default:
+      inputValue = this_level_1[args.level_1_key];
+  }
+
+  // handle placeholders
+  switch (args.level_0_key) {
+    case "education":
+      switch (args.level_1_key) {
+        case "gradYear":
+          placeholder = "graduation year";
+          break;
+        case "gpaScale":
+          placeholder = "gpa scale";
+          break;
+        default:
+          placeholder = args.level_1_key;
+      }
+      break;
+
+    case "workExperience":
+      switch (args.level_1_key) {
+        case "totalTimeStart":
+          placeholder = "when started?";
+          break;
+        case "totalTimeEnd":
+          placeholder = "when ended?";
+          break;
+        default:
+          placeholder = args.level_1_key;
+      }
+      break;
+
+    default:
+      placeholder = args.level_1_key;
+  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={inputValue}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    </div>
+  );
+}
+
+function get_level_1_radioInput(args, this_level_1) {
+  let name = null;
+
+  if (
+    args.level_0_key === "education" &&
+    (args.level_1_key === "minor" || args.level_1_key === "specialization")
+  ) {
+    name = args.level_1_id.id + "-minorSpec-selection";
+  }
+
+  // error handle
+  if (!name) console.error("Radio inputs must have name");
+
+  return (
+    <div>
+      <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
+        {args.level_1_key + ": "}
+        <input
+          id={this_level_1.id + "-" + args.level_1_key}
+          name={name}
+          type="radio"
+          checked={this_level_1[args.level_1_key]}
+          onChange={(e) =>
+            changeData({
+              ...args,
+              e: e,
+            })
+          }
+        />
+      </label>
+    </div>
+  );
+}
+
+function get_level_1_checkboxInput(args, this_level_1) {
+  let label = args.level_1_key;
+  let checked = this_level_1[args.level_1_key];
+
+  switch (args.level_1_key) {
+    case "currentStudent":
+      label = "current student";
+      break;
+    case "includeGPA":
+      label = "include GPA";
+      checked = this_level_1.gpa || this_level_1.gpa === "" ? true : false;
+      break;
+  }
+
+  return (
+    <div>
+      <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
+        {label + "?: "}
+        <input
+          id={this_level_1.id + "-" + args.level_1_key}
+          type="checkbox"
+          checked={checked}
+          onChange={(e) =>
+            changeData({
+              ...args,
+              e: e,
+            })
+          }
+        />
+      </label>
+    </div>
+  );
+}
+
+// OLD ========================================================================================
 
 export function getListItemInput(
   thisListItem,

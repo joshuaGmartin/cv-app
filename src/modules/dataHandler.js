@@ -1,5 +1,20 @@
 /* 
 parameter template:
+
+onChange={(e) =>
+  changeData({
+    e: e,
+    userData: userData,
+    setUserData: setUserData,
+    level_0_key: null,
+    level_1_key: null,
+    level_1_id: null,
+    level_2_key: null,
+    level_2_id: null,
+    listIndexToChange: null,
+  })
+}
+
 */
 
 export function changeData({
@@ -7,7 +22,6 @@ export function changeData({
   userData = null,
   setUserData = null,
   level_0_key = null,
-  // level_0_id = null,
   level_1_key = null,
   level_1_id = null,
   level_2_key = null,
@@ -18,7 +32,6 @@ export function changeData({
     e,
     userData,
     setUserData,
-    // level_0_id,
     level_0_key,
     level_1_id,
     level_1_key,
@@ -53,8 +66,7 @@ function changeEducationData(args) {
     "currentStudent",
     "minor",
     "specialization",
-    "gpa",
-    "gpaScale",
+    "includeGPA",
   ];
   const listKeys = ["awards", "coursework"];
 
@@ -104,6 +116,7 @@ function changeSkillsAndIntData(args) {
 // =======================================================================================
 
 // ====================== level 0 ======================
+
 function change_level_0_textData(args) {
   let changeValue = args.e.target.value;
 
@@ -142,7 +155,25 @@ function change_level_0_listData(args) {
 }
 
 // ====================== level 1 ======================
+
 function change_level_1_textData(args) {
+  const thisEd = args.userData.education.find(
+    (thisEdMap) => thisEdMap.id === args.level_1_id
+  );
+
+  switch (args.level_0_key) {
+    case "education":
+      switch (args.level_1_key) {
+        case "minorOrSpec":
+          args.level_1_key = "minor"; // auto assign key to minor and then check for specialization
+          if (!thisEd.minor) {
+            args.level_1_key = "specialization";
+          }
+          break;
+      }
+      break;
+  }
+
   args.setUserData({
     ...args.userData,
     [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
@@ -159,17 +190,76 @@ function change_level_1_textData(args) {
 }
 
 function change_level_1_booleanData(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-      if (level_1_map.id === args.level_1_id) {
-        return {
-          ...level_1_map,
-          [args.level_1_key]: !level_1_map[args.level_1_key],
-        };
-      } else return level_1_map;
-    }),
-  });
+  // handle special: ed include GPA
+  if (args.level_0_key === "education" && args.level_1_key === "includeGPA") {
+    //test
+    console.log("test");
+
+    args.setUserData({
+      ...args.userData,
+      education: args.userData.education.map((thisEdMap) => {
+        if (thisEdMap.id === args.level_1_id) {
+          return {
+            ...thisEdMap,
+            gpa: thisEdMap.gpa || thisEdMap.gpa === "" ? false : "",
+            gpaScale:
+              thisEdMap.gpaScale || thisEdMap.gpaScale === "" ? false : "",
+          };
+        } else return thisEdMap;
+      }),
+    });
+
+    //test
+    const thisEd = args.userData.education.find(
+      (thisEdMap) => thisEdMap.id === args.level_1_id
+    );
+    console.log("gpa");
+    console.log(thisEd.gpa);
+    console.log("gpaScale");
+    console.log(thisEd.gpaScale);
+  }
+
+  // handle special: ed minor or spec select
+  else if (
+    args.level_0_key === "education" &&
+    (args.level_1_key === "minor" || args.level_1_key === "specialization")
+  ) {
+    let newChoiceKey = "minor";
+    let oldChoiceKey = "specialization";
+
+    if (args.level_1_key === "specialization") {
+      newChoiceKey = "specialization";
+      oldChoiceKey = "minor";
+    }
+
+    args.setUserData({
+      ...args.userData,
+      education: args.userData.education.map((thisEdMap) => {
+        if (thisEdMap.id === args.level_1_id) {
+          return {
+            ...thisEdMap,
+            [newChoiceKey]: thisEdMap[oldChoiceKey], // new choice (other) key becomes the old value
+            [oldChoiceKey]: false, // old choice becomes false
+          };
+        } else return thisEdMap;
+      }),
+    });
+  }
+
+  //default
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: !level_1_map[args.level_1_key],
+          };
+        } else return level_1_map;
+      }),
+    });
+  }
 
   return;
 }
