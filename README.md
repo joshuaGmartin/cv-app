@@ -15,8 +15,11 @@ todo:
 -move focuser to util.js?
 -inline the input list for space saving
 -enable scrolling on resume
+-fix minor/spec null to false in code
 
 
 on:
 -add/del award (check if need ids in database) - maybe
+-making data handler
+
  -->
