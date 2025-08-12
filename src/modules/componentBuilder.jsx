@@ -1,7 +1,35 @@
 import { changeData } from "./dataHandler.js";
 
+/* 
+templates:
+
+<GetDataInput
+  userData={userData}
+  setUserData={setUserData}
+  level_0_key={""}
+  level_1_key={""}
+  level_1_id={""}
+  level_2_key={""}
+  level_2_id={""}
+  listIndexToChange={""}
+/>
+
+<GetDataButton
+  btnType=""
+  userData={userData}
+  setUserData={setUserData}
+  level_0_key={""}
+  level_1_key={""}
+  level_1_id={""}
+  level_2_key={""}
+  level_2_id={""}
+  listIndexToChange={""}
+/>
+
+*/
+
 // =======================================================================================
-// main function
+// main functions
 // =======================================================================================
 export function GetDataInput({
   e = null,
@@ -15,7 +43,6 @@ export function GetDataInput({
   listIndexToChange = null,
 }) {
   const args = {
-    e,
     userData,
     setUserData,
     level_0_key,
@@ -43,18 +70,52 @@ export function GetDataInput({
   }
 }
 
+export function GetDataButton({
+  btnType = null,
+  userData = null,
+  setUserData = null,
+  level_0_key = null,
+  level_1_key = null,
+  level_1_id = null,
+  level_2_key = null,
+  level_2_id = null,
+  listIndexToChange = null,
+}) {
+  const args = {
+    btnType,
+    userData,
+    setUserData,
+    level_0_key,
+    level_1_key,
+    level_1_id,
+    level_2_key,
+    level_2_id,
+    listIndexToChange,
+  };
+
+  switch (btnType) {
+    case "delete":
+      return getDeleteButton(args);
+    case "add":
+      return getAddButton(args);
+    default:
+      console.error("Button type doesn't not exist");
+      return;
+  }
+}
+
 // =======================================================================================
 // secondary functions
 // =======================================================================================
+
+// ====================== inputs ======================
 
 function getPersonalInput(args) {
   return get_level_0_textInput(args);
 }
 
 function getEducationInput(args) {
-  const thisEd = args.userData.education.find(
-    (thisEdMap) => thisEdMap.id === args.level_1_id
-  );
+  const thisEd = get_this_level_1(args);
 
   // qualifiers
   const checkboxKeys = ["currentStudent", "includeGPA"];
@@ -107,6 +168,40 @@ function getSkillsAndIntInput(args) {
   return get_level_0_listInput(args);
 }
 
+// ====================== buttons ======================
+
+function getDeleteButton(args) {
+  return (
+    <button
+      className={`delete-${args.level_1_key}-button`}
+      onClick={() => changeData(args)} // focus handle here?
+    >
+      {"[ X ]"}
+    </button>
+  );
+}
+
+function getAddButton(args) {
+  let buttonText = args.level_1_key;
+  switch (args.level_1_key) {
+    case "awards":
+      buttonText = "award";
+      break;
+    case "coursework":
+      buttonText = "course";
+      break;
+  }
+
+  return (
+    <button
+      className={`delete-${args.level_1_key}-button`}
+      onClick={() => changeData(args)} // focus handle here?
+    >
+      {"add " + buttonText}
+    </button>
+  );
+}
+
 // =======================================================================================
 // helper functions
 // =======================================================================================
@@ -119,20 +214,23 @@ export function getTextInput(args) {
 // ====================== level 0 ======================
 
 function get_level_0_textInput(args) {
+  let inputValue = args.userData[args.level_0_key][args.level_1_key];
+
+  // handle special
+  if (args.level_1_key === "portfolioLink") inputValue = inputValue.slice(8);
+
   return (
-    <div>
-      <input
-        type="text"
-        placeholder={args.level_1_key}
-        value={args.userData[args.level_0_key][args.level_1_key]}
-        onChange={(e) =>
-          changeData({
-            ...args,
-            e: e,
-          })
-        }
-      />
-    </div>
+    <input
+      type="text"
+      placeholder={args.level_1_key}
+      value={inputValue}
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
   );
 }
 
@@ -150,23 +248,21 @@ function get_level_0_listInput(args) {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={
-          args.userData[args.level_0_key][args.level_1_key][
-            args.listIndexToChange
-          ]
-        }
-        onChange={(e) =>
-          changeData({
-            ...args,
-            e: e,
-          })
-        }
-      />
-    </div>
+    <input
+      type="text"
+      placeholder={placeholder}
+      value={
+        args.userData[args.level_0_key][args.level_1_key][
+          args.listIndexToChange
+        ]
+      }
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
   );
 }
 
@@ -181,7 +277,7 @@ function get_level_1_textInput(args, this_level_1) {
   switch (args.level_0_key) {
     case "education":
       switch (args.level_1_key) {
-        case "minorOrSpec":
+        case "minorOrConc":
           temp_level_1_key = "minor"; // auto assign key to minor and then check for concentration
           if (!this_level_1.minor) {
             temp_level_1_key = "concentration";
@@ -189,10 +285,6 @@ function get_level_1_textInput(args, this_level_1) {
           inputValue = this_level_1[temp_level_1_key];
           break;
 
-        case "gpa":
-        case "gpaScale":
-          if (inputValue === true) inputValue = "";
-          break;
         default:
           inputValue = this_level_1[args.level_1_key];
       }
@@ -235,19 +327,17 @@ function get_level_1_textInput(args, this_level_1) {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={(e) =>
-          changeData({
-            ...args,
-            e: e,
-          })
-        }
-      />
-    </div>
+    <input
+      type="text"
+      placeholder={placeholder}
+      value={inputValue}
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
   );
 }
 
@@ -265,23 +355,21 @@ function get_level_1_radioInput(args, this_level_1) {
   if (!name) console.error("Radio inputs must have name");
 
   return (
-    <div>
-      <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
-        {args.level_1_key + ": "}
-        <input
-          id={this_level_1.id + "-" + args.level_1_key}
-          name={name}
-          type="radio"
-          checked={this_level_1[args.level_1_key]}
-          onChange={(e) =>
-            changeData({
-              ...args,
-              e: e,
-            })
-          }
-        />
-      </label>
-    </div>
+    <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
+      {args.level_1_key + ": "}
+      <input
+        id={this_level_1.id + "-" + args.level_1_key}
+        name={name}
+        type="radio"
+        checked={this_level_1[args.level_1_key]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    </label>
   );
 }
 
@@ -302,32 +390,12 @@ function get_level_1_checkboxInput(args, this_level_1) {
   }
 
   return (
-    <div>
-      <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
-        {label + "?: "}
-        <input
-          id={this_level_1.id + "-" + args.level_1_key}
-          type="checkbox"
-          checked={checked}
-          onChange={(e) =>
-            changeData({
-              ...args,
-              e: e,
-            })
-          }
-        />
-      </label>
-    </div>
-  );
-}
-
-function get_level_1_listItemInput(args, this_level_1) {
-  return (
-    <div>
+    <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
+      {label + "?: "}
       <input
-        type="text"
-        placeholder={args.level_1_key}
-        value={this_level_1[args.level_1_key][args.listIndexToChange]}
+        id={this_level_1.id + "-" + args.level_1_key}
+        type="checkbox"
+        checked={checked}
         onChange={(e) =>
           changeData({
             ...args,
@@ -335,53 +403,75 @@ function get_level_1_listItemInput(args, this_level_1) {
           })
         }
       />
-    </div>
+    </label>
+  );
+}
+
+function get_level_1_listItemInput(args, this_level_1) {
+  return (
+    <input
+      type="text"
+      placeholder={args.level_1_key}
+      value={this_level_1[args.level_1_key][args.listIndexToChange]}
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
   );
 }
 
 // ====================== level 2 ======================
 
 function get_level_2_textInput(args, this_level_1) {
-  const this_level_2 = this_level_1[args.level_1_key].find(
-    (this_level_2_map) => this_level_2_map.id === args.level_2_id
-  );
+  const this_level_2 = get_this_level_2(args, this_level_1);
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder={args.level_2_key}
-        value={this_level_2[args.level_2_key]}
-        onChange={(e) =>
-          changeData({
-            ...args,
-            e: e,
-          })
-        }
-      />
-    </div>
+    <input
+      type="text"
+      placeholder={args.level_2_key}
+      value={this_level_2[args.level_2_key]}
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
   );
 }
 
 function get_level_2_listItemInput(args, this_level_1) {
-  const this_level_2 = this_level_1[args.level_1_key].find(
-    (this_level_2_map) => this_level_2_map.id === args.level_2_id
-  );
+  const this_level_2 = get_this_level_2(args, this_level_1);
 
   return (
-    <div>
-      <textarea
-        type="text"
-        placeholder={args.level_2_key}
-        value={this_level_2[args.level_2_key][args.listIndexToChange]}
-        onChange={(e) =>
-          changeData({
-            ...args,
-            e: e,
-          })
-        }
-      />
-    </div>
+    <textarea
+      type="text"
+      placeholder={args.level_2_key}
+      value={this_level_2[args.level_2_key][args.listIndexToChange]}
+      onChange={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    />
+  );
+}
+
+// ====================== util ======================
+
+function get_this_level_1(args) {
+  return args.userData.education.find(
+    (this_level_1_map) => this_level_1_map.id === args.level_1_id
+  );
+}
+
+function get_this_level_2(args, this_level_1) {
+  return this_level_1[args.level_1_key].find(
+    (this_level_2_map) => this_level_2_map.id === args.level_2_id
   );
 }
 

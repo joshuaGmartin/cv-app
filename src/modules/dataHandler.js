@@ -1,45 +1,24 @@
-/* 
-parameter template:
+import { resetData } from "./userData";
 
-onChange={(e) =>
-  changeData({
-    e: e,
-    userData: userData,
-    setUserData: setUserData,
-    level_0_key: null,
-    level_1_key: null,
-    level_1_id: null,
-    level_2_key: null,
-    level_2_id: null,
-    listIndexToChange: null,
-  })
-}
+// =======================================================================================
+// main function
+// =======================================================================================
 
-*/
-
-export function changeData({
-  e = null,
-  userData = null,
-  setUserData = null,
-  level_0_key = null,
-  level_1_key = null,
-  level_1_id = null,
-  level_2_key = null,
-  level_2_id = null,
-  listIndexToChange = null,
-}) {
-  const args = {
-    e,
-    userData,
-    setUserData,
-    level_0_key,
-    level_1_id,
-    level_1_key,
-    level_2_id,
-    level_2_key,
-    listIndexToChange,
+/*
+expects:
+args = {
+  userData,
+  setUserData,
+  level_0_key,
+  level_1_key,
+  level_1_id,
+  level_2_key,
+  level_2_id,
+  listIndexToChange,
   };
+  */
 
+export function changeData(args) {
   switch (args.level_0_key) {
     case "personal":
       return changePersonalData(args);
@@ -50,10 +29,16 @@ export function changeData({
     case "skillsAndInt":
       return changeSkillsAndIntData(args);
     default:
-      console.error(args.level_0_key + "does not exist");
+      console.error(
+        args.level_0_key + " does not exist in data base as top level key"
+      );
       return;
   }
 }
+
+// =======================================================================================
+// secondary function
+// =======================================================================================
 
 function changePersonalData(args) {
   change_level_0_textData(args);
@@ -164,7 +149,7 @@ function change_level_1_textData(args) {
   switch (args.level_0_key) {
     case "education":
       switch (args.level_1_key) {
-        case "minorOrSpec":
+        case "minorOrConc":
           args.level_1_key = "minor"; // auto assign key to minor and then check for concentration
           if (!thisEd.minor) {
             args.level_1_key = "concentration";
@@ -254,23 +239,67 @@ function change_level_1_booleanData(args) {
 }
 
 function change_level_1_listData(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-      if (level_1_map.id === args.level_1_id) {
-        return {
-          ...level_1_map,
-          [args.level_1_key]: level_1_map[args.level_1_key].map(
-            (listItemMap, index) => {
-              if (index === args.listIndexToChange) {
-                return args.e.target.value;
-              } else return listItemMap;
-            }
-          ),
-        };
-      } else return level_1_map;
-    }),
-  });
+  // handle delete
+  if (args.btnType === "delete") {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: level_1_map[args.level_1_key].filter(
+              (_, filterIndex) => args.listIndexToChange !== filterIndex
+            ),
+          };
+        } else return level_1_map;
+      }),
+    });
+
+    return;
+  }
+
+  // handle add
+  else if (args.btnType === "add") {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: [
+              ...level_1_map[args.level_1_key],
+              resetData[args.level_0_key][0][args.level_1_key],
+            ],
+          };
+        } else return level_1_map;
+      }),
+    });
+
+    return;
+  }
+
+  //handle all other
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: level_1_map[args.level_1_key].map(
+              (listItemMap, index) => {
+                if (index === args.listIndexToChange) {
+                  return args.e.target.value;
+                } else return listItemMap;
+              }
+            ),
+          };
+        } else return level_1_map;
+      }),
+    });
+
+    return;
+  }
 }
 
 // ====================== level 2 ======================

@@ -1,4 +1,5 @@
-import * as componentBuilder from "../modules/componentBuilder.jsx";
+import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
+import * as componentBuilder from "../modules/componentBuilder.jsx"; // delete later
 import { FocusHandler } from "../modules/Helper.jsx";
 
 export default function InfoInput_Education({
@@ -19,9 +20,11 @@ export default function InfoInput_Education({
               setUserData,
               setFocusElementInfo
             )}
+
             <button
               className="delete-education-button"
               onClick={() =>
+                // add to dataHandler
                 setUserData({
                   ...userData,
                   education: userData.education.filter(
@@ -69,69 +72,72 @@ function getEducationInputs(
 function getEducationInputs_topLines(thisEd, userData, setUserData) {
   return (
     <div className="education-top-lines-inputs">
-      {componentBuilder.getTextInput(
-        thisEd,
-        "school",
-        userData,
-        setUserData,
-        thisEd.id + "-school-input"
-      )}
+      <GetDataInput
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"education"}
+        level_1_key={"school"}
+        level_1_id={thisEd.id}
+      />
 
       <div className="grad-year-line">
-        {componentBuilder.getTextInput(
-          thisEd,
-          "gradYear",
-          userData,
-          setUserData,
-          thisEd.id + "-gradYear-input"
-        )}
-        {componentBuilder.getCheckBoxInput(
-          thisEd,
-          "currentStudent",
-          userData,
-          setUserData,
-          thisEd.id + "-currentStudent-input"
-        )}
+        <GetDataInput
+          userData={userData}
+          setUserData={setUserData}
+          level_0_key={"education"}
+          level_1_key={"gradYear"}
+          level_1_id={thisEd.id}
+        />
+        <GetDataInput
+          userData={userData}
+          setUserData={setUserData}
+          level_0_key={"education"}
+          level_1_key={"currentStudent"}
+          level_1_id={thisEd.id}
+        />
       </div>
 
-      {componentBuilder.getTextInput(
-        thisEd,
-        "location",
-        userData,
-        setUserData,
-        thisEd.id + "-location-input"
-      )}
-      {componentBuilder.getTextInput(
-        thisEd,
-        "degree",
-        userData,
-        setUserData,
-        thisEd.id + "-degree-input"
-      )}
+      <div className="degree-line">
+        <GetDataInput
+          userData={userData}
+          setUserData={setUserData}
+          level_0_key={"education"}
+          level_1_key={"degree"}
+          level_1_id={thisEd.id}
+        />
 
-      <div className="minOrSpec-line">
-        {componentBuilder.getTextInput(
-          thisEd,
-          "minorOrSpec",
-          userData,
-          setUserData,
-          thisEd.id + "-minorOrSpec-input"
-        )}
-        {componentBuilder.getRadioInput(
-          thisEd,
-          "minor",
-          userData,
-          setUserData,
-          thisEd.id + "-minor-input"
-        )}{" "}
-        {componentBuilder.getRadioInput(
-          thisEd,
-          "concentration",
-          userData,
-          setUserData,
-          thisEd.id + "-concentration-input"
-        )}
+        <div className="minor-or-conc-line">
+          <GetDataInput
+            userData={userData}
+            setUserData={setUserData}
+            level_0_key={"education"}
+            level_1_key={"minorOrConc"}
+            level_1_id={thisEd.id}
+          />
+          <GetDataInput
+            userData={userData}
+            setUserData={setUserData}
+            level_0_key={"education"}
+            level_1_key={"minor"}
+            level_1_id={thisEd.id}
+          />
+          <GetDataInput
+            userData={userData}
+            setUserData={setUserData}
+            level_0_key={"education"}
+            level_1_key={"concentration"}
+            level_1_id={thisEd.id}
+          />
+        </div>
       </div>
+
+      <GetDataInput
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"education"}
+        level_1_key={"location"}
+        level_1_id={thisEd.id}
+      />
     </div>
   );
 }
@@ -149,16 +155,32 @@ function getEducationInputs_listInputs(
         thisEd,
         userData,
         setUserData,
-        "award",
+        "awards",
         setFocusElementInfo
       )}
       {getEducationInputs_listItemInput(
         thisEd,
         userData,
         setUserData,
-        "course",
+        "coursework",
         setFocusElementInfo
       )}
+
+      {/* OLD */}
+      {/* {OLD_getEducationInputs_listItemInput(
+        thisEd,
+        userData,
+        setUserData,
+        "award",
+        setFocusElementInfo
+      )} */}
+      {/* {OLD_getEducationInputs_listItemInput(
+        thisEd,
+        userData,
+        setUserData,
+        "course",
+        setFocusElementInfo
+      )} */}
     </div>
   );
 }
@@ -166,36 +188,98 @@ function getEducationInputs_listInputs(
 function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
   return (
     <div className="gpa-inputs">
-      {componentBuilder.getCheckBoxInput(
-        thisEd,
-        "gpa",
-        userData,
-        setUserData,
-        thisEd.id + "-includeGPA-input"
-      )}
-      {thisEd.gpa || thisEd.gpa === ""
-        ? componentBuilder.getTextInput(
-            thisEd,
-            "gpa",
-            userData,
-            setUserData,
-            thisEd.id + "-gpa-input"
-          )
-        : null}
-      {thisEd.gpa || thisEd.gpa === ""
-        ? componentBuilder.getTextInput(
-            thisEd,
-            "gpaScale",
-            userData,
-            setUserData,
-            thisEd.id + "-gpaScale-input"
-          )
-        : null}
+      <GetDataInput
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"education"}
+        level_1_key={"includeGPA"}
+        level_1_id={thisEd.id}
+      />
+
+      {thisEd.gpa || thisEd.gpa === "" ? (
+        <>
+          <GetDataInput
+            userData={userData}
+            setUserData={setUserData}
+            level_0_key={"education"}
+            level_1_key={"gpa"}
+            level_1_id={thisEd.id}
+          />
+          <GetDataInput
+            userData={userData}
+            setUserData={setUserData}
+            level_0_key={"education"}
+            level_1_key={"gpaScale"}
+            level_1_id={thisEd.id}
+          />
+        </>
+      ) : null}
+    </div>
+  );
+}
+function getEducationInputs_listItemInput(
+  thisEd,
+  userData,
+  setUserData,
+  level_1_key,
+  setFocusElementInfo
+) {
+  let placeholder;
+
+  switch (level_1_key) {
+    case "awards":
+      placeholder = "award";
+      break;
+    case "coursework":
+      placeholder = "course";
+      break;
+  }
+
+  return (
+    <div className="education-input-list-input-section">
+      {level_1_key + ": "}
+      <div className="list-item-inputs">
+        {thisEd[level_1_key].map((listItem, index) => {
+          return (
+            <div
+              key={`${level_1_key}[${index}]-${thisEd.id}`}
+              className="list-input-and-del-btn"
+            >
+              <GetDataInput
+                userData={userData}
+                setUserData={setUserData}
+                level_0_key={"education"}
+                level_1_key={level_1_key}
+                level_1_id={thisEd.id}
+                listIndexToChange={index}
+              />
+              <GetDataButton
+                btnType="delete"
+                userData={userData}
+                setUserData={setUserData}
+                level_0_key={"education"}
+                level_1_key={level_1_key}
+                level_1_id={thisEd.id}
+                listIndexToChange={index}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <GetDataButton
+        btnType="add"
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"education"}
+        level_1_key={level_1_key}
+        level_1_id={thisEd.id}
+      />
     </div>
   );
 }
 
-function getEducationInputs_listItemInput(
+// delete later
+function OLD_getEducationInputs_listItemInput(
   thisEd,
   userData,
   setUserData,

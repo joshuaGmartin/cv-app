@@ -16,7 +16,7 @@ todo:
 -inline the input list for space saving
 -enable scrolling on resume
 -fix minor/spec null to false in code
-
+-fix focus handler
 
 on:
 -add/del award (check if need ids in database) - maybe

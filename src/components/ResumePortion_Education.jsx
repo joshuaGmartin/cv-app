@@ -20,7 +20,7 @@ export default function ResumePortion_Education({ userData }) {
             <div className="education-second-line">
               <i>
                 {thisEd.degree}, {thisEd.major}
-                {getMinorOrSpecLine(thisEd)}
+                {getminorOrConcLine(thisEd)}
               </i>
               <i>{thisEd.location}</i>
             </div>
@@ -32,7 +32,7 @@ export default function ResumePortion_Education({ userData }) {
   );
 }
 
-function getMinorOrSpecLine(thisEd) {
+function getminorOrConcLine(thisEd) {
   if (thisEd.minor === "" || thisEd.concentration === "") {
     return null;
   } else {
