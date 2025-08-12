@@ -192,13 +192,11 @@ function change_level_1_textData(args) {
 function change_level_1_booleanData(args) {
   // handle special: ed include GPA
   if (args.level_0_key === "education" && args.level_1_key === "includeGPA") {
-    //test
-    console.log("test");
-
     args.setUserData({
       ...args.userData,
       education: args.userData.education.map((thisEdMap) => {
         if (thisEdMap.id === args.level_1_id) {
+          // empty strings count as false
           return {
             ...thisEdMap,
             gpa: thisEdMap.gpa || thisEdMap.gpa === "" ? false : "",
@@ -208,15 +206,6 @@ function change_level_1_booleanData(args) {
         } else return thisEdMap;
       }),
     });
-
-    //test
-    const thisEd = args.userData.education.find(
-      (thisEdMap) => thisEdMap.id === args.level_1_id
-    );
-    console.log("gpa");
-    console.log(thisEd.gpa);
-    console.log("gpaScale");
-    console.log(thisEd.gpaScale);
   }
 
   // handle special: ed minor or spec select

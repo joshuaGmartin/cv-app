@@ -1,5 +1,8 @@
 import { changeData } from "./dataHandler.js";
 
+// =======================================================================================
+// main function
+// =======================================================================================
 export function GetDataInput({
   e = null,
   userData = null,
@@ -40,6 +43,10 @@ export function GetDataInput({
   }
 }
 
+// =======================================================================================
+// secondary functions
+// =======================================================================================
+
 function getPersonalInput(args) {
   return get_level_0_textInput(args);
 }
@@ -52,6 +59,7 @@ function getEducationInput(args) {
   // qualifiers
   const checkboxKeys = ["currentStudent", "includeGPA"];
   const radioKeys = ["minor", "specialization"];
+  const listKeys = ["awards", "coursework"];
 
   // handle checkbox inputs
   if (checkboxKeys.includes(args.level_1_key)) {
@@ -59,13 +67,46 @@ function getEducationInput(args) {
   }
 
   // handle radio inputs
-  if (radioKeys.includes(args.level_1_key)) {
+  else if (radioKeys.includes(args.level_1_key)) {
     return get_level_1_radioInput(args, thisEd);
   }
 
-  //need list text also (nested)
-  // handle
+  // handle list inputs
+  else if (listKeys.includes(args.level_1_key)) {
+    return get_level_1_listItemInput(args, thisEd);
+  }
+
+  // handle text other inputs
   else return get_level_1_textInput(args, thisEd);
+}
+
+function getWorkExperienceInput(args) {
+  const thisWorkEx = args.userData.workExperience.find(
+    (thisWorkExMap) => thisWorkExMap.id === args.level_1_id
+  );
+
+  // qualifiers
+  const listKeys = ["duties", "stack", "keyResults"];
+
+  // handle level_2
+  if (args.level_2_key) {
+    // handle level_2 list inputs
+    if (listKeys.includes(args.level_2_key)) {
+      return get_level_2_listItemInput(args, thisWorkEx);
+    }
+
+    // handle level_2 other text inputs
+    else {
+      return get_level_2_textInput(args, thisWorkEx);
+    }
+  }
+
+  // handle level_1
+  else {
+    return get_level_1_textInput(args, thisWorkEx);
+  }
+
+  return;
 }
 
 // =======================================================================================
@@ -219,8 +260,10 @@ function get_level_1_checkboxInput(args, this_level_1) {
     case "currentStudent":
       label = "current student";
       break;
+
     case "includeGPA":
       label = "include GPA";
+      // empty strings count as false
       checked = this_level_1.gpa || this_level_1.gpa === "" ? true : false;
       break;
   }
@@ -241,6 +284,70 @@ function get_level_1_checkboxInput(args, this_level_1) {
           }
         />
       </label>
+    </div>
+  );
+}
+
+function get_level_1_listItemInput(args, this_level_1) {
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={args.level_1_key}
+        value={this_level_1[args.level_1_key][args.listIndexToChange]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    </div>
+  );
+}
+
+// ====================== level 2 ======================
+
+function get_level_2_textInput(args, this_level_1) {
+  const this_level_2 = this_level_1[args.level_1_key].find(
+    (this_level_2_map) => this_level_2_map.id === args.level_2_id
+  );
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={args.level_2_key}
+        value={this_level_2[args.level_2_key]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    </div>
+  );
+}
+
+function get_level_2_listItemInput(args, this_level_1) {
+  const this_level_2 = this_level_1[args.level_1_key].find(
+    (this_level_2_map) => this_level_2_map.id === args.level_2_id
+  );
+
+  return (
+    <div>
+      <textarea
+        type="text"
+        placeholder={args.level_2_key}
+        value={this_level_2[args.level_2_key][args.listIndexToChange]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
     </div>
   );
 }
