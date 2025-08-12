@@ -7,19 +7,11 @@ todo:
 -reset button
 -load josh data button
 -print button
--need change null on minor/spec?
--key results and duty keys can repeat if user repeats (unlikely?)
--add gitHub link
--fix name parameters in ed input
--need add focus handler in App root
--move focuser to util.js?
+-key for the key results and duty keys can repeat if user repeats (unlikely?)
+-add gitHub repo link
 -inline the input list for space saving
 -enable scrolling on resume
--fix minor/spec null to false in code
--fix focus handler
 
 on:
--add/del award (check if need ids in database) - maybe
--making data handler
-
+-workEx inputs dataHandle integration
  -->

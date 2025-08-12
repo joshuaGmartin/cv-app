@@ -1,4 +1,5 @@
 import { changeData } from "./dataHandler.js";
+import { FocusHandler } from "../modules/Helper.jsx";
 
 /* 
 templates:
@@ -15,7 +16,7 @@ templates:
 />
 
 <GetDataButton
-  btnType=""
+  btnType={""}
   userData={userData}
   setUserData={setUserData}
   level_0_key={""}
@@ -24,6 +25,7 @@ templates:
   level_2_key={""}
   level_2_id={""}
   listIndexToChange={""}
+  setFocusElementInfo={setFocusElementInfo}
 />
 
 */
@@ -80,6 +82,7 @@ export function GetDataButton({
   level_2_key = null,
   level_2_id = null,
   listIndexToChange = null,
+  setFocusElementInfo = null,
 }) {
   const args = {
     btnType,
@@ -91,6 +94,7 @@ export function GetDataButton({
     level_2_key,
     level_2_id,
     listIndexToChange,
+    setFocusElementInfo,
   };
 
   switch (btnType) {
@@ -174,7 +178,7 @@ function getDeleteButton(args) {
   return (
     <button
       className={`delete-${args.level_1_key}-button`}
-      onClick={() => changeData(args)} // focus handle here?
+      onClick={() => changeData(args)}
     >
       {"[ X ]"}
     </button>
@@ -195,7 +199,14 @@ function getAddButton(args) {
   return (
     <button
       className={`delete-${args.level_1_key}-button`}
-      onClick={() => changeData(args)} // focus handle here?
+      onClick={() => {
+        args.setFocusElementInfo({
+          focusElm_id: args.level_1_id,
+          focusElm_section: args.level_0_key,
+          focusElm_list: args.level_1_key,
+        });
+        changeData(args);
+      }}
     >
       {"add " + buttonText}
     </button>
@@ -348,7 +359,7 @@ function get_level_1_radioInput(args, this_level_1) {
     args.level_0_key === "education" &&
     (args.level_1_key === "minor" || args.level_1_key === "concentration")
   ) {
-    name = args.level_1_id.id + "-minorSpec-selection";
+    name = this_level_1.id + "-minorOrConc-selection";
   }
 
   // error handle

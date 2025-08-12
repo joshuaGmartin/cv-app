@@ -1,32 +1,46 @@
 import { useState, useEffect } from "react";
 
+/* 
+template:
+
+setFocusElementInfo({
+    focusElm_id:"",
+    focusElm_section:"",
+    focusElm_list:"",
+  })
+
+*/
+
 export function FocusHandler() {
   const [focusElementInfo, setFocusElementInfo] = useState({
-    focusElmId: null,
-    focusElmType: null,
+    focusElm_id: null,
+    focusElm_section: null,
+    focusElm_list: null,
   });
 
   function handleFocusChange(focusElementInfo) {
-    const parentFocusElm = document.getElementById(focusElementInfo.focusElmId);
-    let inputCollectionElm;
+    const parentFocusElm = document.getElementById(
+      focusElementInfo.focusElm_id
+    );
 
-    if (focusElementInfo.focusElmType === "award") {
-      inputCollectionElm = parentFocusElm.querySelector(".awards-input");
-    }
-    if (focusElementInfo.focusElmType === "course") {
-      inputCollectionElm = parentFocusElm.querySelector(".coursework-input");
-    }
+    let inputCollectionElm = parentFocusElm
+      .querySelector(
+        `.${focusElementInfo.focusElm_section}-input-list-${focusElementInfo.focusElm_list}`
+      )
+      .querySelector(".list-item-inputs");
 
     inputCollectionElm
       .querySelector("div:last-of-type")
       .querySelector("input")
       .focus();
 
+    console.log(inputCollectionElm);
+
     return;
   }
 
   useEffect(() => {
-    if (!focusElementInfo.focusElmId || !focusElementInfo.focusElmType) return;
+    if (!focusElementInfo.focusElm_id) return;
 
     handleFocusChange(focusElementInfo);
   }, [focusElementInfo]);

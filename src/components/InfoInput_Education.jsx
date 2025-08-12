@@ -24,7 +24,7 @@ export default function InfoInput_Education({
             <button
               className="delete-education-button"
               onClick={() =>
-                // add to dataHandler
+                // need add to dataHandler
                 setUserData({
                   ...userData,
                   education: userData.education.filter(
@@ -39,7 +39,7 @@ export default function InfoInput_Education({
         );
       })}
 
-      {/* add education button */}
+      {/* add education button______________________________________________________________ */}
       {componentBuilder.getAddSectionButton(
         userData,
         setUserData,
@@ -217,6 +217,7 @@ function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
     </div>
   );
 }
+
 function getEducationInputs_listItemInput(
   thisEd,
   userData,
@@ -224,19 +225,8 @@ function getEducationInputs_listItemInput(
   level_1_key,
   setFocusElementInfo
 ) {
-  let placeholder;
-
-  switch (level_1_key) {
-    case "awards":
-      placeholder = "award";
-      break;
-    case "coursework":
-      placeholder = "course";
-      break;
-  }
-
   return (
-    <div className="education-input-list-input-section">
+    <div className={`education-input-list-${level_1_key}`}>
       {level_1_key + ": "}
       <div className="list-item-inputs">
         {thisEd[level_1_key].map((listItem, index) => {
@@ -273,6 +263,7 @@ function getEducationInputs_listItemInput(
         level_0_key={"education"}
         level_1_key={level_1_key}
         level_1_id={thisEd.id}
+        setFocusElementInfo={setFocusElementInfo}
       />
     </div>
   );

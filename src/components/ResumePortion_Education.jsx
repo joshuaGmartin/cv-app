@@ -40,7 +40,7 @@ function getminorOrConcLine(thisEd) {
       <>
         {" "}
         (
-        {thisEd.minor !== null
+        {thisEd.minor
           ? thisEd.minor + " minor"
           : thisEd.concentration + " concentration"}
         )
