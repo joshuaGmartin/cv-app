@@ -126,10 +126,10 @@ function getEducationInputs_topLines(thisEd, userData, setUserData) {
         )}{" "}
         {componentBuilder.getRadioInput(
           thisEd,
-          "specialization",
+          "concentration",
           userData,
           setUserData,
-          thisEd.id + "-specialization-input"
+          thisEd.id + "-concentration-input"
         )}
       </div>
     </div>

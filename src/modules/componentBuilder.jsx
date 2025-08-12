@@ -58,7 +58,7 @@ function getEducationInput(args) {
 
   // qualifiers
   const checkboxKeys = ["currentStudent", "includeGPA"];
-  const radioKeys = ["minor", "specialization"];
+  const radioKeys = ["minor", "concentration"];
   const listKeys = ["awards", "coursework"];
 
   // handle checkbox inputs
@@ -96,17 +96,15 @@ function getWorkExperienceInput(args) {
     }
 
     // handle level_2 other text inputs
-    else {
-      return get_level_2_textInput(args, thisWorkEx);
-    }
+    else return get_level_2_textInput(args, thisWorkEx);
   }
 
   // handle level_1
-  else {
-    return get_level_1_textInput(args, thisWorkEx);
-  }
+  else return get_level_1_textInput(args, thisWorkEx);
+}
 
-  return;
+function getSkillsAndIntInput(args) {
+  return get_level_0_listInput(args);
 }
 
 // =======================================================================================
@@ -119,6 +117,7 @@ export function getTextInput(args) {
 }
 
 // ====================== level 0 ======================
+
 function get_level_0_textInput(args) {
   return (
     <div>
@@ -126,6 +125,40 @@ function get_level_0_textInput(args) {
         type="text"
         placeholder={args.level_1_key}
         value={args.userData[args.level_0_key][args.level_1_key]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    </div>
+  );
+}
+
+function get_level_0_listInput(args) {
+  let placeholder = args.level_1_key;
+
+  switch (args.level_1_key) {
+    case "hardSkillsTech":
+    case "hardSkillsOther":
+    case "softSkills":
+      placeholder = "skill";
+      break;
+    case "interests":
+      placeholder = "interest";
+  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={
+          args.userData[args.level_0_key][args.level_1_key][
+            args.listIndexToChange
+          ]
+        }
         onChange={(e) =>
           changeData({
             ...args,
@@ -149,9 +182,9 @@ function get_level_1_textInput(args, this_level_1) {
     case "education":
       switch (args.level_1_key) {
         case "minorOrSpec":
-          temp_level_1_key = "minor"; // auto assign key to minor and then check for specialization
+          temp_level_1_key = "minor"; // auto assign key to minor and then check for concentration
           if (!this_level_1.minor) {
-            temp_level_1_key = "specialization";
+            temp_level_1_key = "concentration";
           }
           inputValue = this_level_1[temp_level_1_key];
           break;
@@ -223,7 +256,7 @@ function get_level_1_radioInput(args, this_level_1) {
 
   if (
     args.level_0_key === "education" &&
-    (args.level_1_key === "minor" || args.level_1_key === "specialization")
+    (args.level_1_key === "minor" || args.level_1_key === "concentration")
   ) {
     name = args.level_1_id.id + "-minorSpec-selection";
   }
@@ -461,7 +494,7 @@ export function getRadioInput(
   inputName
 ) {
   let otherKey = "minor";
-  if (key === "minor") otherKey = "specialization";
+  if (key === "minor") otherKey = "concentration";
 
   return (
     <label htmlFor={inputName}>

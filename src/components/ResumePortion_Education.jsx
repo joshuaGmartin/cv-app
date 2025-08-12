@@ -33,7 +33,7 @@ export default function ResumePortion_Education({ userData }) {
 }
 
 function getMinorOrSpecLine(thisEd) {
-  if (thisEd.minor === "" || thisEd.specialization === "") {
+  if (thisEd.minor === "" || thisEd.concentration === "") {
     return null;
   } else {
     return (
@@ -42,7 +42,7 @@ function getMinorOrSpecLine(thisEd) {
         (
         {thisEd.minor !== null
           ? thisEd.minor + " minor"
-          : thisEd.specialization + " specialization"}
+          : thisEd.concentration + " concentration"}
         )
       </>
     );

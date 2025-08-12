@@ -51,7 +51,7 @@ function App() {
         userData={userData}
         setUserData={setUserData}
         level_0_key={"education"}
-        level_1_key={"specialization"}
+        level_1_key={"concentration"}
         level_1_id={userData.education[0].id}
         level_2_key={null}
         level_2_id={null}
@@ -116,12 +116,12 @@ function App() {
         // e={null}
         userData={userData}
         setUserData={setUserData}
-        level_0_key={"workExperience"}
-        level_1_key={"jobsInfo"}
-        level_1_id={userData.workExperience[0].id}
-        level_2_key={"location"}
-        level_2_id={userData.workExperience[0].jobsInfo[0].id}
-        listIndexToChange={null}
+        level_0_key={"skillsAndInt"}
+        level_1_key={"interests"}
+        level_1_id={null}
+        level_2_key={null}
+        level_2_id={null}
+        listIndexToChange={0}
       />
       {/* end of test */}
 

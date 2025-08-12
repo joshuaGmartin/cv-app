@@ -65,7 +65,7 @@ function changeEducationData(args) {
   const booleanKeys = [
     "currentStudent",
     "minor",
-    "specialization",
+    "concentration",
     "includeGPA",
   ];
   const listKeys = ["awards", "coursework"];
@@ -165,9 +165,9 @@ function change_level_1_textData(args) {
     case "education":
       switch (args.level_1_key) {
         case "minorOrSpec":
-          args.level_1_key = "minor"; // auto assign key to minor and then check for specialization
+          args.level_1_key = "minor"; // auto assign key to minor and then check for concentration
           if (!thisEd.minor) {
-            args.level_1_key = "specialization";
+            args.level_1_key = "concentration";
           }
           break;
       }
@@ -211,13 +211,13 @@ function change_level_1_booleanData(args) {
   // handle special: ed minor or spec select
   else if (
     args.level_0_key === "education" &&
-    (args.level_1_key === "minor" || args.level_1_key === "specialization")
+    (args.level_1_key === "minor" || args.level_1_key === "concentration")
   ) {
     let newChoiceKey = "minor";
-    let oldChoiceKey = "specialization";
+    let oldChoiceKey = "concentration";
 
-    if (args.level_1_key === "specialization") {
-      newChoiceKey = "specialization";
+    if (args.level_1_key === "concentration") {
+      newChoiceKey = "concentration";
       oldChoiceKey = "minor";
     }
 
