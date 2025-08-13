@@ -5,7 +5,7 @@ import { FocusHandler } from "../modules/Helper.jsx";
 export default function InfoInput_Education({
   userData,
   setUserData,
-  resetData,
+  resetData, // remove?
 }) {
   const setFocusElementInfo = FocusHandler();
 
@@ -21,31 +21,23 @@ export default function InfoInput_Education({
               setFocusElementInfo
             )}
 
-            <button
-              className="delete-education-button"
-              onClick={() =>
-                // need add to dataHandler
-                setUserData({
-                  ...userData,
-                  education: userData.education.filter(
-                    (filterEd) => filterEd.id !== thisEd.id
-                  ),
-                })
-              }
-            >
-              xxxxxxxxxxxxx
-            </button>
+            <GetDataButton
+              btnType={"delete"}
+              userData={userData}
+              setUserData={setUserData}
+              level_0_key={"education"}
+              level_1_id={thisEd.id}
+            />
           </div>
         );
       })}
 
-      {/* add education button______________________________________________________________ */}
-      {componentBuilder.getAddSectionButton(
-        userData,
-        setUserData,
-        resetData,
-        "education"
-      )}
+      <GetDataButton
+        btnType={"add"}
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"education"}
+      />
     </div>
   );
 }

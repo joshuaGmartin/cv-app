@@ -12,6 +12,11 @@ todo:
 -inline the input list for space saving
 -fix scrolling on resume or inputs
 -focus on new section add
+-change position of sections ^ or v
+
+bugs:
+-new ed section min/conc bug
+-"Awards:" shows if gpa is ""
 
 on:
 -workEx inputs dataHandle integration

@@ -1,7 +1,7 @@
 import { resetData } from "./userData";
 
 // =======================================================================================
-// main function
+// main functions
 // =======================================================================================
 
 /*
@@ -19,26 +19,58 @@ args = {
   */
 
 export function changeData(args) {
-  switch (args.level_0_key) {
-    case "personal":
-      return changePersonalData(args);
-    case "education":
-      return changeEducationData(args);
-    case "workExperience":
-      return changeWorkExperienceData(args);
-    case "skillsAndInt":
-      return changeSkillsAndIntData(args);
-    default:
-      console.error(
-        args.level_0_key + " does not exist in data base as top level key"
-      );
-      return;
+  //handle add/delete
+  if (args.btnType) {
+    //handle error
+    const btnTypes = ["add", "delete"];
+
+    if (!btnTypes.includes(args.btnType))
+      console.error("Button type does not exist.");
+
+    switch (args.level_0_key) {
+      case "personal":
+        return;
+      case "education":
+        return addDelEducationData(args);
+      case "workExperience":
+        return addDelWorkExperienceData(args);
+      case "skillsAndInt":
+        return;
+      default:
+        console.error(
+          args.level_0_key + " does not exist in data base as top level key"
+        );
+        return;
+    }
+  }
+
+  // handle inputs
+  else {
+    switch (args.level_0_key) {
+      case "personal":
+        return changePersonalData(args);
+      case "education":
+        return changeEducationData(args);
+      case "workExperience":
+        return changeWorkExperienceData(args);
+      case "skillsAndInt":
+        return changeSkillsAndIntData(args);
+      default:
+        console.error(
+          args.level_0_key + " does not exist in data base as top level key"
+        );
+        return;
+    }
   }
 }
 
 // =======================================================================================
-// secondary function
+// secondary functions
 // =======================================================================================
+
+// ----------------------------------------------
+// inputs
+// ----------------------------------------------
 
 function changePersonalData(args) {
   change_level_0_textData(args);
@@ -96,11 +128,36 @@ function changeSkillsAndIntData(args) {
   return change_level_0_listData(args);
 }
 
+// ----------------------------------------------
+// add/delete
+// ----------------------------------------------
+
+function addDelEducationData(args) {
+  switch (args.btnType) {
+    case "delete":
+      if (args.level_1_key) return deleteIn_level_1(args);
+      else return deleteIn_level_0(args);
+    case "add":
+      if (args.level_1_key) return addIn_level_1(args);
+      else return addIn_level_0(args);
+  }
+
+  return;
+}
+
+function addDelWorkExperienceData(args) {
+  return;
+}
+
 // =======================================================================================
 // helper functions
 // =======================================================================================
 
-// ====================== level 0 ======================
+// ----------------------------------------------
+// inputs
+// ----------------------------------------------
+
+// ************** level 0 **************
 
 function change_level_0_textData(args) {
   let changeValue = args.e.target.value;
@@ -139,7 +196,7 @@ function change_level_0_listData(args) {
   return;
 }
 
-// ====================== level 1 ======================
+// ************** level 1 **************
 
 function change_level_1_textData(args) {
   const thisEd = args.userData.education.find(
@@ -201,13 +258,6 @@ function change_level_1_booleanData(args) {
     let newChoiceKey = "minor";
     let oldChoiceKey = "concentration";
 
-    //test
-    console.log("=============================");
-    console.log("minor");
-    console.log(args.userData.education[0].minor);
-    console.log("concentration");
-    console.log(args.userData.education[0].concentration);
-
     if (args.level_1_key === "concentration") {
       newChoiceKey = "concentration";
       oldChoiceKey = "minor";
@@ -246,70 +296,28 @@ function change_level_1_booleanData(args) {
 }
 
 function change_level_1_listData(args) {
-  // handle delete
-  if (args.btnType === "delete") {
-    args.setUserData({
-      ...args.userData,
-      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-        if (level_1_map.id === args.level_1_id) {
-          return {
-            ...level_1_map,
-            [args.level_1_key]: level_1_map[args.level_1_key].filter(
-              (_, filterIndex) => args.listIndexToChange !== filterIndex
-            ),
-          };
-        } else return level_1_map;
-      }),
-    });
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+      if (level_1_map.id === args.level_1_id) {
+        return {
+          ...level_1_map,
+          [args.level_1_key]: level_1_map[args.level_1_key].map(
+            (listItemMap, index) => {
+              if (index === args.listIndexToChange) {
+                return args.e.target.value;
+              } else return listItemMap;
+            }
+          ),
+        };
+      } else return level_1_map;
+    }),
+  });
 
-    return;
-  }
-
-  // handle add
-  else if (args.btnType === "add") {
-    args.setUserData({
-      ...args.userData,
-      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-        if (level_1_map.id === args.level_1_id) {
-          return {
-            ...level_1_map,
-            [args.level_1_key]: [
-              ...level_1_map[args.level_1_key],
-              resetData[args.level_0_key][0][args.level_1_key],
-            ],
-          };
-        } else return level_1_map;
-      }),
-    });
-
-    return;
-  }
-
-  //handle all other
-  else {
-    args.setUserData({
-      ...args.userData,
-      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-        if (level_1_map.id === args.level_1_id) {
-          return {
-            ...level_1_map,
-            [args.level_1_key]: level_1_map[args.level_1_key].map(
-              (listItemMap, index) => {
-                if (index === args.listIndexToChange) {
-                  return args.e.target.value;
-                } else return listItemMap;
-              }
-            ),
-          };
-        } else return level_1_map;
-      }),
-    });
-
-    return;
-  }
+  return;
 }
 
-// ====================== level 2 ======================
+// ************** level 2 **************
 
 function change_level_2_textData(args) {
   args.setUserData({
@@ -366,3 +374,76 @@ function change_level_2_listData(args) {
 
   return;
 }
+
+// ----------------------------------------------
+// add/delete
+// ----------------------------------------------
+
+// ************** level 0 **************
+
+function deleteIn_level_0(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].filter(
+      (level_1_map) => level_1_map.id !== args.level_1_id
+    ),
+  });
+
+  return;
+}
+
+function addIn_level_0(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: [
+      ...args.userData[args.level_0_key],
+      {
+        ...resetData[args.level_0_key][0],
+        id: crypto.randomUUID(),
+      },
+    ],
+  });
+
+  return;
+}
+
+// ************** level 1 **************
+
+function deleteIn_level_1(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+      if (level_1_map.id === args.level_1_id) {
+        return {
+          ...level_1_map,
+          [args.level_1_key]: level_1_map[args.level_1_key].filter(
+            (_, filterIndex) => args.listIndexToChange !== filterIndex
+          ),
+        };
+      } else return level_1_map;
+    }),
+  });
+
+  return;
+}
+
+function addIn_level_1(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+      if (level_1_map.id === args.level_1_id) {
+        return {
+          ...level_1_map,
+          [args.level_1_key]: [
+            ...level_1_map[args.level_1_key],
+            resetData[args.level_0_key][0][args.level_1_key],
+          ],
+        };
+      } else return level_1_map;
+    }),
+  });
+
+  return;
+}
+
+// ************** level 2 **************

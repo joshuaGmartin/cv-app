@@ -1,5 +1,4 @@
 import { changeData } from "./dataHandler.js";
-import { FocusHandler } from "../modules/Helper.jsx";
 
 /* 
 templates:
@@ -30,11 +29,15 @@ templates:
 
 */
 
-// =======================================================================================
+// ======================================================================================
 // main functions
-// =======================================================================================
+// ======================================================================================
+
+// ----------------------------------------------
+// inputs
+// ----------------------------------------------
+
 export function GetDataInput({
-  e = null,
   userData = null,
   setUserData = null,
   level_0_key = null,
@@ -71,6 +74,10 @@ export function GetDataInput({
       return;
   }
 }
+
+// ----------------------------------------------
+// buttons
+// ----------------------------------------------
 
 export function GetDataButton({
   btnType = null,
@@ -112,7 +119,9 @@ export function GetDataButton({
 // secondary functions
 // =======================================================================================
 
-// ====================== inputs ======================
+// ----------------------------------------------
+// inputs
+// ----------------------------------------------
 
 function getPersonalInput(args) {
   return get_level_0_textInput(args);
@@ -172,57 +181,58 @@ function getSkillsAndIntInput(args) {
   return get_level_0_listInput(args);
 }
 
-// ====================== buttons ======================
+// ----------------------------------------------
+// buttons
+// ----------------------------------------------
 
 function getDeleteButton(args) {
-  return (
-    <button
-      className={`delete-${args.level_1_key}-button`}
-      onClick={() => changeData(args)}
-    >
-      {"[ X ]"}
-    </button>
-  );
+  // handle delete level 2 object
+  if (args.level_2_key) {
+    return get_level_2_deleteButton(args);
+  }
+
+  // handle delete level 1 object
+  else if (args.level_1_key) {
+    return get_level_1_deleteButton(args);
+  }
+
+  // else handle delete level 0 object
+  else {
+    return get_level_0_deleteButton(args);
+  }
 }
 
 function getAddButton(args) {
-  let buttonText = args.level_1_key;
-  switch (args.level_1_key) {
-    case "awards":
-      buttonText = "award";
-      break;
-    case "coursework":
-      buttonText = "course";
-      break;
+  // handle add level 2 object
+  if (args.level_2_key) {
+    return get_level_2_addButton(args);
   }
 
-  return (
-    <button
-      className={`delete-${args.level_1_key}-button`}
-      onClick={() => {
-        args.setFocusElementInfo({
-          focusElm_id: args.level_1_id,
-          focusElm_section: args.level_0_key,
-          focusElm_list: args.level_1_key,
-        });
-        changeData(args);
-      }}
-    >
-      {"add " + buttonText}
-    </button>
-  );
+  // else handle add level 1 object
+  else if (args.level_1_key) {
+    return get_level_1_addButton(args);
+  }
+
+  // else handle add level 0 object
+  else {
+    return get_level_0_addButton(args);
+  }
 }
 
 // =======================================================================================
 // helper functions
 // =======================================================================================
 
-//temp fix
+//temp fix, delete later
 export function getTextInput(args) {
   return; // NOT THIS ONE
 }
 
-// ====================== level 0 ======================
+// ----------------------------------------------
+// inputs
+// ----------------------------------------------
+
+// ************** level 0 **************
 
 function get_level_0_textInput(args) {
   let inputValue = args.userData[args.level_0_key][args.level_1_key];
@@ -277,7 +287,7 @@ function get_level_0_listInput(args) {
   );
 }
 
-// ====================== level 1 ======================
+// ************** level 1 **************
 
 function get_level_1_textInput(args, this_level_1) {
   let inputValue;
@@ -440,7 +450,7 @@ function get_level_1_listItemInput(args, this_level_1) {
   );
 }
 
-// ====================== level 2 ======================
+// ************** level 2 **************
 
 function get_level_2_textInput(args, this_level_1) {
   const this_level_2 = get_this_level_2(args, this_level_1);
@@ -478,10 +488,101 @@ function get_level_2_listItemInput(args, this_level_1) {
   );
 }
 
-// ====================== util ======================
+// ----------------------------------------------
+// buttons
+// ----------------------------------------------
+
+// ************** level 0 **************
+
+function get_level_0_deleteButton(args) {
+  return (
+    <button
+      className={`delete-${args.level_0_key}-button`}
+      onClick={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    >
+      delete {args.level_0_key}
+    </button>
+  );
+}
+
+function get_level_0_addButton(args) {
+  return (
+    <button
+      className={`add-${args.level_0_key}-button`}
+      onClick={(e) =>
+        changeData({
+          ...args,
+          e: e,
+        })
+      }
+    >
+      add {args.level_0_key}
+    </button>
+  );
+}
+
+// ************** level 1 **************
+
+function get_level_1_deleteButton(args) {
+  return (
+    <button
+      className={`delete-${args.level_1_key}-button`}
+      onClick={() => changeData(args)}
+    >
+      {"[ X ]"}
+    </button>
+  );
+}
+
+function get_level_1_addButton(args) {
+  let buttonText = args.level_0_key;
+  switch (args.level_1_key) {
+    case "awards":
+      buttonText = "award";
+      break;
+    case "coursework":
+      buttonText = "course";
+      break;
+  }
+
+  return (
+    <button
+      className={`add-${args.level_1_key}-button`}
+      onClick={() => {
+        args.setFocusElementInfo({
+          focusElm_id: args.level_1_id,
+          focusElm_section: args.level_0_key,
+          focusElm_list: args.level_1_key,
+        });
+        changeData(args);
+      }}
+    >
+      {"add " + buttonText}
+    </button>
+  );
+}
+
+// ************** level 2 **************
+
+function get_level_2_deleteButton(args) {
+  return;
+}
+
+function get_level_2_addButton(args) {
+  return;
+}
+
+// =======================================================================================
+// util
+// =======================================================================================
 
 function get_this_level_1(args) {
-  return args.userData.education.find(
+  return args.userData[args.level_0_key].find(
     (this_level_1_map) => this_level_1_map.id === args.level_1_id
   );
 }
