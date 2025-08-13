@@ -301,6 +301,7 @@ function get_level_1_textInput(args, this_level_1) {
         case "minorOrConc":
           temp_level_1_key = "minor"; // auto assign key to minor and then check for concentration
           if (!this_level_1.minor && this_level_1.minor !== "") {
+            // empty string is false in boolean
             temp_level_1_key = "concentration";
           }
           inputValue = this_level_1[temp_level_1_key];

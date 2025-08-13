@@ -78,7 +78,7 @@ function educationListSection(thisEd) {
 
       edAwards = (
         <>
-          {!thisEd.gpa ? <b>Awards: </b> : null}
+          {!thisEd.gpa && thisEd.gpa !== "" ? <b>Awards: </b> : null}
           {awardsString}
         </>
       );

@@ -208,7 +208,8 @@ function change_level_1_textData(args) {
       switch (args.level_1_key) {
         case "minorOrConc":
           args.level_1_key = "minor"; // auto assign key to minor and then check for concentration
-          if (!thisEd.minor) {
+          // empty string is boolean false
+          if (!thisEd.minor && thisEd.minor !== "") {
             args.level_1_key = "concentration";
           }
           break;

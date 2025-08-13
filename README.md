@@ -15,8 +15,7 @@ todo:
 -change position of sections ^ or v
 
 bugs:
--new ed section min/conc bug
--"Awards:" shows if gpa is ""
+
 
 on:
 -workEx inputs dataHandle integration
