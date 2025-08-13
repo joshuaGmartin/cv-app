@@ -10,7 +10,8 @@ todo:
 -key for the key results and duty keys can repeat if user repeats (unlikely?)
 -add gitHub repo link
 -inline the input list for space saving
--enable scrolling on resume
+-fix scrolling on resume or inputs
+-focus on new section add
 
 on:
 -workEx inputs dataHandle integration

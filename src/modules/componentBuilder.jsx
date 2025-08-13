@@ -290,7 +290,7 @@ function get_level_1_textInput(args, this_level_1) {
       switch (args.level_1_key) {
         case "minorOrConc":
           temp_level_1_key = "minor"; // auto assign key to minor and then check for concentration
-          if (!this_level_1.minor) {
+          if (!this_level_1.minor && this_level_1.minor !== "") {
             temp_level_1_key = "concentration";
           }
           inputValue = this_level_1[temp_level_1_key];
@@ -309,6 +309,9 @@ function get_level_1_textInput(args, this_level_1) {
   switch (args.level_0_key) {
     case "education":
       switch (args.level_1_key) {
+        case "minorOrConc":
+          placeholder = "minor/concentration";
+          break;
         case "gradYear":
           placeholder = "graduation year";
           break;
@@ -372,7 +375,10 @@ function get_level_1_radioInput(args, this_level_1) {
         id={this_level_1.id + "-" + args.level_1_key}
         name={name}
         type="radio"
-        checked={this_level_1[args.level_1_key]}
+        checked={
+          this_level_1[args.level_1_key] ||
+          this_level_1[args.level_1_key] === ""
+        }
         onChange={(e) =>
           changeData({
             ...args,

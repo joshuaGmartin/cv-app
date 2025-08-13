@@ -201,6 +201,13 @@ function change_level_1_booleanData(args) {
     let newChoiceKey = "minor";
     let oldChoiceKey = "concentration";
 
+    //test
+    console.log("=============================");
+    console.log("minor");
+    console.log(args.userData.education[0].minor);
+    console.log("concentration");
+    console.log(args.userData.education[0].concentration);
+
     if (args.level_1_key === "concentration") {
       newChoiceKey = "concentration";
       oldChoiceKey = "minor";
