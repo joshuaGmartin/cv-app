@@ -20,7 +20,6 @@ export default function InfoInput_Education({
               setUserData,
               setFocusElementInfo
             )}
-
             <GetDataButton
               btnType={"delete"}
               userData={userData}

@@ -7,12 +7,13 @@ todo:
 -reset button
 -load josh data button
 -print button
--key for the key results and duty keys can repeat if user repeats (unlikely?)
+-key for the key results and duty keys can repeat if user repeats (unlikely?)???????
 -add gitHub repo link
 -inline the input list for space saving
 -fix scrolling on resume or inputs
 -focus on new section add
 -change position of sections ^ or v
+-delete all unused formulas after data handler integration
 
 bugs:
 

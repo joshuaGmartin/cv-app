@@ -1,3 +1,4 @@
+import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
 import * as componentBuilder from "../modules/componentBuilder.jsx";
 import { FocusHandler } from "../modules/Helper.jsx";
 
@@ -12,7 +13,7 @@ export default function InfoInput_WorkExp({
     <div className="InfoInput_WorkExp">
       {userData.workExperience.map((thisWork) => {
         return (
-          <div key={thisWork.id} className="work-exp-section">
+          <div key={thisWork.id} className="work-exp-section" id={thisWork.id}>
             {getWorkExpInputs(
               thisWork,
               userData,
@@ -20,15 +21,23 @@ export default function InfoInput_WorkExp({
               setFocusElementInfo,
               resetData
             )}
+            <GetDataButton
+              btnType={"delete"}
+              userData={userData}
+              setUserData={setUserData}
+              level_0_key={"workExperience"}
+              level_1_id={thisWork.id}
+            />
           </div>
         );
       })}
-      {componentBuilder.getAddSectionButton(
-        userData,
-        setUserData,
-        resetData,
-        "workExperience"
-      )}
+      {/* check this <--------------------------------------------------- */}
+      <GetDataButton
+        btnType={"add"}
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"workExperience"}
+      />
     </div>
   );
 }
@@ -57,32 +66,29 @@ function getWorkExpInputs(
 function getWorkExpInputs_topLines(thisWork, userData, setUserData) {
   return (
     <div className="work-exp-top-lines-inputs">
-      {componentBuilder.getTextInput(
-        thisWork,
-        "employer",
-        userData,
-        setUserData,
-        thisWork.id + "-employer-input",
-        "workExperience"
-      )}
+      <GetDataInput
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"workExperience"}
+        level_1_key={"employer"}
+        level_1_id={thisWork.id}
+      />
 
       <div className="work-exp-section-time">
-        {componentBuilder.getTextInput(
-          thisWork,
-          "totalTimeStart",
-          userData,
-          setUserData,
-          thisWork.id + "-totalTimeStart-input",
-          "workExperience"
-        )}
-        {componentBuilder.getTextInput(
-          thisWork,
-          "totalTimeEnd",
-          userData,
-          setUserData,
-          thisWork.id + "-totalTimeEnd-input",
-          "workExperience"
-        )}
+        <GetDataInput
+          userData={userData}
+          setUserData={setUserData}
+          level_0_key={"workExperience"}
+          level_1_key={"totalTimeStart"}
+          level_1_id={thisWork.id}
+        />
+        <GetDataInput
+          userData={userData}
+          setUserData={setUserData}
+          level_0_key={"workExperience"}
+          level_1_key={"totalTimeEnd"}
+          level_1_id={thisWork.id}
+        />
       </div>
     </div>
   );
@@ -99,53 +105,58 @@ function getWorkExpInputs_jobSection(
     <>
       {thisWork.jobsInfo.map((thisJob) => {
         return (
-          <div key={thisJob.id} className="work-exp-job-section">
-            {componentBuilder.getTextInput_nested1(
-              userData,
-              setUserData,
-              thisWork,
-              "workExperience",
-              thisJob,
-              "jobsInfo",
-              "position",
-              thisWork.id + "-position-input"
-            )}
+          <div
+            key={thisJob.id}
+            className="work-exp-job-section"
+            id={thisJob.id}
+          >
+            <GetDataInput
+              userData={userData}
+              setUserData={setUserData}
+              level_0_key={"workExperience"}
+              level_1_key={"jobsInfo"}
+              level_1_id={thisWork.id}
+              level_2_key={"position"}
+              level_2_id={thisJob.id}
+              listIndexToChange={""}
+            />
 
             {thisWork.jobsInfo.length > 1 ? (
-              <>
-                {componentBuilder.getTextInput_nested1(
-                  userData,
-                  setUserData,
-                  thisWork,
-                  "workExperience",
-                  thisJob,
-                  "jobsInfo",
-                  "timeStart",
-                  thisWork.id + "-timeStart-input"
-                )}
-                {componentBuilder.getTextInput_nested1(
-                  userData,
-                  setUserData,
-                  thisWork,
-                  "workExperience",
-                  thisJob,
-                  "jobsInfo",
-                  "timeEnd",
-                  thisWork.id + "-timeEnd-input"
-                )}
-              </>
+              <div className="job-exp-section-time">
+                <GetDataInput
+                  userData={userData}
+                  setUserData={setUserData}
+                  level_0_key={"workExperience"}
+                  level_1_key={"jobsInfo"}
+                  level_1_id={thisWork.id}
+                  level_2_key={"timeStart"}
+                  level_2_id={thisJob.id}
+                  listIndexToChange={""}
+                />
+                <GetDataInput
+                  userData={userData}
+                  setUserData={setUserData}
+                  level_0_key={"workExperience"}
+                  level_1_key={"jobsInfo"}
+                  level_1_id={thisWork.id}
+                  level_2_key={"timeEnd"}
+                  level_2_id={thisJob.id}
+                  listIndexToChange={""}
+                />
+              </div>
             ) : null}
 
-            {componentBuilder.getTextInput_nested1(
-              userData,
-              setUserData,
-              thisWork,
-              "workExperience",
-              thisJob,
-              "jobsInfo",
-              "location",
-              thisWork.id + "-location-input"
-            )}
+            <div className="wrapper">
+              <GetDataInput
+                userData={userData}
+                setUserData={setUserData}
+                level_0_key={"workExperience"}
+                level_1_key={"jobsInfo"}
+                level_1_id={thisWork.id}
+                level_2_key={"location"}
+                level_2_id={thisJob.id}
+              />
+            </div>
             {getWorkExpInputs_listInputs(
               thisWork,
               thisJob,
@@ -153,6 +164,8 @@ function getWorkExpInputs_jobSection(
               setUserData,
               setFocusElementInfo
             )}
+
+            {/* delete job button */}
           </div>
         );
       })}
@@ -175,24 +188,105 @@ function getWorkExpInputs_listInputs(
   setUserData,
   setFocusElementInfo
 ) {
+  const workExpListKeys = ["duties", "stack", "keyResults"];
+
   return (
-    <div className="work-exp-list-inputs">
-      <div className="work-exp-duties">
-        duties:
-        {thisJob.duties.map((thisDuty, index) => {
-          return (
-            <div className="job-duty" key={index}>
-              <textarea
-                className="job-duty-description-input"
-                placeholder="job duty description"
-                value={thisDuty}
-                onChange={() => console.log()}
-                // onChange={() => {}}
-              ></textarea>
+    <div className="jobsInfo-input-lists">
+      {workExpListKeys.map((workExpListKey, topIndex) => {
+        return (
+          <div
+            key={"workExpListKey" + topIndex}
+            className={`jobsInfo-input-list-${workExpListKey}`}
+          >
+            <div className="list-item-inputs">
+              {workExpListKey === "keyResults" ? "key results" : workExpListKey}
+              {": "}
+              {thisJob[workExpListKey].map((_, index) => {
+                return (
+                  <div className={workExpListKey + "-list-item"} key={index}>
+                    <GetDataInput
+                      userData={userData}
+                      setUserData={setUserData}
+                      level_0_key={"workExperience"}
+                      level_1_key={"jobsInfo"}
+                      level_1_id={thisWork.id}
+                      level_2_key={workExpListKey}
+                      level_2_id={thisJob.id}
+                      listIndexToChange={index}
+                    />
+                    <GetDataButton
+                      btnType={"delete"}
+                      userData={userData}
+                      setUserData={setUserData}
+                      level_0_key={"workExperience"}
+                      level_1_key={"jobsInfo"}
+                      level_1_id={thisWork.id}
+                      level_2_key={workExpListKey}
+                      level_2_id={thisJob.id}
+                      listIndexToChange={index}
+                      setFocusElementInfo={setFocusElementInfo}
+                    />
+                  </div>
+                );
+              })}
+              <GetDataButton
+                btnType={"add"}
+                userData={userData}
+                setUserData={setUserData}
+                level_0_key={"workExperience"}
+                level_1_key={"jobsInfo"}
+                level_1_id={thisWork.id}
+                level_2_key={workExpListKey}
+                level_2_id={thisJob.id}
+                setFocusElementInfo={setFocusElementInfo}
+              />
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
+
+// <div className="list-item-inputs">
+//               duties:
+//               {thisJob.duties.map((_, index) => {
+//                 return (
+//                   <div className="job-duty" key={index}>
+//                     <GetDataInput
+//                       userData={userData}
+//                       setUserData={setUserData}
+//                       level_0_key={"workExperience"}
+//                       level_1_key={"jobsInfo"}
+//                       level_1_id={thisWork.id}
+//                       level_2_key={"duties"}
+//                       level_2_id={thisJob.id}
+//                       listIndexToChange={index}
+//                     />
+//                     <GetDataButton
+//                       btnType={"delete"}
+//                       userData={userData}
+//                       setUserData={setUserData}
+//                       level_0_key={"workExperience"}
+//                       level_1_key={"jobsInfo"}
+//                       level_1_id={thisWork.id}
+//                       level_2_key={"duties"}
+//                       level_2_id={thisJob.id}
+//                       listIndexToChange={index}
+//                       setFocusElementInfo={setFocusElementInfo}
+//                     />
+//                   </div>
+//                 );
+//               })}
+//               <GetDataButton
+//                 btnType={"add"}
+//                 userData={userData}
+//                 setUserData={setUserData}
+//                 level_0_key={"workExperience"}
+//                 level_1_key={"jobsInfo"}
+//                 level_1_id={thisWork.id}
+//                 level_2_key={"duties"}
+//                 level_2_id={thisJob.id}
+//                 setFocusElementInfo={setFocusElementInfo}
+//               />
+//             </div>

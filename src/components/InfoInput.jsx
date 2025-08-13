@@ -47,17 +47,17 @@ export default function InfoInput({ userData, setUserData, resetData }) {
           //   resetData={resetData}
           // />
 
-          <InfoInput_Education
-            userData={userData}
-            setUserData={setUserData}
-            resetData={resetData}
-          />
-
-          // <InfoInput_WorkExp
+          // <InfoInput_Education
           //   userData={userData}
           //   setUserData={setUserData}
           //   resetData={resetData}
           // />
+
+          <InfoInput_WorkExp
+            userData={userData}
+            setUserData={setUserData}
+            resetData={resetData}
+          />
 
           // <InfoInput_SkillsAndInt
           //   userData={userData}

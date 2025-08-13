@@ -146,6 +146,17 @@ function addDelEducationData(args) {
 }
 
 function addDelWorkExperienceData(args) {
+  switch (args.btnType) {
+    case "delete":
+      if (args.level_2_key) return deleteIn_level_2(args);
+      else if (args.level_1_key) return deleteIn_level_1(args);
+      else return deleteIn_level_0(args);
+    case "add":
+      if (args.level_2_key) return addIn_level_2(args);
+      if (args.level_1_key) return addIn_level_1(args);
+      else return addIn_level_0(args);
+  }
+
   return;
 }
 
@@ -437,7 +448,8 @@ function addIn_level_1(args) {
           ...level_1_map,
           [args.level_1_key]: [
             ...level_1_map[args.level_1_key],
-            resetData[args.level_0_key][0][args.level_1_key],
+            "",
+            // resetData[args.level_0_key][0][args.level_1_key],
           ],
         };
       } else return level_1_map;
@@ -448,3 +460,55 @@ function addIn_level_1(args) {
 }
 
 // ************** level 2 **************
+
+function deleteIn_level_2(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+      if (level_1_map.id === args.level_1_id) {
+        return {
+          ...level_1_map,
+          [args.level_1_key]: level_1_map[args.level_1_key].map(
+            (level_2_map) => {
+              if (level_2_map.id === args.level_2_id) {
+                return {
+                  ...level_2_map,
+                  [args.level_2_key]: level_2_map[args.level_2_key].filter(
+                    (_, filterIndex) => args.listIndexToChange !== filterIndex
+                  ),
+                };
+              } else return level_2_map;
+            }
+          ),
+        };
+      } else return level_1_map;
+    }),
+  });
+
+  return;
+}
+
+function addIn_level_2(args) {
+  args.setUserData({
+    ...args.userData,
+    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+      if (level_1_map.id === args.level_1_id) {
+        return {
+          ...level_1_map,
+          [args.level_1_key]: level_1_map[args.level_1_key].map(
+            (level_2_map) => {
+              if (level_2_map.id === args.level_2_id) {
+                return {
+                  ...level_2_map,
+                  [args.level_2_key]: [...level_2_map[args.level_2_key], ""],
+                };
+              } else return level_2_map;
+            }
+          ),
+        };
+      } else return level_1_map;
+    }),
+  });
+
+  return;
+}

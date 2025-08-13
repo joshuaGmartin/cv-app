@@ -45,16 +45,19 @@ export default function ResumePortion_WorkExp({ userData }) {
                         {semiColonList(thisJob.stack)}
                       </li>
                     ) : null}
-                    {thisJob.keyResults.length > 0
-                      ? thisJob.keyResults.map((keyResult) => {
-                          return (
-                            <li key={keyResult}>
-                              <b>Key Results: </b>
-                              {keyResult}
-                            </li>
-                          );
-                        })
-                      : null}
+                    {getKeyResultsLine(thisJob)}
+                    {/* {thisJob.keyResults.length > 0 ? (
+                      <>
+                        <li>
+                          <b>Key Results: </b>
+                          <ul className="key-results-list">
+                            {thisJob.keyResults.map((keyResult) => {
+                              return <li key={keyResult}>{keyResult}</li>;
+                            })}
+                          </ul>
+                        </li>
+                      </>
+                    ) : null} */}
                   </ul>
                 </div>
               );
@@ -77,4 +80,28 @@ function semiColonList(list) {
   });
 
   return formattedList;
+}
+
+function getKeyResultsLine(thisJob) {
+  if (thisJob.keyResults.length === 0) return;
+  if (thisJob.keyResults.length === 1) {
+    return (
+      <li>
+        <b>Key Results: </b>
+        {thisJob.keyResults[0]}{" "}
+      </li>
+    );
+  }
+  if (thisJob.keyResults.length > 1) {
+    return (
+      <li>
+        <b>Key Results: </b>
+        <ul className="key-results-list">
+          {thisJob.keyResults.map((keyResult, index) => {
+            return <li key={index}>{keyResult}</li>;
+          })}
+        </ul>
+      </li>
+    );
+  }
 }

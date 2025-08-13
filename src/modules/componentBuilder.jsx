@@ -8,9 +8,9 @@ templates:
   setUserData={setUserData}
   level_0_key={""}
   level_1_key={""}
-  level_1_id={""}
+  level_1_id={}
   level_2_key={""}
-  level_2_id={""}
+  level_2_id={}
   listIndexToChange={""}
 />
 
@@ -20,9 +20,9 @@ templates:
   setUserData={setUserData}
   level_0_key={""}
   level_1_key={""}
-  level_1_id={""}
+  level_1_id={}
   level_2_key={""}
-  level_2_id={""}
+  level_2_id={}
   listIndexToChange={""}
   setFocusElementInfo={setFocusElementInfo}
 />
@@ -473,20 +473,54 @@ function get_level_2_textInput(args, this_level_1) {
 
 function get_level_2_listItemInput(args, this_level_1) {
   const this_level_2 = get_this_level_2(args, this_level_1);
+  let placeholder = args.level_2_key;
 
-  return (
-    <textarea
-      type="text"
-      placeholder={args.level_2_key}
-      value={this_level_2[args.level_2_key][args.listIndexToChange]}
-      onChange={(e) =>
-        changeData({
-          ...args,
-          e: e,
-        })
-      }
-    />
-  );
+  switch (args.level_2_key) {
+    case "duties":
+      placeholder = "duty";
+      break;
+    case "keyResults":
+      placeholder = "key result";
+      break;
+  }
+
+  //handle textarea inputs
+  if (
+    args.level_0_key === "workExperience" &&
+    args.level_1_key === "jobsInfo" &&
+    (args.level_2_key === "duties" || args.level_2_key === "keyResults")
+  ) {
+    return (
+      <textarea
+        type="text"
+        placeholder={placeholder}
+        value={this_level_2[args.level_2_key][args.listIndexToChange]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    );
+  }
+
+  // handle other inputs
+  else {
+    return (
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={this_level_2[args.level_2_key][args.listIndexToChange]}
+        onChange={(e) =>
+          changeData({
+            ...args,
+            e: e,
+          })
+        }
+      />
+    );
+  }
 }
 
 // ----------------------------------------------
@@ -496,9 +530,14 @@ function get_level_2_listItemInput(args, this_level_1) {
 // ************** level 0 **************
 
 function get_level_0_deleteButton(args) {
+  let btnLabel = args.level_0_key;
+
+  //handle special
+  if (args.level_0_key === "workExperience") btnLabel = "experience";
+
   return (
     <button
-      className={`delete-${args.level_0_key}-button`}
+      className={`delete-${args.level_0_key}-button delete-in-level-0-button`}
       onClick={(e) =>
         changeData({
           ...args,
@@ -506,12 +545,17 @@ function get_level_0_deleteButton(args) {
         })
       }
     >
-      delete {args.level_0_key}
+      delete {btnLabel}
     </button>
   );
 }
 
 function get_level_0_addButton(args) {
+  let btnLabel = args.level_0_key;
+
+  //handle special
+  if (args.level_0_key === "workExperience") btnLabel = "experience";
+
   return (
     <button
       className={`add-${args.level_0_key}-button`}
@@ -522,7 +566,7 @@ function get_level_0_addButton(args) {
         })
       }
     >
-      add {args.level_0_key}
+      add {btnLabel}
     </button>
   );
 }
@@ -571,11 +615,43 @@ function get_level_1_addButton(args) {
 // ************** level 2 **************
 
 function get_level_2_deleteButton(args) {
-  return;
+  return (
+    <button
+      className={`delete-${args.level_1_key}-${args.level_2_key}-button`}
+      onClick={() => changeData(args)}
+    >
+      {"[ X ]"}
+    </button>
+  );
 }
 
 function get_level_2_addButton(args) {
-  return;
+  let buttonText = args.level_2_key;
+  switch (args.level_2_key) {
+    case "duties":
+      buttonText = "duty";
+      break;
+    case "keyResults":
+      buttonText = "key result";
+      break;
+  }
+
+  return (
+    <button
+      className={`add-${args.level_1_key}-${args.level_2_key}-button`}
+      onClick={() => {
+        // fix <----------------------------------------------------------
+        args.setFocusElementInfo({
+          focusElm_id: args.level_2_id,
+          focusElm_section: args.level_1_key,
+          focusElm_list: args.level_2_key,
+        });
+        changeData(args);
+      }}
+    >
+      {"add " + buttonText}
+    </button>
+  );
 }
 
 // =======================================================================================

@@ -31,8 +31,7 @@ export function FocusHandler() {
 
     inputCollectionElm
       .querySelector("div:last-of-type")
-      .querySelector("input")
-      .focus();
+      .firstElementChild.focus();
 
     console.log(inputCollectionElm);
 
