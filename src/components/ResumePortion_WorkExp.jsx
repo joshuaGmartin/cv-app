@@ -46,18 +46,6 @@ export default function ResumePortion_WorkExp({ userData }) {
                       </li>
                     ) : null}
                     {getKeyResultsLine(thisJob)}
-                    {/* {thisJob.keyResults.length > 0 ? (
-                      <>
-                        <li>
-                          <b>Key Results: </b>
-                          <ul className="key-results-list">
-                            {thisJob.keyResults.map((keyResult) => {
-                              return <li key={keyResult}>{keyResult}</li>;
-                            })}
-                          </ul>
-                        </li>
-                      </>
-                    ) : null} */}
                   </ul>
                 </div>
               );

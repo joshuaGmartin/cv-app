@@ -18,7 +18,11 @@ export function FocusHandler() {
     focusElm_list: null,
   });
 
+  // this could stand to be refactored into level_0, 1, 2
   function handleFocusChange(focusElementInfo) {
+    // add section focus functionality later
+    if (focusElementInfo.focusElm_list === "jobsInfo") return;
+
     const parentFocusElm = document.getElementById(
       focusElementInfo.focusElm_id
     );

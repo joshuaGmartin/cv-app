@@ -223,11 +223,6 @@ function getAddButton(args) {
 // helper functions
 // =======================================================================================
 
-//temp fix, delete later
-export function getTextInput(args) {
-  return; // NOT THIS ONE
-}
-
 // ----------------------------------------------
 // inputs
 // ----------------------------------------------
@@ -574,14 +569,29 @@ function get_level_0_addButton(args) {
 // ************** level 1 **************
 
 function get_level_1_deleteButton(args) {
-  return (
-    <button
-      className={`delete-${args.level_1_key}-button`}
-      onClick={() => changeData(args)}
-    >
-      {"[ X ]"}
-    </button>
-  );
+  // handle del job section
+  if (args.level_1_key === "jobsInfo") {
+    return (
+      <button
+        className={`delete-${args.level_1_key}-button`}
+        onClick={() => changeData(args)}
+      >
+        {"delete job"}
+      </button>
+    );
+  }
+
+  // default
+  else {
+    return (
+      <button
+        className={`delete-${args.level_1_key}-button`}
+        onClick={() => changeData(args)}
+      >
+        {"[ X ]"}
+      </button>
+    );
+  }
 }
 
 function get_level_1_addButton(args) {
@@ -592,6 +602,9 @@ function get_level_1_addButton(args) {
       break;
     case "coursework":
       buttonText = "course";
+      break;
+    case "jobsInfo":
+      buttonText = "job";
       break;
   }
 
@@ -640,7 +653,6 @@ function get_level_2_addButton(args) {
     <button
       className={`add-${args.level_1_key}-${args.level_2_key}-button`}
       onClick={() => {
-        // fix <----------------------------------------------------------
         args.setFocusElementInfo({
           focusElm_id: args.level_2_id,
           focusElm_section: args.level_1_key,
@@ -667,273 +679,5 @@ function get_this_level_1(args) {
 function get_this_level_2(args, this_level_1) {
   return this_level_1[args.level_1_key].find(
     (this_level_2_map) => this_level_2_map.id === args.level_2_id
-  );
-}
-
-// OLD ========================================================================================
-
-export function getListItemInput(
-  thisListItem,
-  userData,
-  setUserData,
-  inputName,
-  listItem,
-  index,
-  listItemtype
-) {
-  let placeholder;
-  let key;
-
-  switch (listItemtype) {
-    case "award":
-      placeholder = "award/recognition";
-      key = "awards";
-      break;
-    case "course":
-      placeholder = "course";
-      key = "coursework";
-      break;
-  }
-
-  return (
-    <input
-      name={inputName}
-      type="text"
-      placeholder={placeholder}
-      value={listItem}
-      onChange={(e) =>
-        setUserData({
-          ...userData,
-          education: userData.education.map((mapEd) => {
-            if (mapEd.id === thisListItem.id) {
-              return {
-                ...mapEd,
-                [key]: mapEd[key].map((maplistItem, mapIndex) => {
-                  if (index === mapIndex) return e.target.value;
-                  else return maplistItem;
-                }),
-              };
-            } else return { ...mapEd };
-          }),
-        })
-      }
-    />
-  );
-}
-
-export function getCheckBoxInput(
-  thisListItem,
-  key,
-  userData,
-  setUserData,
-  inputName
-) {
-  let checked = thisListItem[key];
-
-  let label = key;
-  switch (key) {
-    case "currentStudent":
-      label = "current student";
-      break;
-    case "gpa":
-      label = "include GPA";
-      if (thisListItem.gpa === "") checked = true; // empty string is false in boolean
-      break;
-  }
-
-  return (
-    <label htmlFor={inputName}>
-      {label}?:{" "}
-      <input
-        id={inputName}
-        name={inputName}
-        type="checkbox"
-        checked={checked} // thisListItem[key] || thisListItem.gpa === "" ???
-        onChange={() =>
-          setUserData({
-            ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd === thisListItem) {
-                return {
-                  ...mapEd,
-                  [key]: !thisListItem[key],
-                  gpaScale:
-                    key === "gpa"
-                      ? !thisListItem.gpaScale
-                      : thisListItem.gpaScale, // could make condition to save GPA in dataBase
-                };
-              } else return { ...mapEd };
-            }),
-          })
-        }
-      />
-    </label>
-  );
-}
-
-export function getRadioInput(
-  thisListItem,
-  key,
-  userData,
-  setUserData,
-  inputName
-) {
-  let otherKey = "minor";
-  if (key === "minor") otherKey = "concentration";
-
-  return (
-    <label htmlFor={inputName}>
-      {key}:{" "}
-      <input
-        type="radio"
-        id={inputName}
-        name={inputName}
-        value={key}
-        checked={thisListItem[key] !== null}
-        onChange={() =>
-          setUserData({
-            ...userData,
-            education: userData.education.map((mapEd) => {
-              if (mapEd === thisListItem) {
-                return {
-                  ...mapEd,
-                  [key]: thisListItem[otherKey],
-                  [otherKey]: null,
-                };
-              } else return { ...mapEd };
-            }),
-          })
-        }
-      />
-    </label>
-  );
-}
-
-export function getAddSectionButton(
-  userData,
-  setUserData,
-  resetData,
-  sectionType
-) {
-  return (
-    <button
-      className={`add-${sectionType}-button`}
-      onClick={() =>
-        setUserData({
-          ...userData,
-          [sectionType]: [
-            ...userData[sectionType],
-            {
-              ...resetData[sectionType][0],
-              id: crypto.randomUUID(),
-            },
-          ],
-        })
-      }
-    >
-      ++++++++++++
-    </button>
-  );
-}
-
-// =========================================================================
-// nested updaters
-// =========================================================================
-
-export function getTextInput_nested1(
-  userData,
-  setUserData,
-  thisSection_top,
-  thisSection_top_key,
-  thisSection_nested,
-  thisSection_nested_key,
-  keyToChange,
-  inputName
-) {
-  let value = thisSection_nested[keyToChange];
-
-  // set and format placeholders
-  let placeholder = keyToChange;
-  switch (keyToChange) {
-    //test
-    case "timeStart":
-      placeholder = "when start position?";
-      break;
-    case "timeEnd":
-      placeholder = "when end position?";
-      break;
-  }
-
-  return (
-    <div>
-      <input
-        name={inputName}
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) =>
-          setUserData({
-            ...userData,
-            [thisSection_top_key]: userData[thisSection_top_key].map(
-              (topSectionMap) => {
-                if (topSectionMap.id === thisSection_top.id) {
-                  return {
-                    ...topSectionMap,
-                    [thisSection_nested_key]: topSectionMap[
-                      thisSection_nested_key
-                    ].map((nestedSectionMap) => {
-                      if (nestedSectionMap.id === thisSection_nested.id) {
-                        return {
-                          ...nestedSectionMap,
-                          [keyToChange]: e.target.value,
-                        };
-                      } else return nestedSectionMap;
-                    }),
-                  };
-                } else return topSectionMap;
-              }
-            ),
-          })
-        }
-      />
-    </div>
-  );
-}
-
-export function getAddSectionButton_nested1(
-  userData,
-  setUserData,
-  thisSection_top,
-  thisSection_top_key,
-  thisSection_nested_key,
-  resetData
-) {
-  return (
-    <button
-      className={`add-${thisSection_nested_key}-button`} //need formatting
-      onClick={() =>
-        setUserData({
-          ...userData,
-          [thisSection_top_key]: userData[thisSection_top_key].map(
-            (topSectionMap) => {
-              if (topSectionMap.id === thisSection_top.id) {
-                return {
-                  ...topSectionMap,
-                  [thisSection_nested_key]: [
-                    ...topSectionMap[thisSection_nested_key],
-                    resetData[thisSection_top_key][0][
-                      thisSection_nested_key
-                    ][0],
-                  ],
-                };
-              }
-              return topSectionMap;
-            }
-          ),
-        })
-      }
-    >
-      ++++++++++++
-    </button>
   );
 }

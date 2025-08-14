@@ -422,39 +422,82 @@ function addIn_level_0(args) {
 // ************** level 1 **************
 
 function deleteIn_level_1(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-      if (level_1_map.id === args.level_1_id) {
-        return {
-          ...level_1_map,
-          [args.level_1_key]: level_1_map[args.level_1_key].filter(
-            (_, filterIndex) => args.listIndexToChange !== filterIndex
-          ),
-        };
-      } else return level_1_map;
-    }),
-  });
+  // handle del job section
+  if (args.level_1_key === "jobsInfo" && !args.level_2_key) {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: level_1_map[args.level_1_key].filter(
+              (level_2_map) => args.level_2_id !== level_2_map.id
+            ),
+          };
+        } else return level_1_map;
+      }),
+    });
+  }
+
+  //default
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: level_1_map[args.level_1_key].filter(
+              (_, filterIndex) => args.listIndexToChange !== filterIndex
+            ),
+          };
+        } else return level_1_map;
+      }),
+    });
+  }
 
   return;
 }
 
 function addIn_level_1(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
-      if (level_1_map.id === args.level_1_id) {
-        return {
-          ...level_1_map,
-          [args.level_1_key]: [
-            ...level_1_map[args.level_1_key],
-            "",
-            // resetData[args.level_0_key][0][args.level_1_key],
-          ],
-        };
-      } else return level_1_map;
-    }),
-  });
+  // handle add job in workEx
+  if (
+    args.level_0_key === "workExperience" &&
+    args.level_1_key === "jobsInfo"
+  ) {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            jobsInfo: [
+              ...level_1_map.jobsInfo,
+              {
+                ...resetData.workExperience[0].jobsInfo[0],
+                id: crypto.randomUUID(),
+              },
+            ],
+          };
+        } else return level_1_map;
+      }),
+    });
+  }
+
+  // default
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].map((level_1_map) => {
+        if (level_1_map.id === args.level_1_id) {
+          return {
+            ...level_1_map,
+            [args.level_1_key]: [...level_1_map[args.level_1_key], ""],
+          };
+        } else return level_1_map;
+      }),
+    });
+  }
 
   return;
 }

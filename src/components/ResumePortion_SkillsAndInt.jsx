@@ -5,12 +5,12 @@ export default function ResumePortion_SkillsAndInt({ userData }) {
       <h2>SKILLS & INTERESTS</h2>
       <hr />
       <ul>
-        {Object.keys(userData.skillsAndInt).map((thisSkillorInt) => {
-          if (userData.skillsAndInt[thisSkillorInt].length > 0) {
+        {Object.keys(userData.skillsAndInt).map((thisSkillOrInt) => {
+          if (userData.skillsAndInt[thisSkillOrInt].length > 0) {
             return (
-              <li key={thisSkillorInt}>
-                {getListTitle(thisSkillorInt)}
-                {semiColonList(userData.skillsAndInt[thisSkillorInt])}
+              <li key={thisSkillOrInt}>
+                {getListTitle(thisSkillOrInt)}
+                {semiColonList(userData.skillsAndInt[thisSkillOrInt])}
               </li>
             );
           } else return null;
@@ -20,8 +20,8 @@ export default function ResumePortion_SkillsAndInt({ userData }) {
   );
 }
 
-function getListTitle(thisSkillorInt) {
-  switch (thisSkillorInt) {
+function getListTitle(thisSkillOrInt) {
+  switch (thisSkillOrInt) {
     case "hardSkillsTech":
       return <b>Hard Skills (Tech): </b>;
     case "hardSkillsOther":

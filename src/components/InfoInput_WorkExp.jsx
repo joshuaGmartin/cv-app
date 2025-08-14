@@ -1,12 +1,7 @@
 import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
-import * as componentBuilder from "../modules/componentBuilder.jsx";
 import { FocusHandler } from "../modules/Helper.jsx";
 
-export default function InfoInput_WorkExp({
-  userData,
-  setUserData,
-  resetData,
-}) {
+export default function InfoInput_WorkExp({ userData, setUserData }) {
   const setFocusElementInfo = FocusHandler();
 
   return (
@@ -18,8 +13,7 @@ export default function InfoInput_WorkExp({
               thisWork,
               userData,
               setUserData,
-              setFocusElementInfo,
-              resetData
+              setFocusElementInfo
             )}
             <GetDataButton
               btnType={"delete"}
@@ -31,12 +25,12 @@ export default function InfoInput_WorkExp({
           </div>
         );
       })}
-      {/* check this <--------------------------------------------------- */}
       <GetDataButton
         btnType={"add"}
         userData={userData}
         setUserData={setUserData}
         level_0_key={"workExperience"}
+        setFocusElementInfo={setFocusElementInfo}
       />
     </div>
   );
@@ -46,8 +40,7 @@ function getWorkExpInputs(
   thisWork,
   userData,
   setUserData,
-  setFocusElementInfo,
-  resetData
+  setFocusElementInfo
 ) {
   return (
     <div className="work-exp-inputs">
@@ -56,7 +49,6 @@ function getWorkExpInputs(
         thisWork,
         userData,
         setUserData,
-        resetData,
         setFocusElementInfo
       )}{" "}
     </div>
@@ -98,7 +90,6 @@ function getWorkExpInputs_jobSection(
   thisWork,
   userData,
   setUserData,
-  resetData,
   setFocusElementInfo
 ) {
   return (
@@ -118,7 +109,6 @@ function getWorkExpInputs_jobSection(
               level_1_id={thisWork.id}
               level_2_key={"position"}
               level_2_id={thisJob.id}
-              listIndexToChange={""}
             />
 
             {thisWork.jobsInfo.length > 1 ? (
@@ -131,7 +121,6 @@ function getWorkExpInputs_jobSection(
                   level_1_id={thisWork.id}
                   level_2_key={"timeStart"}
                   level_2_id={thisJob.id}
-                  listIndexToChange={""}
                 />
                 <GetDataInput
                   userData={userData}
@@ -141,7 +130,6 @@ function getWorkExpInputs_jobSection(
                   level_1_id={thisWork.id}
                   level_2_key={"timeEnd"}
                   level_2_id={thisJob.id}
-                  listIndexToChange={""}
                 />
               </div>
             ) : null}
@@ -164,19 +152,27 @@ function getWorkExpInputs_jobSection(
               setUserData,
               setFocusElementInfo
             )}
-
-            {/* delete job button */}
+            <GetDataButton
+              btnType={"delete"}
+              userData={userData}
+              setUserData={setUserData}
+              level_0_key={"workExperience"}
+              level_1_key={"jobsInfo"}
+              level_1_id={thisWork.id}
+              level_2_id={thisJob.id}
+            />
           </div>
         );
       })}
-      {componentBuilder.getAddSectionButton_nested1(
-        userData,
-        setUserData,
-        thisWork,
-        "workExperience",
-        "jobsInfo",
-        resetData
-      )}
+      <GetDataButton
+        btnType={"add"}
+        userData={userData}
+        setUserData={setUserData}
+        level_0_key={"workExperience"}
+        level_1_key={"jobsInfo"}
+        level_1_id={thisWork.id}
+        setFocusElementInfo={setFocusElementInfo}
+      />
     </>
   );
 }
@@ -247,46 +243,3 @@ function getWorkExpInputs_listInputs(
     </div>
   );
 }
-
-// <div className="list-item-inputs">
-//               duties:
-//               {thisJob.duties.map((_, index) => {
-//                 return (
-//                   <div className="job-duty" key={index}>
-//                     <GetDataInput
-//                       userData={userData}
-//                       setUserData={setUserData}
-//                       level_0_key={"workExperience"}
-//                       level_1_key={"jobsInfo"}
-//                       level_1_id={thisWork.id}
-//                       level_2_key={"duties"}
-//                       level_2_id={thisJob.id}
-//                       listIndexToChange={index}
-//                     />
-//                     <GetDataButton
-//                       btnType={"delete"}
-//                       userData={userData}
-//                       setUserData={setUserData}
-//                       level_0_key={"workExperience"}
-//                       level_1_key={"jobsInfo"}
-//                       level_1_id={thisWork.id}
-//                       level_2_key={"duties"}
-//                       level_2_id={thisJob.id}
-//                       listIndexToChange={index}
-//                       setFocusElementInfo={setFocusElementInfo}
-//                     />
-//                   </div>
-//                 );
-//               })}
-//               <GetDataButton
-//                 btnType={"add"}
-//                 userData={userData}
-//                 setUserData={setUserData}
-//                 level_0_key={"workExperience"}
-//                 level_1_key={"jobsInfo"}
-//                 level_1_id={thisWork.id}
-//                 level_2_key={"duties"}
-//                 level_2_id={thisJob.id}
-//                 setFocusElementInfo={setFocusElementInfo}
-//               />
-//             </div>

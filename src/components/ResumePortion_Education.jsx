@@ -20,7 +20,7 @@ export default function ResumePortion_Education({ userData }) {
             <div className="education-second-line">
               <i>
                 {thisEd.degree}, {thisEd.major}
-                {getminorOrConcLine(thisEd)}
+                {getMinorOrConcLine(thisEd)}
               </i>
               <i>{thisEd.location}</i>
             </div>
@@ -32,7 +32,7 @@ export default function ResumePortion_Education({ userData }) {
   );
 }
 
-function getminorOrConcLine(thisEd) {
+function getMinorOrConcLine(thisEd) {
   if (thisEd.minor === "" || thisEd.concentration === "") {
     return null;
   } else {
@@ -95,7 +95,7 @@ function educationListSection(thisEd) {
       });
     }
 
-    // if no gpa or awards, line is null (see edList below for null test in render)
+    // if no gpa or awards, line is false (see edList below for false test in render)
     if (edGPA || edAwards) {
       edGPAplusAwards = (
         <>

@@ -1,12 +1,7 @@
 import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
-import * as componentBuilder from "../modules/componentBuilder.jsx"; // delete later
 import { FocusHandler } from "../modules/Helper.jsx";
 
-export default function InfoInput_Education({
-  userData,
-  setUserData,
-  resetData, // remove?
-}) {
+export default function InfoInput_Education({ userData, setUserData }) {
   const setFocusElementInfo = FocusHandler();
 
   return (
@@ -156,22 +151,6 @@ function getEducationInputs_listInputs(
         "coursework",
         setFocusElementInfo
       )}
-
-      {/* OLD */}
-      {/* {OLD_getEducationInputs_listItemInput(
-        thisEd,
-        userData,
-        setUserData,
-        "award",
-        setFocusElementInfo
-      )} */}
-      {/* {OLD_getEducationInputs_listItemInput(
-        thisEd,
-        userData,
-        setUserData,
-        "course",
-        setFocusElementInfo
-      )} */}
     </div>
   );
 }
@@ -258,114 +237,4 @@ function getEducationInputs_listItemInput(
       />
     </div>
   );
-}
-
-// delete later
-function OLD_getEducationInputs_listItemInput(
-  thisEd,
-  userData,
-  setUserData,
-  listItemtype,
-  setFocusElementInfo
-) {
-  let key;
-
-  switch (listItemtype) {
-    case "award":
-      key = "awards";
-      break;
-    case "course":
-      key = "coursework";
-      break;
-  }
-
-  return (
-    <>
-      <div className={`${key}-input`}>
-        {key}:
-        {thisEd[key].map((listItem, index) => {
-          return (
-            <div key={index}>
-              {componentBuilder.getListItemInput(
-                thisEd,
-                userData,
-                setUserData,
-                thisEd.school + thisEd.gradYear + listItemtype + "input",
-                listItem,
-                index,
-                listItemtype
-              )}
-
-              {/* delete listItem button */}
-              <button
-                className={`delete-${listItemtype}-button`}
-                onClick={() =>
-                  setUserData({
-                    ...userData,
-                    education: userData.education.map((mapEd) => {
-                      if (mapEd.id === thisEd.id) {
-                        return {
-                          ...mapEd,
-                          [key]: mapEd[key].filter(
-                            (listItem, filterIndex) => index !== filterIndex
-                          ),
-                        };
-                      } else return mapEd;
-                    }),
-                  })
-                }
-              >
-                -X-
-              </button>
-            </div>
-          );
-        })}
-        {/* add item button */}
-        <button
-          className={`add-${listItemtype}-button`}
-          onClick={() =>
-            handleAddListItemButtonClick(
-              thisEd,
-              userData,
-              setUserData,
-              setFocusElementInfo,
-              listItemtype,
-              key
-            )
-          }
-        >
-          add {listItemtype}
-        </button>
-      </div>
-    </>
-  );
-}
-
-// need add focus handler in App root?
-function handleAddListItemButtonClick(
-  thisEd,
-  userData,
-  setUserData,
-  setFocusElementInfo,
-  listItemtype,
-  key
-) {
-  setFocusElementInfo({
-    focusElmId: thisEd.id,
-    focusElmType: listItemtype,
-  });
-
-  setUserData({
-    ...userData,
-    education: userData.education.map((mapEd) => {
-      if (mapEd.id === thisEd.id) {
-        return {
-          ...mapEd,
-          [key]: [...mapEd[key], ""],
-        };
-      } else return mapEd;
-    }),
-  });
-
-  return;
 }
