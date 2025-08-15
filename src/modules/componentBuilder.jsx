@@ -595,7 +595,7 @@ function get_level_1_deleteButton(args) {
 }
 
 function get_level_1_addButton(args) {
-  let buttonText = args.level_0_key;
+  let buttonText = args.level_1_key;
   switch (args.level_1_key) {
     case "awards":
       buttonText = "award";
@@ -605,6 +605,18 @@ function get_level_1_addButton(args) {
       break;
     case "jobsInfo":
       buttonText = "job";
+      break;
+    case "hardSkillsTech":
+      buttonText = "tech skill";
+      break;
+    case "hardSkillsOther":
+      buttonText = "other skill";
+      break;
+    case "softSkills":
+      buttonText = "soft skill";
+      break;
+    case "interests":
+      buttonText = "interest";
       break;
   }
 

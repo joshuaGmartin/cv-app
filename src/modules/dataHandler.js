@@ -35,7 +35,7 @@ export function changeData(args) {
       case "workExperience":
         return addDelWorkExperienceData(args);
       case "skillsAndInt":
-        return;
+        return addDelSkillsAndIntData(args);
       default:
         console.error(
           args.level_0_key + " does not exist in data base as top level key"
@@ -158,6 +158,15 @@ function addDelWorkExperienceData(args) {
   }
 
   return;
+}
+
+function addDelSkillsAndIntData(args) {
+  switch (args.btnType) {
+    case "delete":
+      return deleteIn_level_0(args);
+    case "add":
+      return addIn_level_0(args);
+  }
 }
 
 // =======================================================================================
@@ -394,27 +403,60 @@ function change_level_2_listData(args) {
 // ************** level 0 **************
 
 function deleteIn_level_0(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: args.userData[args.level_0_key].filter(
-      (level_1_map) => level_1_map.id !== args.level_1_id
-    ),
-  });
+  // handle delete in skillsAndInt list
+  if (args.level_0_key === "skillsAndInt") {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: {
+        ...args.userData[args.level_0_key],
+        [args.level_1_key]: args.userData[args.level_0_key][
+          args.level_1_key
+        ].filter((_, filterIndex) => args.listIndexToChange !== filterIndex),
+      },
+    });
+  }
+
+  // default
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: args.userData[args.level_0_key].filter(
+        (level_1_map) => level_1_map.id !== args.level_1_id
+      ),
+    });
+  }
 
   return;
 }
 
 function addIn_level_0(args) {
-  args.setUserData({
-    ...args.userData,
-    [args.level_0_key]: [
-      ...args.userData[args.level_0_key],
-      {
-        ...resetData[args.level_0_key][0],
-        id: crypto.randomUUID(),
+  // handle add in skillsAndInt list
+  if (args.level_0_key === "skillsAndInt") {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: {
+        ...args.userData[args.level_0_key],
+        [args.level_1_key]: [
+          ...args.userData[args.level_0_key][args.level_1_key],
+          "",
+        ],
       },
-    ],
-  });
+    });
+  }
+
+  // default
+  else {
+    args.setUserData({
+      ...args.userData,
+      [args.level_0_key]: [
+        ...args.userData[args.level_0_key],
+        {
+          ...resetData[args.level_0_key][0],
+          id: crypto.randomUUID(),
+        },
+      ],
+    });
+  }
 
   return;
 }

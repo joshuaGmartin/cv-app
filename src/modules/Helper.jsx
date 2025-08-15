@@ -27,6 +27,8 @@ export function FocusHandler() {
       focusElementInfo.focusElm_id
     );
 
+    console.log(focusElementInfo.focusElm_id);
+
     let inputCollectionElm = parentFocusElm
       .querySelector(
         `.${focusElementInfo.focusElm_section}-input-list-${focusElementInfo.focusElm_list}`
