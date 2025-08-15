@@ -17,11 +17,28 @@
   /* text-align: center; */
 
   display: grid;
-  /* grid-template-columns: 1fr 1fr; */
-  /* grid-template-columns: 2fr 3fr; */
-  /* grid-template-columns: 3fr 4fr; */
+  grid-template-rows: auto auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#page-title {
+  font-size: 3.5rem;
+  color: yellowgreen;
+  span {
+    color: white;
+  }
+}
+
+.main-section {
+  display: grid;
   grid-template-columns: 4fr 5fr;
   gap: var(--spacing);
+
+  max-height: calc(100vh - 7.5rem);
 }
 
 .InfoInput {
@@ -29,10 +46,17 @@
 
   display: grid;
   grid-template-columns: max-content auto;
+
+  max-height: inherit;
 }
 
 .InfoInput > * {
   padding: var(--padding);
+}
+
+.InfoInput > div:last-of-type {
+  /* max-height: min-content; */
+  overflow-y: scroll;
 }
 
 .InfoInput .infoSectionSelectors {
@@ -44,11 +68,20 @@
 }
 
 .InfoInput .infoSectionSelectors .InfoSectionSelector {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  font-weight: bold;
+
   background-color: white;
   width: max-content;
 
   &:hover {
     cursor: pointer;
+    color: tomato;
+  }
+
+  &.selected {
+    color: tomato;
     background-color: yellowgreen;
   }
 }
@@ -60,15 +93,81 @@
   outline: white solid 1px;
 }
 
+.InfoInput .InfoInput_Personal {
+  > div {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.InfoInput .education-top-lines-inputs {
+  > * {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.InfoInput .education-top-lines-inputs .grad-year-line {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.InfoInput .education-top-lines-inputs .degree-line {
+  > * {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.InfoInput .education-top-lines-inputs .minor-or-conc-line {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.InfoInput .education-list-inputs .gpa-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 0.5rem;
+
+  input:not([type="checkbox"]) {
+    width: 7rem;
+  }
+}
+
+.InfoInput .education-list-inputs .education-input-list-awards,
+.InfoInput .education-list-inputs .education-input-list-coursework {
+  button {
+    padding: 0 0.33rem;
+  }
+
+  .list-input-and-del-btn {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    align-items: center;
+  }
+
+  button.delete-in-level-1-button {
+    height: 1.25rem;
+    width: 1.25rem;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* =========================================================================== */
+/* Resume */
+/* =========================================================================== */
+
 .Resume {
   background-color: white;
   padding: calc(2 * var(--padding));
 
-  max-height: calc(100vh - 6rem);
+  max-height: calc(100vh - 7rem);
   overflow-y: scroll;
-
-  /* position: fixed; */
-  /* margin-left: 50rem; */
 }
 
 .Resume .education-top-line,
@@ -90,49 +189,37 @@
   color: gray;
 }
 
-/* ======================================================= */
-/* from template */
-/* ======================================================= */
-/* 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* =================================================================== */
+/* catch all */
+/* =================================================================== */
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+button {
+  padding: 0.5rem;
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  border: none;
+  border-radius: 1rem;
+
+  font-weight: bold;
+  background-color: white;
+
+  &:hover {
+    color: tomato;
+    background-color: yellowgreen;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+input {
+  max-height: 1.5rem;
+
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 1rem;
+
+  &[type="text"]:hover {
+    outline: black solid 1px;
+  }
+
+  &[type="text"]:focus {
+    outline: black solid 1px;
   }
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-} */

@@ -33,9 +33,10 @@ export default function InfoInput({ userData, setUserData }) {
         );
       default:
         return (
-          <InfoInput_Personal userData={userData} setUserData={setUserData} />
+          // <InfoInput_Personal userData={userData} setUserData={setUserData} />
 
-          // <InfoInput_Education userData={userData} setUserData={setUserData} />
+          //testing
+          <InfoInput_Education userData={userData} setUserData={setUserData} />
 
           // <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
 
@@ -55,6 +56,7 @@ export default function InfoInput({ userData, setUserData }) {
             <InfoSectionSelector
               key={section}
               value={section}
+              selected={section === infoSelection}
               onClick={() => setInfoSelection(section)}
             />
           );
@@ -66,9 +68,12 @@ export default function InfoInput({ userData, setUserData }) {
   );
 }
 
-function InfoSectionSelector({ value, onClick }) {
+function InfoSectionSelector({ value, selected, onClick }) {
   return (
-    <div className="InfoSectionSelector" onClick={onClick}>
+    <div
+      className={`InfoSectionSelector ${selected ? "selected" : ""}`}
+      onClick={onClick}
+    >
       {value}
     </div>
   );

@@ -414,7 +414,6 @@ function get_level_1_checkboxInput(args, this_level_1) {
 
   return (
     <label htmlFor={this_level_1.id + "-" + args.level_1_key}>
-      {label + "?: "}
       <input
         id={this_level_1.id + "-" + args.level_1_key}
         type="checkbox"
@@ -426,15 +425,27 @@ function get_level_1_checkboxInput(args, this_level_1) {
           })
         }
       />
+      {" " + label}
     </label>
   );
 }
 
 function get_level_1_listItemInput(args, this_level_1) {
+  let placeholder = args.level_1_key;
+
+  switch (args.level_1_key) {
+    case "coursework":
+      placeholder = "course";
+      break;
+    case "awards":
+      placeholder = "award";
+      break;
+  }
+
   return (
     <input
       type="text"
-      placeholder={args.level_1_key}
+      placeholder={placeholder}
       value={this_level_1[args.level_1_key][args.listIndexToChange]}
       onChange={(e) =>
         changeData({
@@ -573,7 +584,7 @@ function get_level_1_deleteButton(args) {
   if (args.level_1_key === "jobsInfo") {
     return (
       <button
-        className={`delete-${args.level_1_key}-button`}
+        className={`delete-${args.level_1_key}-button delete-in-level-1-button`}
         onClick={() => changeData(args)}
       >
         {"delete job"}
@@ -585,10 +596,10 @@ function get_level_1_deleteButton(args) {
   else {
     return (
       <button
-        className={`delete-${args.level_1_key}-button`}
+        className={`delete-${args.level_1_key}-button delete-in-level-1-button`}
         onClick={() => changeData(args)}
       >
-        {"[ X ]"}
+        <div className="button-text">{"✖"}</div>
       </button>
     );
   }
@@ -645,7 +656,7 @@ function get_level_2_deleteButton(args) {
       className={`delete-${args.level_1_key}-${args.level_2_key}-button`}
       onClick={() => changeData(args)}
     >
-      {"[ X ]"}
+      {"✖"}
     </button>
   );
 }

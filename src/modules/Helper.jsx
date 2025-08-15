@@ -27,19 +27,30 @@ export function FocusHandler() {
       focusElementInfo.focusElm_id
     );
 
-    console.log(focusElementInfo.focusElm_id);
-
     let inputCollectionElm = parentFocusElm
       .querySelector(
         `.${focusElementInfo.focusElm_section}-input-list-${focusElementInfo.focusElm_list}`
       )
       .querySelector(".list-item-inputs");
 
+    //test
+    console.log("========================================");
+    console.log("parentFocusElm");
+    console.log(parentFocusElm);
+    console.log(`inputCollectionElm`);
+    console.log(inputCollectionElm);
+    console.log(`inputCollectionElm.querySelector("div:last-of-type")`);
+    console.log(inputCollectionElm.querySelector("div:last-of-type"));
+    console.log(
+      `inputCollectionElm.querySelector("div:last-of-type").firstElementChild`
+    );
+    console.log(
+      inputCollectionElm.querySelector("div:last-of-type").firstElementChild
+    );
+
     inputCollectionElm
       .querySelector("div:last-of-type")
       .firstElementChild.focus();
-
-    console.log(inputCollectionElm);
 
     return;
   }
