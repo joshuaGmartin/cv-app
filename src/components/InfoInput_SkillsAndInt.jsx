@@ -2,7 +2,7 @@ import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
 import { FocusHandler } from "../modules/Helper.jsx";
 
 export default function InfoInput_SkillsAndInt({ userData, setUserData }) {
-  const setFocusElementInfo = FocusHandler();
+  const setFocusElmInfo = FocusHandler();
 
   return (
     <div className="InfoInput_SkillsAndInt">
@@ -19,7 +19,7 @@ export default function InfoInput_SkillsAndInt({ userData, setUserData }) {
               level_1_key,
               userData,
               setUserData,
-              setFocusElementInfo,
+              setFocusElmInfo,
               thisSectionID
             )}
           </div>
@@ -33,7 +33,7 @@ function getSkillsAndIntInputs_listInputs(
   level_1_key,
   userData,
   setUserData,
-  setFocusElementInfo,
+  setFocusElmInfo,
   thisSectionID
 ) {
   let sectionLabel = level_1_key;
@@ -87,7 +87,7 @@ function getSkillsAndIntInputs_listInputs(
           level_0_key={"skillsAndInt"}
           level_1_key={level_1_key}
           level_1_id={thisSectionID}
-          setFocusElementInfo={setFocusElementInfo}
+          setFocusElmInfo={setFocusElmInfo}
         />
       </div>
     </>

@@ -13,11 +13,14 @@ todo:
 -fix scrolling on resume or inputs
 -focus on new section add
 -change position of sections ^ or v
--delete all unused formulas after data handler integration
+-make list and label in Input side by side?
 
 bugs:
-
+-on new ed, gpa check no show GPA in resume
 
 on:
--workEx inputs dataHandle integration
- -->
+-refactor focus handler to work like dataHandler (levels 0-2)
+
+
+
+-->

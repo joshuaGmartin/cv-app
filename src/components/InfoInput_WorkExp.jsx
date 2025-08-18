@@ -2,19 +2,14 @@ import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
 import { FocusHandler } from "../modules/Helper.jsx";
 
 export default function InfoInput_WorkExp({ userData, setUserData }) {
-  const setFocusElementInfo = FocusHandler();
+  const setFocusElmInfo = FocusHandler();
 
   return (
     <div className="InfoInput_WorkExp">
       {userData.workExperience.map((thisWork) => {
         return (
           <div key={thisWork.id} className="work-exp-section" id={thisWork.id}>
-            {getWorkExpInputs(
-              thisWork,
-              userData,
-              setUserData,
-              setFocusElementInfo
-            )}
+            {getWorkExpInputs(thisWork, userData, setUserData, setFocusElmInfo)}
             <GetDataButton
               btnType={"delete"}
               userData={userData}
@@ -30,18 +25,13 @@ export default function InfoInput_WorkExp({ userData, setUserData }) {
         userData={userData}
         setUserData={setUserData}
         level_0_key={"workExperience"}
-        setFocusElementInfo={setFocusElementInfo}
+        setFocusElmInfo={setFocusElmInfo}
       />
     </div>
   );
 }
 
-function getWorkExpInputs(
-  thisWork,
-  userData,
-  setUserData,
-  setFocusElementInfo
-) {
+function getWorkExpInputs(thisWork, userData, setUserData, setFocusElmInfo) {
   return (
     <div className="work-exp-inputs">
       {getWorkExpInputs_topLines(thisWork, userData, setUserData)}
@@ -49,7 +39,7 @@ function getWorkExpInputs(
         thisWork,
         userData,
         setUserData,
-        setFocusElementInfo
+        setFocusElmInfo
       )}{" "}
     </div>
   );
@@ -90,7 +80,7 @@ function getWorkExpInputs_jobSection(
   thisWork,
   userData,
   setUserData,
-  setFocusElementInfo
+  setFocusElmInfo
 ) {
   return (
     <>
@@ -150,7 +140,7 @@ function getWorkExpInputs_jobSection(
               thisJob,
               userData,
               setUserData,
-              setFocusElementInfo
+              setFocusElmInfo
             )}
             <GetDataButton
               btnType={"delete"}
@@ -171,7 +161,7 @@ function getWorkExpInputs_jobSection(
         level_0_key={"workExperience"}
         level_1_key={"jobsInfo"}
         level_1_id={thisWork.id}
-        setFocusElementInfo={setFocusElementInfo}
+        setFocusElmInfo={setFocusElmInfo}
       />
     </>
   );
@@ -182,7 +172,7 @@ function getWorkExpInputs_listInputs(
   thisJob,
   userData,
   setUserData,
-  setFocusElementInfo
+  setFocusElmInfo
 ) {
   const workExpListKeys = ["duties", "stack", "keyResults"];
 
@@ -220,7 +210,7 @@ function getWorkExpInputs_listInputs(
                       level_2_key={workExpListKey}
                       level_2_id={thisJob.id}
                       listIndexToChange={index}
-                      setFocusElementInfo={setFocusElementInfo}
+                      setFocusElmInfo={setFocusElmInfo}
                     />
                   </div>
                 );
@@ -234,7 +224,7 @@ function getWorkExpInputs_listInputs(
                 level_1_id={thisWork.id}
                 level_2_key={workExpListKey}
                 level_2_id={thisJob.id}
-                setFocusElementInfo={setFocusElementInfo}
+                setFocusElmInfo={setFocusElmInfo}
               />
             </div>
           </div>

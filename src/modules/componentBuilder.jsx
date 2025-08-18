@@ -24,7 +24,7 @@ templates:
   level_2_key={""}
   level_2_id={}
   listIndexToChange={""}
-  setFocusElementInfo={setFocusElementInfo}
+  setFocusElmInfo={setFocusElmInfo}
 />
 
 */
@@ -89,7 +89,7 @@ export function GetDataButton({
   level_2_key = null,
   level_2_id = null,
   listIndexToChange = null,
-  setFocusElementInfo = null,
+  setFocusElmInfo = null,
 }) {
   const args = {
     btnType,
@@ -101,7 +101,7 @@ export function GetDataButton({
     level_2_key,
     level_2_id,
     listIndexToChange,
-    setFocusElementInfo,
+    setFocusElmInfo,
   };
 
   switch (btnType) {
@@ -565,12 +565,19 @@ function get_level_0_addButton(args) {
   return (
     <button
       className={`add-${args.level_0_key}-button`}
-      onClick={(e) =>
+      onClick={(e) => {
+        args.setFocusElmInfo({
+          level_0_key: args.level_0_key,
+          level_1_key: args.level_1_key,
+          level_1_id: args.level_1_id,
+          level_2_key: args.level_2_key,
+          level_2_id: args.level_2_id,
+        });
         changeData({
           ...args,
           e: e,
-        })
-      }
+        });
+      }}
     >
       add {btnLabel}
     </button>
@@ -635,10 +642,12 @@ function get_level_1_addButton(args) {
     <button
       className={`add-${args.level_1_key}-button`}
       onClick={() => {
-        args.setFocusElementInfo({
-          focusElm_id: args.level_1_id,
-          focusElm_section: args.level_0_key,
-          focusElm_list: args.level_1_key,
+        args.setFocusElmInfo({
+          level_0_key: args.level_0_key,
+          level_1_key: args.level_1_key,
+          level_1_id: args.level_1_id,
+          level_2_key: args.level_2_key,
+          level_2_id: args.level_2_id,
         });
         changeData(args);
       }}
@@ -676,10 +685,12 @@ function get_level_2_addButton(args) {
     <button
       className={`add-${args.level_1_key}-${args.level_2_key}-button`}
       onClick={() => {
-        args.setFocusElementInfo({
-          focusElm_id: args.level_2_id,
-          focusElm_section: args.level_1_key,
-          focusElm_list: args.level_2_key,
+        args.setFocusElmInfo({
+          level_0_key: args.level_0_key,
+          level_1_key: args.level_1_key,
+          level_1_id: args.level_1_id,
+          level_2_key: args.level_2_key,
+          level_2_id: args.level_2_id,
         });
         changeData(args);
       }}

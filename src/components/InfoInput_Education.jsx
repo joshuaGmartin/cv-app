@@ -2,19 +2,14 @@ import { GetDataInput, GetDataButton } from "../modules/componentBuilder.jsx";
 import { FocusHandler } from "../modules/Helper.jsx";
 
 export default function InfoInput_Education({ userData, setUserData }) {
-  const setFocusElementInfo = FocusHandler();
+  const setFocusElmInfo = FocusHandler();
 
   return (
     <div className="InfoInput_Education">
       {userData.education.map((thisEd) => {
         return (
           <div key={thisEd.id} className="education-section" id={thisEd.id}>
-            {getEducationInputs(
-              thisEd,
-              userData,
-              setUserData,
-              setFocusElementInfo
-            )}
+            {getEducationInputs(thisEd, userData, setUserData, setFocusElmInfo)}
             <GetDataButton
               btnType={"delete"}
               userData={userData}
@@ -31,17 +26,13 @@ export default function InfoInput_Education({ userData, setUserData }) {
         userData={userData}
         setUserData={setUserData}
         level_0_key={"education"}
+        setFocusElmInfo={setFocusElmInfo}
       />
     </div>
   );
 }
 
-function getEducationInputs(
-  thisEd,
-  userData,
-  setUserData,
-  setFocusElementInfo
-) {
+function getEducationInputs(thisEd, userData, setUserData, setFocusElmInfo) {
   return (
     <div className="education-inputs">
       {getEducationInputs_topLines(thisEd, userData, setUserData)}
@@ -49,7 +40,7 @@ function getEducationInputs(
         thisEd,
         userData,
         setUserData,
-        setFocusElementInfo
+        setFocusElmInfo
       )}
     </div>
   );
@@ -132,7 +123,7 @@ function getEducationInputs_listInputs(
   thisEd,
   userData,
   setUserData,
-  setFocusElementInfo
+  setFocusElmInfo
 ) {
   return (
     <div className="education-list-inputs">
@@ -142,14 +133,14 @@ function getEducationInputs_listInputs(
         userData,
         setUserData,
         "awards",
-        setFocusElementInfo
+        setFocusElmInfo
       )}
       {getEducationInputs_listItemInput(
         thisEd,
         userData,
         setUserData,
         "coursework",
-        setFocusElementInfo
+        setFocusElmInfo
       )}
     </div>
   );
@@ -193,7 +184,7 @@ function getEducationInputs_listItemInput(
   userData,
   setUserData,
   level_1_key,
-  setFocusElementInfo
+  setFocusElmInfo
 ) {
   return (
     <div className={`education-input-list-${level_1_key}`}>
@@ -233,7 +224,7 @@ function getEducationInputs_listItemInput(
         level_0_key={"education"}
         level_1_key={level_1_key}
         level_1_id={thisEd.id}
-        setFocusElementInfo={setFocusElementInfo}
+        setFocusElmInfo={setFocusElmInfo}
       />
     </div>
   );

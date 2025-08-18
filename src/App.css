@@ -10,7 +10,9 @@
 
 #root {
   --padding: 1rem;
+  --spacing: 0.5rem;
 
+  min-width: 120rem;
   /* max-width: 1280px; */
   margin: 0 auto;
   padding: 1rem 2rem;
@@ -68,7 +70,7 @@
 }
 
 .InfoInput .infoSectionSelectors .InfoSectionSelector {
-  padding: 0.5rem;
+  padding: var(--spacing);
   border-radius: 1rem;
   font-weight: bold;
 
@@ -95,37 +97,43 @@
 
 .InfoInput .InfoInput_Personal {
   > div {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing);
   }
 }
 
 .InfoInput .education-top-lines-inputs {
   > * {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing);
   }
 }
 
 .InfoInput .education-top-lines-inputs .grad-year-line {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing);
 }
 
 .InfoInput .education-top-lines-inputs .degree-line {
   > * {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing);
   }
 }
 
 .InfoInput .education-top-lines-inputs .minor-or-conc-line {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing);
+}
+
+.InfoInput .education-list-inputs {
+  > div {
+    margin-bottom: var(--spacing);
+  }
 }
 
 .InfoInput .education-list-inputs .gpa-inputs {
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: start;
-  gap: 0.5rem;
+  gap: var(--spacing);
 
   input:not([type="checkbox"]) {
     width: 7rem;
@@ -141,7 +149,6 @@
   .list-input-and-del-btn {
     display: flex;
     gap: 0.25rem;
-    margin-bottom: 0.5rem;
 
     align-items: center;
   }
@@ -194,7 +201,7 @@
 /* =================================================================== */
 
 button {
-  padding: 0.5rem;
+  padding: var(--spacing);
 
   border: none;
   border-radius: 1rem;
@@ -211,7 +218,7 @@ button {
 input {
   max-height: 1.5rem;
 
-  padding: 0 0.5rem;
+  padding: 0 var(--spacing);
   border: none;
   border-radius: 1rem;
 
@@ -222,4 +229,19 @@ input {
   &[type="text"]:focus {
     outline: black solid 1px;
   }
+}
+
+.delete-in-level-0-button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.list-item-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+}
+.list-item-inputs > button:last-of-type {
+  margin-top: var(--spacing);
+  color: red;
 }
