@@ -5,7 +5,7 @@ export default function InfoInput_SkillsAndInt({ userData, setUserData }) {
   const setFocusElmInfo = FocusHandler();
 
   return (
-    <div className="InfoInput_SkillsAndInt">
+    <div className="InfoInput_SkillsAndInt main-input-section">
       {Object.keys(userData.skillsAndInt).map((level_1_key) => {
         const thisSectionID = "skillsAndInt-" + level_1_key + "-section";
 

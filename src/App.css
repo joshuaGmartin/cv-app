@@ -11,6 +11,7 @@
 #root {
   --padding: 1rem;
   --spacing: 0.5rem;
+  --radius: 1rem;
 
   min-width: 120rem;
   /* max-width: 1280px; */
@@ -43,13 +44,24 @@
   max-height: calc(100vh - 7.5rem);
 }
 
+/* =========================================================================== */
+/* Inputs */
+/* =========================================================================== */
+
 .InfoInput {
   outline: white solid 1px;
+  border-radius: var(--radius);
 
   display: grid;
   grid-template-columns: max-content auto;
 
   max-height: inherit;
+
+  .main-input-section {
+    > * {
+      margin-bottom: var(--padding);
+    }
+  }
 }
 
 .InfoInput > * {
@@ -62,8 +74,6 @@
 }
 
 .InfoInput .infoSectionSelectors {
-  outline: white solid 1px;
-
   display: flex;
   flex-direction: column;
   gap: var(--padding);
@@ -92,8 +102,15 @@
 .InfoInput .work-exp-section,
 .InfoInput .work-exp-section .work-exp-job-section {
   padding: var(--padding);
+  margin-bottom: 1.5rem;
+
   outline: white solid 1px;
+  border-radius: var(--radius);
 }
+
+/* ---------------------------------------------- */
+/* Personal */
+/* ---------------------------------------------- */
 
 .InfoInput .InfoInput_Personal {
   > div {
@@ -101,7 +118,15 @@
   }
 }
 
+/* ---------------------------------------------- */
+/* Education */
+/* ---------------------------------------------- */
+
 .InfoInput .education-top-lines-inputs {
+  > :first-child {
+    width: 100%;
+  }
+
   > * {
     margin-bottom: var(--spacing);
   }
@@ -152,17 +177,116 @@
 
     align-items: center;
   }
+}
 
-  button.delete-in-level-1-button {
-    height: 1.25rem;
-    width: 1.25rem;
+/* ---------------------------------------------- */
+/* WorkExp */
+/* ---------------------------------------------- */
 
-    border-radius: 50%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.InfoInput_WorkExp .work-exp-top-lines-inputs {
+  > :first-child {
+    width: 100%;
   }
+
+  > * {
+    margin-bottom: var(--spacing);
+  }
+
+  .work-exp-section-time {
+    display: flex;
+    gap: var(--spacing);
+  }
+}
+
+.InfoInput_WorkExp .jobsInfo-input-lists {
+  > div {
+    margin-bottom: var(--spacing);
+
+    > button:last-of-type {
+      margin-top: var(--spacing);
+    }
+  }
+}
+
+.InfoInput_WorkExp .jobsInfo-input-list-stack .list-item-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+
+  .stack-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  input {
+    width: 12.66rem;
+  }
+}
+
+.InfoInput_WorkExp .work-exp-job-section {
+  margin-top: var(--padding);
+  margin-bottom: var(--spacing);
+
+  > :first-child {
+    width: 100%;
+  }
+
+  > * {
+    margin-bottom: var(--spacing);
+  }
+
+  button {
+    padding: 0 0.33rem;
+  }
+
+  .delete-in-level-1-button {
+    width: 100%;
+    margin-bottom: 0;
+    border-radius: var(--radius);
+  }
+
+  .stack-list-item {
+    display: flex;
+    gap: var(--spacing);
+  }
+
+  .duties-list-item,
+  .keyResults-list-item {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: auto min-content;
+    gap: var(--spacing);
+
+    .delete-in-level-2-button {
+      height: 100%;
+      border-radius: var(--radius);
+    }
+  }
+
+  .delete-jobsInfo-button {
+    margin-top: var(--padding);
+    padding: var(--padding);
+  }
+}
+
+.InfoInput_WorkExp .add-jobsInfo-button {
+  margin-top: 0;
+
+  outline: white 2px solid;
+  color: white;
+  background-color: tomato;
+  width: 100%;
+
+  &:hover {
+    background-color: white;
+    color: tomato;
+  }
+}
+
+.InfoInput_WorkExp .delete-workExperience-button {
+  margin-top: 2rem;
 }
 
 /* =========================================================================== */
@@ -215,6 +339,18 @@ button {
   }
 }
 
+.delete-in-level-1-button,
+.delete-in-level-2-button {
+  height: 1.25rem;
+  width: 1.25rem;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 input {
   max-height: 1.5rem;
 
@@ -231,6 +367,21 @@ input {
   }
 }
 
+textarea {
+  height: 4.5rem;
+  padding: 0 var(--spacing);
+  border: none;
+  border-radius: 1rem;
+
+  &:hover {
+    outline: black solid 1px;
+  }
+
+  &:focus {
+    outline: black solid 1px;
+  }
+}
+
 .delete-in-level-0-button {
   margin-top: 1rem;
   width: 100%;
@@ -241,7 +392,21 @@ input {
   flex-wrap: wrap;
   gap: var(--spacing);
 }
-.list-item-inputs > button:last-of-type {
+
+.add-list-item-button {
   margin-top: var(--spacing);
-  color: red;
+}
+
+.add-section-in-level-0-button,
+.add-section-in-level-1-button {
+  outline: white 2px solid;
+  color: white;
+  background-color: tomato;
+  margin-top: var(--spacing);
+  width: 100%;
+
+  &:hover {
+    background-color: white;
+    color: tomato;
+  }
 }

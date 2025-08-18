@@ -5,7 +5,7 @@ export default function InfoInput_Education({ userData, setUserData }) {
   const setFocusElmInfo = FocusHandler();
 
   return (
-    <div className="InfoInput_Education">
+    <div className="InfoInput_Education main-input-section">
       {userData.education.map((thisEd) => {
         return (
           <div key={thisEd.id} className="education-section" id={thisEd.id}>

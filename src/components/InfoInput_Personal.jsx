@@ -2,7 +2,7 @@ import { GetDataInput } from "../modules/componentBuilder";
 
 export default function InfoInput_Personal({ userData, setUserData }) {
   return (
-    <div className="InfoInput_Personal">
+    <div className="InfoInput_Personal main-input-section">
       {Object.keys(userData.personal).map((key) => {
         return (
           <div key={key} className={`personal-input personal-input-${key}`}>

@@ -5,7 +5,7 @@ export default function InfoInput_WorkExp({ userData, setUserData }) {
   const setFocusElmInfo = FocusHandler();
 
   return (
-    <div className="InfoInput_WorkExp">
+    <div className="InfoInput_WorkExp main-input-section">
       {userData.workExperience.map((thisWork) => {
         return (
           <div key={thisWork.id} className="work-exp-section" id={thisWork.id}>
@@ -184,9 +184,9 @@ function getWorkExpInputs_listInputs(
             key={"workExpListKey" + topIndex}
             className={`jobsInfo-input-list-${workExpListKey}`}
           >
+            {workExpListKey === "keyResults" ? "key results" : workExpListKey}
+            {": "}
             <div className="list-item-inputs">
-              {workExpListKey === "keyResults" ? "key results" : workExpListKey}
-              {": "}
               {thisJob[workExpListKey].map((_, index) => {
                 return (
                   <div className={workExpListKey + "-list-item"} key={index}>
@@ -215,18 +215,18 @@ function getWorkExpInputs_listInputs(
                   </div>
                 );
               })}
-              <GetDataButton
-                btnType={"add"}
-                userData={userData}
-                setUserData={setUserData}
-                level_0_key={"workExperience"}
-                level_1_key={"jobsInfo"}
-                level_1_id={thisWork.id}
-                level_2_key={workExpListKey}
-                level_2_id={thisJob.id}
-                setFocusElmInfo={setFocusElmInfo}
-              />
             </div>
+            <GetDataButton
+              btnType={"add"}
+              userData={userData}
+              setUserData={setUserData}
+              level_0_key={"workExperience"}
+              level_1_key={"jobsInfo"}
+              level_1_id={thisWork.id}
+              level_2_key={workExpListKey}
+              level_2_id={thisJob.id}
+              setFocusElmInfo={setFocusElmInfo}
+            />
           </div>
         );
       })}

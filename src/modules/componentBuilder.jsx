@@ -564,7 +564,7 @@ function get_level_0_addButton(args) {
 
   return (
     <button
-      className={`add-${args.level_0_key}-button`}
+      className={`add-${args.level_0_key}-button add-section-in-level-0-button`}
       onClick={(e) => {
         args.setFocusElmInfo({
           level_0_key: args.level_0_key,
@@ -640,7 +640,7 @@ function get_level_1_addButton(args) {
 
   return (
     <button
-      className={`add-${args.level_1_key}-button`}
+      className={`add-${args.level_1_key}-button add-list-item-button`}
       onClick={() => {
         args.setFocusElmInfo({
           level_0_key: args.level_0_key,
@@ -662,10 +662,10 @@ function get_level_1_addButton(args) {
 function get_level_2_deleteButton(args) {
   return (
     <button
-      className={`delete-${args.level_1_key}-${args.level_2_key}-button`}
+      className={`delete-${args.level_1_key}-${args.level_2_key}-button delete-in-level-2-button`}
       onClick={() => changeData(args)}
     >
-      {"✖"}
+      <div className="button-text">{"✖"}</div>
     </button>
   );
 }
