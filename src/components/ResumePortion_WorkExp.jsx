@@ -35,8 +35,8 @@ export default function ResumePortion_WorkExp({ userData }) {
 
                   <ul>
                     {thisJob.duties.length > 0
-                      ? thisJob.duties.map((duty) => {
-                          return <li key={duty}>{duty}</li>;
+                      ? thisJob.duties.map((duty, index) => {
+                          return <li key={index + duty}>{duty}</li>;
                         })
                       : null}
                     {thisJob.stack.length > 0 ? (

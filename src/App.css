@@ -1,3 +1,10 @@
+.cormorant-garamond-<uniquifier > {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
 @media print {
   #root {
     display: block !important;
@@ -24,12 +31,6 @@
 }
 
 #root {
-  .cormorant-garamond-<uniquifier > {
-    font-family: "Cormorant Garamond", serif;
-    font-optical-sizing: auto;
-    font-weight: <weight>;
-    font-style: normal;
-  }
   --padding: 1rem;
   --spacing: 0.5rem;
   --radius: 1rem;
@@ -338,6 +339,8 @@
 
   max-height: calc(100vh - 7rem);
   overflow-y: scroll;
+  max-width: fit-content;
+  min-width: 100%;
 
   font-family: "Cormorant Garamond", serif;
 }

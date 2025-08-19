@@ -212,7 +212,7 @@ export const resetData = {
   },
   education: [
     {
-      id: "",
+      id: crypto.randomUUID(),
       school: "",
       gradYear: "",
       currentStudent: false,
@@ -229,13 +229,13 @@ export const resetData = {
   ],
   workExperience: [
     {
-      id: "",
+      id: crypto.randomUUID(),
       employer: "",
       totalTimeStart: "",
       totalTimeEnd: "",
       jobsInfo: [
         {
-          id: "",
+          id: crypto.randomUUID(),
           position: "",
           timeStart: "",
           timeEnd: "",

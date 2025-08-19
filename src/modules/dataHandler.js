@@ -444,6 +444,26 @@ function addIn_level_0(args) {
     });
   }
 
+  // handle add workEx (with job)
+  else if (args.level_0_key === "workExperience") {
+    args.setUserData({
+      ...args.userData,
+      workExperience: [
+        ...args.userData.workExperience,
+        {
+          ...resetData.workExperience[0],
+          id: crypto.randomUUID(),
+          jobsInfo: [
+            {
+              ...resetData.workExperience[0].jobsInfo[0],
+              id: crypto.randomUUID(),
+            },
+          ],
+        },
+      ],
+    });
+  }
+
   // default
   else {
     args.setUserData({
