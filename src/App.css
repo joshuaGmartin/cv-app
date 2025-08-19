@@ -1,23 +1,43 @@
 @media print {
   #root {
     display: block !important;
+    width: 2761px !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .InfoInput {
-    display: none;
+  .InfoInput,
+  .header {
+    display: none !important;
+  }
+
+  .Resume {
+    max-height: max-content !important;
+    overflow-y: initial !important;
+    padding: 0.5in !important;
+    font-size: large !important;
+  }
+
+  a {
+    color: blue !important;
   }
 }
 
 #root {
+  .cormorant-garamond-<uniquifier > {
+    font-family: "Cormorant Garamond", serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+  }
   --padding: 1rem;
   --spacing: 0.5rem;
   --radius: 1rem;
 
   min-width: 120rem;
-  /* max-width: 1280px; */
   margin: 0 auto;
   padding: 1rem 2rem;
-  /* text-align: center; */
+  padding-top: 0;
 
   display: grid;
   grid-template-rows: auto auto;
@@ -26,6 +46,16 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  .header-buttons {
+    display: flex;
+    gap: var(--spacing);
+
+    button {
+      height: fit-content;
+    }
+  }
 }
 
 #page-title {
@@ -112,7 +142,9 @@
 /* Personal */
 /* ---------------------------------------------- */
 
-.InfoInput .InfoInput_Personal {
+.InfoInput_Personal {
+  outline: white solid 1px;
+
   > div {
     margin-bottom: var(--spacing);
   }
@@ -122,7 +154,7 @@
 /* Education */
 /* ---------------------------------------------- */
 
-.InfoInput .education-top-lines-inputs {
+.InfoInput_Education .education-top-lines-inputs {
   > :first-child {
     width: 100%;
   }
@@ -132,29 +164,29 @@
   }
 }
 
-.InfoInput .education-top-lines-inputs .grad-year-line {
+.InfoInput_Education .education-top-lines-inputs .grad-year-line {
   display: flex;
   gap: var(--spacing);
 }
 
-.InfoInput .education-top-lines-inputs .degree-line {
+.InfoInput_Education .education-top-lines-inputs .degree-line {
   > * {
     margin-bottom: var(--spacing);
   }
 }
 
-.InfoInput .education-top-lines-inputs .minor-or-conc-line {
+.InfoInput_Education .education-top-lines-inputs .minor-or-conc-line {
   display: flex;
   gap: var(--spacing);
 }
 
-.InfoInput .education-list-inputs {
+.InfoInput_Education .education-list-inputs {
   > div {
     margin-bottom: var(--spacing);
   }
 }
 
-.InfoInput .education-list-inputs .gpa-inputs {
+.InfoInput_Education .education-list-inputs .gpa-inputs {
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: start;
@@ -165,18 +197,15 @@
   }
 }
 
-.InfoInput .education-list-inputs .education-input-list-awards,
-.InfoInput .education-list-inputs .education-input-list-coursework {
+.InfoInput_Education .education-list-inputs .education-input-list-awards,
+.InfoInput_Education .education-list-inputs .education-input-list-coursework {
   button {
     padding: 0 0.33rem;
   }
+}
 
-  .list-input-and-del-btn {
-    display: flex;
-    gap: 0.25rem;
-
-    align-items: center;
-  }
+.InfoInput_Education .delete-education-button {
+  margin-top: var(--spacing);
 }
 
 /* ---------------------------------------------- */
@@ -264,29 +293,39 @@
       border-radius: var(--radius);
     }
   }
+  .job-exp-section-time {
+    display: flex;
+    gap: var(--spacing);
+  }
 
   .delete-jobsInfo-button {
     margin-top: var(--padding);
     padding: var(--padding);
+
+    border: white 1px solid;
   }
 }
 
 .InfoInput_WorkExp .add-jobsInfo-button {
   margin-top: 0;
 
-  outline: white 2px solid;
-  color: white;
-  background-color: tomato;
   width: 100%;
-
-  &:hover {
-    background-color: white;
-    color: tomato;
-  }
 }
 
 .InfoInput_WorkExp .delete-workExperience-button {
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+
+/* ---------------------------------------------- */
+/* SkillsAndInt */
+/* ---------------------------------------------- */
+
+.InfoInput_SkillsAndInt {
+  outline: white solid 1px;
+
+  .list-item-inputs {
+    /* margin-top: var(--spacing); */
+  }
 }
 
 /* =========================================================================== */
@@ -299,6 +338,8 @@
 
   max-height: calc(100vh - 7rem);
   overflow-y: scroll;
+
+  font-family: "Cormorant Garamond", serif;
 }
 
 .Resume .education-top-line,
@@ -339,18 +380,6 @@ button {
   }
 }
 
-.delete-in-level-1-button,
-.delete-in-level-2-button {
-  height: 1.25rem;
-  width: 1.25rem;
-
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 input {
   max-height: 1.5rem;
 
@@ -382,11 +411,6 @@ textarea {
   }
 }
 
-.delete-in-level-0-button {
-  margin-top: 1rem;
-  width: 100%;
-}
-
 .list-item-inputs {
   display: flex;
   flex-wrap: wrap;
@@ -397,16 +421,45 @@ textarea {
   margin-top: var(--spacing);
 }
 
-.add-section-in-level-0-button,
-.add-section-in-level-1-button {
-  outline: white 2px solid;
+.delete-in-level-0-button,
+.delete-in-level-1-button,
+.delete-jobsInfo-duties-button,
+.delete-jobsInfo-stack-button,
+.delete-jobsInfo-keyResults-button,
+#gitHub-repo-link {
+  border: white 1px solid;
   color: white;
   background-color: tomato;
-  margin-top: var(--spacing);
+  /* margin-top: var(--spacing); */
   width: 100%;
 
   &:hover {
     background-color: white;
     color: tomato;
   }
+}
+
+.delete-in-level-1-button,
+.delete-in-level-2-button {
+  border: none;
+
+  height: 1.25rem;
+  width: 1.25rem;
+
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-section-in-level-0-button {
+  width: 100%;
+}
+
+.list-input-and-del-btn {
+  display: flex;
+  gap: 0.25rem;
+
+  align-items: center;
 }

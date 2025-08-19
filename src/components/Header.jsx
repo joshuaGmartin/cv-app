@@ -1,4 +1,8 @@
-import { ResetDataButton, DemoDataButton } from "../modules/HeaderButtons";
+import {
+  ResetDataButton,
+  DemoDataButton,
+  PrintButton,
+} from "../modules/HeaderButtons";
 
 export function Header({ setUserData }) {
   return (
@@ -9,6 +13,19 @@ export function Header({ setUserData }) {
       <div className="header-buttons">
         <ResetDataButton setUserData={setUserData}></ResetDataButton>
         <DemoDataButton setUserData={setUserData}></DemoDataButton>
+        <PrintButton></PrintButton>
+        <button
+          id="gitHub-repo-link"
+          onClick={() =>
+            window.open(
+              "https://github.com/joshuaGmartin/cv-app",
+              "_blank",
+              "noopener,noreferrer"
+            )
+          }
+        >
+          GitHub
+        </button>
       </div>
     </div>
   );

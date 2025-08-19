@@ -4,7 +4,11 @@ export default function ResumePortion_Personal({ userData }) {
       <h1>{userData.personal.fullname}</h1>
       {userData.personal.email} | {userData.personal.phone} |{" "}
       {userData.personal.location} |{" "}
-      <a href={userData.personal.portfolioLink}>
+      <a
+        href={userData.personal.portfolioLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {userData.personal.portfolioName}
       </a>
       <hr />
