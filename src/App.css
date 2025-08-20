@@ -10,8 +10,7 @@
 @media print {
   #root {
     display: block !important;
-    /* width: 2761px !important; */
-    width: 2455px !important;
+    width: 51rem !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -24,8 +23,9 @@
   .Resume {
     max-height: max-content !important;
     overflow-y: initial !important;
-    padding: 0.5in !important;
-    font-size: large !important;
+    padding: 0.33in 0.5in 0 !important;
+    /* guess, looks good on print screen */
+    font-size: 0.775rem !important;
   }
 
   a {
@@ -47,7 +47,7 @@
 
 .main-section {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 1fr;
   gap: var(--spacing);
 
   max-height: calc(100vh - 6rem);
