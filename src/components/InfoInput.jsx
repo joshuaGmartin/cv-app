@@ -34,16 +34,6 @@ export default function InfoInput({ userData, setUserData }) {
       default:
         return (
           <InfoInput_Personal userData={userData} setUserData={setUserData} />
-
-          //testing
-          // <InfoInput_Education userData={userData} setUserData={setUserData} />
-
-          // <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
-
-          // <InfoInput_SkillsAndInt
-          //   userData={userData}
-          //   setUserData={setUserData}
-          // />
         );
     }
   }

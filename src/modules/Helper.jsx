@@ -122,7 +122,6 @@ function getFocusElm_in_level_1_section(focusElmInfo) {
 function getFocusElm_in_level_2_list(focusElmInfo) {
   // jank: the class name are a little arbitrary.
 
-  console.log(focusElmInfo.level_2_id);
   const parentFocusElm = document.getElementById(focusElmInfo.level_2_id);
   const childFocusElm = parentFocusElm.querySelector(
     `.${focusElmInfo.level_1_key}-input-list-${focusElmInfo.level_2_key}`

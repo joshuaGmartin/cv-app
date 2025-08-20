@@ -17,9 +17,3 @@ export default function Resume({ userData }) {
     </div>
   );
 }
-
-// add later?
-function printResume() {
-  const resumeElm = document.querySelector(".Resume");
-  window.print();
-}
