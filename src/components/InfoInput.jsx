@@ -7,7 +7,7 @@ import InfoInput_SkillsAndInt from "./InfoInput_SkillsAndInt";
 const infoSections = [
   "Personal",
   "Education",
-  "Relevant Work Experience",
+  "Work Experience",
   "Skills & Interests",
 ];
 
@@ -20,7 +20,7 @@ export default function InfoInput({ userData, setUserData }) {
         return (
           <InfoInput_Education userData={userData} setUserData={setUserData} />
         );
-      case "Relevant Work Experience":
+      case "Work Experience":
         return (
           <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
         );
@@ -33,12 +33,12 @@ export default function InfoInput({ userData, setUserData }) {
         );
       default:
         return (
-          // <InfoInput_Personal userData={userData} setUserData={setUserData} />
+          <InfoInput_Personal userData={userData} setUserData={setUserData} />
 
           //testing
           // <InfoInput_Education userData={userData} setUserData={setUserData} />
 
-          <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
+          // <InfoInput_WorkExp userData={userData} setUserData={setUserData} />
 
           // <InfoInput_SkillsAndInt
           //   userData={userData}

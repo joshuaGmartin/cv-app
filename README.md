@@ -7,6 +7,7 @@ todo:
 -scroll to change on resume
 -change position of sections ^ or v
 -polish comments and code
+-mobile view?
 
 bugs:
 

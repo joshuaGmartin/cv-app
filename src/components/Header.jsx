@@ -24,7 +24,7 @@ export function Header({ setUserData }) {
             )
           }
         >
-          GitHub
+          source
         </button>
       </div>
     </div>

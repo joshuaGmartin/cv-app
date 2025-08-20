@@ -1,3 +1,4 @@
+/***************** imports *****************/
 .cormorant-garamond-<uniquifier > {
   font-family: "Cormorant Garamond", serif;
   font-optical-sizing: auto;
@@ -5,10 +6,12 @@
   font-style: normal;
 }
 
+/***************** print *****************/
 @media print {
   #root {
     display: block !important;
-    width: 2761px !important;
+    /* width: 2761px !important; */
+    width: 2455px !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -35,13 +38,19 @@
   --spacing: 0.5rem;
   --radius: 1rem;
 
-  min-width: 120rem;
   margin: 0 auto;
-  padding: 1rem 2rem;
-  padding-top: 0;
+  padding: 0 2rem;
 
   display: grid;
   grid-template-rows: auto auto;
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: var(--spacing);
+
+  max-height: calc(100vh - 6rem);
 }
 
 .header {
@@ -67,24 +76,19 @@
   }
 }
 
-.main-section {
-  display: grid;
-  grid-template-columns: 4fr 5fr;
-  gap: var(--spacing);
-
-  max-height: calc(100vh - 7.5rem);
-}
+/***************** sections *****************/
 
 /* =========================================================================== */
 /* Inputs */
 /* =========================================================================== */
 
 .InfoInput {
-  outline: white solid 1px;
+  width: 35rem;
+
   border-radius: var(--radius);
 
   display: grid;
-  grid-template-columns: max-content auto;
+  grid-template-rows: max-content auto;
 
   max-height: inherit;
 
@@ -97,17 +101,19 @@
 
 .InfoInput > * {
   padding: var(--padding);
+  padding-top: 0;
+
+  border-radius: var(--radius);
 }
 
 .InfoInput > div:last-of-type {
-  /* max-height: min-content; */
   overflow-y: scroll;
+  padding-top: 0.1rem;
 }
 
 .InfoInput .infoSectionSelectors {
   display: flex;
-  flex-direction: column;
-  gap: var(--padding);
+  justify-content: space-between;
 }
 
 .InfoInput .infoSectionSelectors .InfoSectionSelector {
@@ -144,7 +150,12 @@
 /* ---------------------------------------------- */
 
 .InfoInput_Personal {
-  outline: white solid 1px;
+  border: white solid 1px;
+  border-right: none;
+
+  > :first-child {
+    padding-top: var(--padding);
+  }
 
   > div {
     margin-bottom: var(--spacing);
@@ -328,7 +339,8 @@
 /* ---------------------------------------------- */
 
 .InfoInput_SkillsAndInt {
-  outline: white solid 1px;
+  border: white solid 1px;
+  border-right: none;
 
   .list-item-inputs {
     /* margin-top: var(--spacing); */
@@ -343,7 +355,6 @@
   background-color: white;
   padding: calc(2 * var(--padding));
 
-  max-height: calc(100vh - 7rem);
   overflow-y: scroll;
   max-width: fit-content;
   min-width: 100%;
@@ -471,4 +482,46 @@ textarea {
   gap: 0.25rem;
 
   align-items: center;
+}
+
+/***************** mobile *****************/
+
+@media (max-width: 1230px) {
+  #root {
+    padding: 0;
+  }
+
+  .header {
+    padding: 0 0.5rem;
+  }
+
+  .main-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+
+    max-height: 100%;
+  }
+
+  .InfoInput {
+    margin: auto;
+  }
+
+  .InfoInput > div:last-of-type {
+    overflow-y: initial;
+  }
+
+  .Resume {
+    overflow-y: initial;
+  }
+
+  .InfoInput_Personal,
+  .InfoInput_SkillsAndInt {
+    margin: 0 0.5rem;
+
+    border-right: 1px white solid;
+  }
+
+  .main-input-section {
+    padding-bottom: 0;
+  }
 }
