@@ -56,7 +56,12 @@ function educationListSection(thisEd) {
   let edCourses = null;
   let edGPAplusAwards = null;
 
-  if (thisEd.gpa || thisEd.awards.length > 0 || thisEd.coursework.length > 0) {
+  if (
+    thisEd.gpa ||
+    thisEd.gpa === "" ||
+    thisEd.awards.length > 0 ||
+    thisEd.coursework.length > 0
+  ) {
     if (thisEd.gpa || thisEd.gpa === "") {
       edGPA = (
         <b>

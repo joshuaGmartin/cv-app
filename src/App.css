@@ -179,6 +179,12 @@
 .InfoInput_Education .education-top-lines-inputs .minor-or-conc-line {
   display: flex;
   gap: var(--spacing);
+
+  label {
+    display: flex;
+    gap: 0.25rem;
+    align-content: center;
+  }
 }
 
 .InfoInput_Education .education-list-inputs {

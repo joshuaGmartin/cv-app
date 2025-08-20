@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 /* 
 template:
 
-setFocusElmInfo({
+args.setFocusElmInfo({
     level_0_key: args.level_0_key,
     level_1_key: args.level_1_key,
     level_1_id: args.level_1_id,
@@ -31,7 +31,9 @@ export function FocusHandler() {
       case "personal":
         return; // no focus here
       case "education":
-        if (focusElmInfo.level_1_key) {
+        if (focusElmInfo.level_1_key === "includeGPA") {
+          focusElm = getFocusElm_gpaInput(focusElmInfo);
+        } else if (focusElmInfo.level_1_key) {
           focusElm = getFocusElm_in_level_1_list(focusElmInfo);
         } else {
           focusElm = getFocusElm_in_level_1_section(focusElmInfo);
@@ -87,8 +89,6 @@ function getFocusElm_in_level_0_list(focusElmInfo) {
 
 function getFocusElm_in_level_1_list(focusElmInfo) {
   const parentFocusElm = document.getElementById(focusElmInfo.level_1_id);
-
-  console.log(parentFocusElm);
 
   let inputCollectionElm = parentFocusElm
     .querySelector(
@@ -151,6 +151,24 @@ function getFocusElm_in_level_2_section(focusElmInfo) {
   );
 
   let focusElm = childFocusElm.querySelector("input");
+
+  return focusElm;
+}
+
+// ************** special **************
+
+function getFocusElm_gpaInput(focusElmInfo) {
+  const parentFocusElm = document
+    .getElementById(focusElmInfo.level_1_id)
+    .querySelector(".gpa-inputs");
+
+  let focusElm = parentFocusElm.querySelector(":nth-child(2)");
+
+  // if gpa input no exist (changed to no check)
+  if (!focusElm) {
+    // focus on checkbox
+    focusElm = document.getElementById(focusElmInfo.level_1_id + "-includeGPA");
+  }
 
   return focusElm;
 }

@@ -46,6 +46,7 @@ export function GetDataInput({
   level_2_key = null,
   level_2_id = null,
   listIndexToChange = null,
+  setFocusElmInfo = null,
 }) {
   const args = {
     userData,
@@ -56,6 +57,7 @@ export function GetDataInput({
     level_2_id,
     level_2_key,
     listIndexToChange,
+    setFocusElmInfo,
   };
 
   switch (args.level_0_key) {
@@ -418,12 +420,22 @@ function get_level_1_checkboxInput(args, this_level_1) {
         id={this_level_1.id + "-" + args.level_1_key}
         type="checkbox"
         checked={checked}
-        onChange={(e) =>
+        onChange={(e) => {
+          if (args.level_1_key === "includeGPA") {
+            args.setFocusElmInfo({
+              level_0_key: args.level_0_key,
+              level_1_key: args.level_1_key,
+              level_1_id: args.level_1_id,
+              level_2_key: args.level_2_key,
+              level_2_id: args.level_2_id,
+            });
+          }
+
           changeData({
             ...args,
             e: e,
-          })
-        }
+          });
+        }}
       />
       {" " + label}
     </label>

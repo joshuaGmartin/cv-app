@@ -127,7 +127,12 @@ function getEducationInputs_listInputs(
 ) {
   return (
     <div className="education-list-inputs">
-      {getEducationInputs_gpaInputs(thisEd, userData, setUserData)}
+      {getEducationInputs_gpaInputs(
+        thisEd,
+        userData,
+        setUserData,
+        setFocusElmInfo
+      )}
       {getEducationInputs_listItemInput(
         thisEd,
         userData,
@@ -146,7 +151,12 @@ function getEducationInputs_listInputs(
   );
 }
 
-function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
+function getEducationInputs_gpaInputs(
+  thisEd,
+  userData,
+  setUserData,
+  setFocusElmInfo
+) {
   return (
     <div className="gpa-inputs">
       <GetDataInput
@@ -155,6 +165,7 @@ function getEducationInputs_gpaInputs(thisEd, userData, setUserData) {
         level_0_key={"education"}
         level_1_key={"includeGPA"}
         level_1_id={thisEd.id}
+        setFocusElmInfo={setFocusElmInfo}
       />
 
       {thisEd.gpa || thisEd.gpa === "" ? (
