@@ -11,4 +11,13 @@ todo:
 
 bugs:
 
+
+gh-pages:
+
+-add "base" to vite.config.js
+-add "homepage" to package.json
+-npm install gh-pages
+-add "predeploy": "npm run build" to package.json
+-add "deploy": "gh-pages -d dist" to package.json
+
 -->
